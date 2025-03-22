@@ -93,8 +93,8 @@ const MOCK_PROPERTIES = [
 
 const Properties = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [propertyType, setPropertyType] = useState('');
-  const [bedrooms, setBedrooms] = useState('');
+  const [propertyType, setPropertyType] = useState('all');
+  const [bedrooms, setBedrooms] = useState('any');
   const [priceRange, setPriceRange] = useState<number[]>([500, 6000]);
   const [areaRange, setAreaRange] = useState<number[]>([500, 3000]);
   const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
@@ -107,8 +107,8 @@ const Properties = () => {
       property.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
       property.description.toLowerCase().includes(searchTerm.toLowerCase());
       
-    const matchesType = propertyType === '' || property.type === propertyType;
-    const matchesBedrooms = bedrooms === '' || 
+    const matchesType = propertyType === 'all' || property.type === propertyType;
+    const matchesBedrooms = bedrooms === 'any' || 
       (bedrooms === '4+' ? property.bedrooms >= 4 : property.bedrooms === parseInt(bedrooms));
     const matchesPrice = property.price >= priceRange[0] && property.price <= priceRange[1];
     const matchesArea = property.area >= areaRange[0] && property.area <= areaRange[1];
@@ -193,7 +193,7 @@ const Properties = () => {
                             <SelectValue placeholder="All Types" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="">All Types</SelectItem>
+                            <SelectItem value="all">All Types</SelectItem>
                             <SelectItem value="Apartment">Apartment</SelectItem>
                             <SelectItem value="House">House</SelectItem>
                             <SelectItem value="Studio">Studio</SelectItem>
@@ -212,7 +212,7 @@ const Properties = () => {
                             <SelectValue placeholder="Any" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="">Any</SelectItem>
+                            <SelectItem value="any">Any</SelectItem>
                             <SelectItem value="1">1</SelectItem>
                             <SelectItem value="2">2</SelectItem>
                             <SelectItem value="3">3</SelectItem>
