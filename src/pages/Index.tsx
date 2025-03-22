@@ -5,6 +5,7 @@ import Footer from '@/components/layout/Footer';
 import Hero from '@/components/home/Hero';
 import FeaturedSection from '@/components/home/FeaturedSection';
 import NavigationCards from '@/components/home/NavigationCards';
+import NewsletterSignup from '@/components/home/NewsletterSignup';
 
 const Index = () => {
   // Page load animation state
@@ -21,6 +22,7 @@ const Index = () => {
         <Hero />
         <NavigationCards />
         <FeaturedSection />
+        <NewsletterSignup />
       </main>
       <Footer />
     </div>

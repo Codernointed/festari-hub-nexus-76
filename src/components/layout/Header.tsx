@@ -1,8 +1,16 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown, Search, User, Bell, LogIn } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -12,8 +20,24 @@ const Header = () => {
   // Navigation items
   const navigationItems = [
     { name: 'Home', path: '/' },
-    { name: 'Real Estate', path: '/real-estate' },
-    { name: 'Research', path: '/research' },
+    { 
+      name: 'Real Estate', 
+      path: '/real-estate',
+      dropdown: [
+        { name: 'Properties', path: '/properties' },
+        { name: 'Featured Listings', path: '/real-estate' },
+        { name: 'Schedule Viewing', path: '/contact' }
+      ]
+    },
+    { 
+      name: 'Research', 
+      path: '/research',
+      dropdown: [
+        { name: 'Publications', path: '/research' },
+        { name: 'Courses', path: '/research#courses' },
+        { name: 'Resources', path: '/research#resources' }
+      ]
+    },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];
@@ -50,26 +74,59 @@ const Header = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden md:flex items-center space-x-6">
           {navigationItems.map((item) => (
-            <Link
-              key={item.name}
-              to={item.path}
-              className={cn(
-                'nav-link',
-                location.pathname === item.path && 'text-accent font-medium'
-              )}
-            >
-              {item.name}
-            </Link>
+            item.dropdown ? (
+              <DropdownMenu key={item.name}>
+                <DropdownMenuTrigger asChild>
+                  <button 
+                    className={cn(
+                      'nav-link flex items-center gap-1',
+                      location.pathname === item.path && 'text-festari-accent font-medium'
+                    )}
+                  >
+                    {item.name}
+                    <ChevronDown size={16} />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="center" className="w-48">
+                  {item.dropdown.map((dropdownItem) => (
+                    <DropdownMenuItem key={dropdownItem.name} asChild>
+                      <Link to={dropdownItem.path}>{dropdownItem.name}</Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link
+                key={item.name}
+                to={item.path}
+                className={cn(
+                  'nav-link',
+                  location.pathname === item.path && 'text-festari-accent font-medium'
+                )}
+              >
+                {item.name}
+              </Link>
+            )
           ))}
-          <Link
-            to="/login"
-            className="btn-primary"
-          >
-            Sign In
-          </Link>
         </nav>
+
+        {/* Action buttons */}
+        <div className="hidden md:flex items-center space-x-3">
+          <Button variant="outline" size="sm" asChild>
+            <Link to="/properties">
+              <Search size={16} className="mr-1" />
+              Properties
+            </Link>
+          </Button>
+          <Button className="bg-festari-accent hover:bg-festari-accent/90" size="sm" asChild>
+            <Link to="/login">
+              <LogIn size={16} className="mr-1" />
+              Sign In
+            </Link>
+          </Button>
+        </div>
 
         {/* Mobile Menu Button */}
         <button
@@ -94,30 +151,72 @@ const Header = () => {
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
-        <nav className="flex flex-col space-y-6 p-8">
+        <nav className="flex flex-col space-y-1 p-4">
           {navigationItems.map((item) => (
-            <Link
-              key={item.name}
-              to={item.path}
-              className={cn(
-                'text-lg font-medium transition-colors',
-                location.pathname === item.path
-                  ? 'text-accent'
-                  : 'text-festari-800 hover:text-accent'
+            <div key={item.name} className="py-2">
+              {item.dropdown ? (
+                <div className="space-y-2">
+                  <div className="text-lg font-medium text-festari-900 px-4 py-2">
+                    {item.name}
+                  </div>
+                  <div className="pl-4 space-y-1 border-l-2 border-gray-100">
+                    {item.dropdown.map((dropdownItem) => (
+                      <Link
+                        key={dropdownItem.name}
+                        to={dropdownItem.path}
+                        className="block px-4 py-2 text-festari-600 hover:text-festari-accent"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {dropdownItem.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  to={item.path}
+                  className={cn(
+                    'block px-4 py-2 text-lg',
+                    location.pathname === item.path
+                      ? 'text-festari-accent font-medium'
+                      : 'text-festari-800 hover:text-festari-accent'
+                  )}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
               )}
+            </div>
+          ))}
+          
+          <div className="pt-4 space-y-2 border-t border-gray-100 mt-4">
+            <Link
+              to="/properties"
+              className="flex items-center gap-2 px-4 py-2 text-festari-800 hover:text-festari-accent"
               onClick={() => setMobileMenuOpen(false)}
             >
-              {item.name}
+              <Search size={18} />
+              Search Properties
             </Link>
-          ))}
-          <div className="pt-4">
+            
             <Link
               to="/login"
-              className="btn-primary w-full justify-center"
+              className="flex items-center gap-2 px-4 py-2 text-festari-800 hover:text-festari-accent"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Sign In
+              <User size={18} />
+              Sign In / Register
             </Link>
+          </div>
+          
+          <div className="mt-auto pt-6">
+            <Button
+              className="w-full bg-festari-accent hover:bg-festari-accent/90"
+              onClick={() => setMobileMenuOpen(false)}
+              asChild
+            >
+              <Link to="/contact">Contact Us</Link>
+            </Button>
           </div>
         </nav>
       </div>
