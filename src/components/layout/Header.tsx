@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, User, ShoppingCart, BookOpen, Home, MapPin } from 'lucide-react';
@@ -104,7 +105,7 @@ const Header = () => {
                 <User size={18} />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="bg-white/95 backdrop-blur-md">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
@@ -125,17 +126,51 @@ const Header = () => {
         </div>
         
         {/* Mobile Menu Button */}
-        <button 
-          className="md:hidden"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-        >
-          {mobileMenuOpen ? (
-            <X size={24} className="text-festari-900" />
-          ) : (
-            <Menu size={24} className={isScrolled || location.pathname !== '/' ? 'text-festari-900' : 'text-white'} />
-          )}
-        </button>
+        <div className="md:hidden flex items-center space-x-2">
+          {/* Mobile User Menu */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className={`rounded-full ${
+                  isScrolled || location.pathname !== '/' ? 'text-festari-900' : 'text-white'
+                }`}
+              >
+                <User size={18} />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="bg-white/95 backdrop-blur-md z-50">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link to="/dashboard" className="w-full cursor-pointer">Dashboard</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/properties" className="w-full cursor-pointer">Saved Properties</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/research" className="w-full cursor-pointer">My Courses</Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          
+          {/* Mobile Menu Toggle Button */}
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+          >
+            {mobileMenuOpen ? (
+              <X size={24} className="text-festari-900" />
+            ) : (
+              <Menu size={24} className={isScrolled || location.pathname !== '/' ? 'text-festari-900' : 'text-white'} />
+            )}
+          </button>
+        </div>
       </div>
       
       {/* Mobile Menu */}
@@ -166,12 +201,6 @@ const Header = () => {
               <Link to="/register" className="w-full">
                 <Button className="w-full bg-festari-accent hover:bg-festari-accent/90 text-white">
                   Register
-                </Button>
-              </Link>
-              <Link to="/dashboard" className="w-full">
-                <Button variant="ghost" className="w-full justify-start">
-                  <User size={18} className="mr-2" />
-                  Dashboard
                 </Button>
               </Link>
             </div>
