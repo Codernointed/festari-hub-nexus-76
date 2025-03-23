@@ -5,6 +5,11 @@ import { Menu, X, User, ShoppingCart, BookOpen, Home, MapPin } from 'lucide-reac
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -16,7 +21,6 @@ import {
 const Header = () => {
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
   
   // Define navigation items
@@ -39,16 +43,11 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  
-  // Close mobile menu when route changes
-  useEffect(() => {
-    setMobileMenuOpen(false);
-  }, [location.pathname]);
 
   return (
     <header 
       className={`fixed top-0 left-0 w-full py-4 z-40 transition-all duration-300 ${
-        isScrolled || mobileMenuOpen ? 'bg-white/90 backdrop-blur-md shadow-sm' : 
+        isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm' : 
         location.pathname === '/' ? 'bg-transparent' : 'bg-white'
       }`}
     >
@@ -56,7 +55,7 @@ const Header = () => {
         {/* Logo */}
         <Link to="/" className="flex items-center">
           <span className={`text-2xl font-display font-bold ${
-            isScrolled || mobileMenuOpen || location.pathname !== '/' ? 'text-festari-900' : 'text-white'
+            isScrolled || location.pathname !== '/' ? 'text-festari-900' : 'text-white'
           }`}>
             Festari
           </span>
@@ -125,7 +124,7 @@ const Header = () => {
           </DropdownMenu>
         </div>
         
-        {/* Mobile Menu Button */}
+        {/* Mobile Menu */}
         <div className="md:hidden flex items-center space-x-2">
           {/* Mobile User Menu */}
           <DropdownMenu>
@@ -159,54 +158,52 @@ const Header = () => {
             </DropdownMenuContent>
           </DropdownMenu>
           
-          {/* Mobile Menu Toggle Button */}
-          <button 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-          >
-            {mobileMenuOpen ? (
-              <X size={24} className="text-festari-900" />
-            ) : (
-              <Menu size={24} className={isScrolled || location.pathname !== '/' ? 'text-festari-900' : 'text-white'} />
-            )}
-          </button>
+          {/* Mobile Navigation Sheet */}
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className={`rounded-full ${
+                  isScrolled || location.pathname !== '/' ? 'text-festari-900' : 'text-white'
+                }`}
+                aria-label="Toggle menu"
+              >
+                <Menu size={24} />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="bg-white/95 backdrop-blur-md pt-16 w-[300px]">
+              <nav className="flex flex-col space-y-4">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    className={`flex items-center text-festari-900 text-lg ${
+                      location.pathname === item.path ? 'font-medium' : ''
+                    }`}
+                  >
+                    {item.icon && <span className="mr-2">{item.icon}</span>}
+                    {item.name}
+                  </Link>
+                ))}
+              </nav>
+              
+              <div className="flex flex-col space-y-3 pt-6 mt-6 border-t border-festari-100">
+                <Link to="/login" className="w-full">
+                  <Button variant="outline" className="w-full">
+                    Login
+                  </Button>
+                </Link>
+                <Link to="/register" className="w-full">
+                  <Button className="w-full bg-festari-accent hover:bg-festari-accent/90 text-white">
+                    Register
+                  </Button>
+                </Link>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
-      
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 top-[68px] bg-white/95 backdrop-blur-md z-30 overflow-y-auto">
-          <div className="container-custom py-8 flex flex-col space-y-8">
-            <nav className="flex flex-col space-y-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  className={`flex items-center text-festari-900 text-lg ${
-                    location.pathname === item.path ? 'font-medium' : ''
-                  }`}
-                >
-                  {item.icon && <span className="mr-2">{item.icon}</span>}
-                  {item.name}
-                </Link>
-              ))}
-            </nav>
-            
-            <div className="flex flex-col space-y-3 pt-4 border-t border-festari-100">
-              <Link to="/login" className="w-full">
-                <Button variant="outline" className="w-full">
-                  Login
-                </Button>
-              </Link>
-              <Link to="/register" className="w-full">
-                <Button className="w-full bg-festari-accent hover:bg-festari-accent/90 text-white">
-                  Register
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
     </header>
   );
 };
