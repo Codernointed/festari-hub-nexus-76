@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Building, BookOpen, Bell, User, Search, Calendar, Heart, Settings, LogOut } from 'lucide-react';
@@ -11,57 +10,57 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 
+// Mock user data
+const userData = {
+  name: "Alex Johnson",
+  email: "alex@example.com",
+  savedProperties: 4,
+  courses: 2,
+  upcomingViewings: 1,
+  notifications: 3,
+};
+
+// Mock property data
+const savedProperties = [
+  {
+    id: 1,
+    title: "Luxury Apartment in Downtown",
+    price: "$2,500/month",
+    location: "123 Main St, Downtown",
+    type: "Apartment",
+    image: "https://source.unsplash.com/random/300x200/?apartment"
+  },
+  {
+    id: 2,
+    title: "Modern Studio near University",
+    price: "$1,800/month",
+    location: "456 College Ave",
+    type: "Studio",
+    image: "https://source.unsplash.com/random/300x200/?studio"
+  }
+];
+
+// Mock course data
+const enrolledCourses = [
+  {
+    id: 1,
+    title: "Introduction to Real Estate Investment",
+    progress: 65,
+    instructor: "Dr. Sarah Smith",
+    nextLesson: "Financing Strategies"
+  },
+  {
+    id: 2,
+    title: "Property Management Fundamentals",
+    progress: 30,
+    instructor: "Prof. Michael Brown",
+    nextLesson: "Tenant Screening Processes"
+  }
+];
+
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const { toast } = useToast();
-
-  // Mock user data
-  const userData = {
-    name: "Alex Johnson",
-    email: "alex@example.com",
-    savedProperties: 4,
-    courses: 2,
-    upcomingViewings: 1,
-    notifications: 3,
-  };
-
-  // Mock property data
-  const savedProperties = [
-    {
-      id: 1,
-      title: "Luxury Apartment in Downtown",
-      price: "$2,500/month",
-      location: "123 Main St, Downtown",
-      type: "Apartment",
-      image: "https://source.unsplash.com/random/300x200/?apartment"
-    },
-    {
-      id: 2,
-      title: "Modern Studio near University",
-      price: "$1,800/month",
-      location: "456 College Ave",
-      type: "Studio",
-      image: "https://source.unsplash.com/random/300x200/?studio"
-    }
-  ];
-
-  // Mock course data
-  const enrolledCourses = [
-    {
-      id: 1,
-      title: "Introduction to Real Estate Investment",
-      progress: 65,
-      instructor: "Dr. Sarah Smith",
-      nextLesson: "Financing Strategies"
-    },
-    {
-      id: 2,
-      title: "Property Management Fundamentals",
-      progress: 30,
-      instructor: "Prof. Michael Brown",
-      nextLesson: "Tenant Screening Processes"
-    }
-  ];
 
   const handleNotificationClick = () => {
     toast({
@@ -235,11 +234,13 @@ const Dashboard = () => {
                     {savedProperties.map(property => (
                       <div key={property.id} className="border rounded-lg overflow-hidden group">
                         <div className="relative h-40 overflow-hidden">
-                          <img 
-                            src={property.image} 
-                            alt={property.title} 
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          />
+                          <Link to={`/property/${property.id}`}>
+                            <img 
+                              src={property.image} 
+                              alt={property.title} 
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                          </Link>
                           <div className="absolute top-2 right-2">
                             <button className="p-1.5 bg-white rounded-full shadow-md">
                               <Heart size={18} className="text-red-500" />
@@ -252,11 +253,15 @@ const Dashboard = () => {
                           </div>
                         </div>
                         <div className="p-4">
-                          <h3 className="font-medium">{property.title}</h3>
+                          <Link to={`/property/${property.id}`}>
+                            <h3 className="font-medium hover:text-festari-accent transition-colors">{property.title}</h3>
+                          </Link>
                           <p className="text-sm text-muted-foreground">{property.location}</p>
                           <div className="mt-2 flex justify-between items-center">
                             <p className="font-semibold text-festari-accent">{property.price}</p>
-                            <Button size="sm" variant="outline">View Details</Button>
+                            <Link to={`/property/${property.id}`}>
+                              <Button size="sm" variant="outline">View Details</Button>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -264,7 +269,7 @@ const Dashboard = () => {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Link to="/real-estate">
+                  <Link to="/properties">
                     <Button variant="outline">Browse More Properties</Button>
                   </Link>
                 </CardFooter>

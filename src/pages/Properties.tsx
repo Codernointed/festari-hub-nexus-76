@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Filter, MapPin, Bed, Bath, Home, Square, Star, Heart, ArrowUpRight } from 'lucide-react';
@@ -13,7 +12,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
 
-// Mock data for properties
 const MOCK_PROPERTIES = [
   {
     id: 1,
@@ -100,7 +98,6 @@ const Properties = () => {
   const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
   const { toast } = useToast();
   
-  // Filter properties based on search criteria
   const filteredProperties = MOCK_PROPERTIES.filter(property => {
     const matchesSearch = 
       property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -134,7 +131,6 @@ const Properties = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
-        {/* Hero section */}
         <section className="bg-gradient-to-r from-festari-900 to-purple-900 text-white py-16">
           <div className="container-custom text-center">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">
@@ -144,7 +140,6 @@ const Properties = () => {
               Explore our curated selection of premium properties available for rent and purchase
             </p>
             
-            {/* Search bar */}
             <div className="max-w-3xl mx-auto relative">
               <div className="flex">
                 <div className="relative flex-grow">
@@ -167,11 +162,9 @@ const Properties = () => {
           </div>
         </section>
         
-        {/* Main content */}
         <section className="py-12 bg-gray-50">
           <div className="container-custom">
             <div className="flex flex-col lg:flex-row gap-8">
-              {/* Filters sidebar */}
               <div className="lg:w-1/4">
                 <Card>
                   <CardContent className="p-6">
@@ -185,7 +178,6 @@ const Properties = () => {
                     </div>
                     
                     <div className="space-y-6">
-                      {/* Property Type */}
                       <div>
                         <label className="text-sm font-medium mb-2 block">Property Type</label>
                         <Select value={propertyType} onValueChange={setPropertyType}>
@@ -204,7 +196,6 @@ const Properties = () => {
                         </Select>
                       </div>
                       
-                      {/* Bedrooms */}
                       <div>
                         <label className="text-sm font-medium mb-2 block">Bedrooms</label>
                         <Select value={bedrooms} onValueChange={setBedrooms}>
@@ -221,7 +212,6 @@ const Properties = () => {
                         </Select>
                       </div>
                       
-                      {/* Price Range */}
                       <div>
                         <div className="flex justify-between mb-2">
                           <label className="text-sm font-medium">Price Range</label>
@@ -240,7 +230,6 @@ const Properties = () => {
                         />
                       </div>
                       
-                      {/* Area */}
                       <div>
                         <div className="flex justify-between mb-2">
                           <label className="text-sm font-medium">Area (sq ft)</label>
@@ -267,9 +256,7 @@ const Properties = () => {
                 </Card>
               </div>
               
-              {/* Property listings */}
               <div className="lg:w-3/4">
-                {/* Listing controls */}
                 <div className="flex justify-between items-center mb-6">
                   <p className="text-gray-600">
                     Showing <span className="font-medium">{filteredProperties.length}</span> properties
@@ -304,7 +291,6 @@ const Properties = () => {
                   </div>
                 </div>
                 
-                {/* Property cards */}
                 {filteredProperties.length === 0 ? (
                   <div className="bg-white rounded-lg p-8 text-center">
                     <Home size={48} className="mx-auto mb-4 text-gray-400" />
@@ -337,13 +323,14 @@ const Properties = () => {
                           viewMode === 'list' ? 'flex flex-col md:flex-row' : ''
                         }`}
                       >
-                        {/* Property image */}
                         <div className={viewMode === 'list' ? 'md:w-2/5 relative' : 'relative'}>
-                          <img 
-                            src={property.image} 
-                            alt={property.title}
-                            className="w-full h-48 object-cover"
-                          />
+                          <Link to={`/property/${property.id}`}>
+                            <img 
+                              src={property.image} 
+                              alt={property.title}
+                              className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
+                            />
+                          </Link>
                           {property.featured && (
                             <Badge className="absolute top-2 left-2 bg-festari-accent">
                               Featured
@@ -357,10 +344,11 @@ const Properties = () => {
                           </button>
                         </div>
                         
-                        {/* Property details */}
                         <div className={`p-5 ${viewMode === 'list' ? 'md:w-3/5' : ''}`}>
                           <div className="flex justify-between items-start">
-                            <h3 className="text-lg font-semibold mb-1">{property.title}</h3>
+                            <Link to={`/property/${property.id}`} className="hover:text-festari-accent transition-colors">
+                              <h3 className="text-lg font-semibold mb-1">{property.title}</h3>
+                            </Link>
                             <p className="text-festari-accent font-bold">${property.price}/mo</p>
                           </div>
                           <div className="flex items-center text-gray-500 mb-3">
@@ -393,10 +381,12 @@ const Properties = () => {
                             >
                               Schedule Viewing
                             </Button>
-                            <Button size="sm">
-                              View Details
-                              <ArrowUpRight size={16} className="ml-1" />
-                            </Button>
+                            <Link to={`/property/${property.id}`}>
+                              <Button size="sm">
+                                View Details
+                                <ArrowUpRight size={16} className="ml-1" />
+                              </Button>
+                            </Link>
                           </div>
                         </div>
                       </div>
