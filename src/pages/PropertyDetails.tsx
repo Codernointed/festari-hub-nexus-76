@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, MapPin, Bed, Bath, Square, Heart, Share2, Calendar, CheckCircle2 } from 'lucide-react';
@@ -10,8 +9,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
+import BookingForm from '@/components/property/BookingForm';
 
-// Mock property data - in a real app, this would come from an API
 const MOCK_PROPERTIES = [
   {
     id: 1,
@@ -65,13 +64,10 @@ const PropertyDetails = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Simulate API call to fetch property details
     setLoading(true);
     
-    // Find the property with the matching ID
     const foundProperty = MOCK_PROPERTIES.find(p => p.id === Number(id));
     
-    // Simulate network delay
     setTimeout(() => {
       setProperty(foundProperty || null);
       setLoading(false);
@@ -82,13 +78,6 @@ const PropertyDetails = () => {
     toast({
       title: "Property Saved",
       description: "This property has been added to your favorites.",
-    });
-  };
-  
-  const handleScheduleViewing = () => {
-    toast({
-      title: "Viewing Request Sent",
-      description: "We'll contact you shortly to confirm your appointment.",
     });
   };
   
@@ -137,7 +126,6 @@ const PropertyDetails = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
-        {/* Back to listings button */}
         <div className="container-custom py-4">
           <Link to="/properties" className="inline-flex items-center text-festari-900 hover:text-festari-accent transition-colors">
             <ArrowLeft size={18} className="mr-2" />
@@ -145,11 +133,9 @@ const PropertyDetails = () => {
           </Link>
         </div>
         
-        {/* Property images */}
         <section className="bg-gray-50 py-6">
           <div className="container-custom">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              {/* Main image */}
               <div className="lg:col-span-2 h-[400px] rounded-lg overflow-hidden">
                 <img 
                   src={property.images[activeImage]} 
@@ -158,7 +144,6 @@ const PropertyDetails = () => {
                 />
               </div>
               
-              {/* Thumbnails */}
               <div className="flex flex-row lg:flex-col gap-3 h-full">
                 {property.images.slice(0, 3).map((image, index) => (
                   <div 
@@ -194,11 +179,9 @@ const PropertyDetails = () => {
           </div>
         </section>
         
-        {/* Property details */}
         <section className="py-8">
           <div className="container-custom">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Main content */}
               <div className="lg:col-span-2">
                 <div className="flex justify-between items-start mb-3">
                   <Badge className="bg-festari-accent mb-2">{property.type}</Badge>
@@ -306,7 +289,6 @@ const PropertyDetails = () => {
                 </Tabs>
               </div>
               
-              {/* Sidebar - Pricing and contact */}
               <div>
                 <Card className="mb-6 sticky top-4">
                   <CardContent className="pt-6">
@@ -315,16 +297,33 @@ const PropertyDetails = () => {
                       <p className="text-3xl font-bold text-festari-accent">${property.price}</p>
                     </div>
                     
-                    <div className="space-y-3">
-                      <Button className="w-full" onClick={handleScheduleViewing}>
-                        <Calendar size={18} className="mr-2" />
-                        Schedule a Viewing
-                      </Button>
+                    <Tabs defaultValue="booking">
+                      <TabsList className="grid grid-cols-2 w-full mb-4">
+                        <TabsTrigger value="booking">
+                          <Calendar size={16} className="mr-2" />
+                          Book Viewing
+                        </TabsTrigger>
+                        <TabsTrigger value="contact">Contact Agent</TabsTrigger>
+                      </TabsList>
                       
-                      <Button variant="outline" className="w-full">
-                        Contact Agent
-                      </Button>
-                    </div>
+                      <TabsContent value="booking">
+                        <BookingForm propertyId={property.id} propertyTitle={property.title} />
+                      </TabsContent>
+                      
+                      <TabsContent value="contact">
+                        <div className="text-center py-4">
+                          <p className="text-sm text-muted-foreground mb-4">
+                            Contact our team for more information about this property
+                          </p>
+                          <Button variant="outline" className="w-full mb-2">
+                            Email Agent
+                          </Button>
+                          <Button variant="outline" className="w-full">
+                            Call Agent
+                          </Button>
+                        </div>
+                      </TabsContent>
+                    </Tabs>
                   </CardContent>
                 </Card>
                 

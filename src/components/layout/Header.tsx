@@ -1,225 +1,184 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, Search, User, Bell, LogIn } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { Menu, X, User, ShoppingCart, BookOpen, Home, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { 
+import { useMobile } from '@/hooks/use-mobile';
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header = () => {
+  const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation();
-
-  // Navigation items
-  const navigationItems = [
+  const isMobile = useMobile();
+  
+  // Define navigation items
+  const navItems = [
     { name: 'Home', path: '/' },
-    { 
-      name: 'Real Estate', 
-      path: '/real-estate',
-      dropdown: [
-        { name: 'Properties', path: '/properties' },
-        { name: 'Featured Listings', path: '/real-estate' },
-        { name: 'Schedule Viewing', path: '/contact' }
-      ]
-    },
-    { 
-      name: 'Research', 
-      path: '/research',
-      dropdown: [
-        { name: 'Publications', path: '/research' },
-        { name: 'Courses', path: '/research#courses' },
-        { name: 'Resources', path: '/research#resources' }
-      ]
-    },
+    { name: 'Real Estate', path: '/real-estate', icon: <Home size={18} /> },
+    { name: 'Research', path: '/research', icon: <BookOpen size={18} /> },
+    { name: 'Agriculture', path: '/agriculture', icon: <ShoppingCart size={18} /> },
     { name: 'About', path: '/about' },
-    { name: 'Contact', path: '/contact' },
+    { name: 'Founder', path: '/founder', icon: <User size={18} /> },
+    { name: 'Contact', path: '/contact', icon: <MapPin size={18} /> },
   ];
 
-  // Check if the user has scrolled
+  // Watch for scroll position to add background to header
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      setIsScrolled(scrollPosition > 20);
+      setIsScrolled(window.scrollY > 20);
     };
-
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
 
   return (
-    <header
-      className={cn(
-        'fixed w-full z-50 transition-all duration-300 ease-in-out',
-        isScrolled
-          ? 'bg-white/95 backdrop-blur-sm shadow-sm py-2'
-          : 'bg-transparent py-4'
-      )}
+    <header 
+      className={`fixed top-0 left-0 w-full py-4 z-40 transition-all duration-300 ${
+        isScrolled || mobileMenuOpen ? 'bg-white/90 backdrop-blur-md shadow-sm' : 
+        location.pathname === '/' ? 'bg-transparent' : 'bg-white'
+      }`}
     >
       <div className="container-custom flex items-center justify-between">
-        <Link 
-          to="/" 
-          className="flex items-center"
-          aria-label="Festari logo"
-        >
-          <span className="text-xl md:text-2xl font-display font-bold text-festari-900">
+        {/* Logo */}
+        <Link to="/" className="flex items-center">
+          <span className={`text-2xl font-display font-bold ${
+            isScrolled || mobileMenuOpen || location.pathname !== '/' ? 'text-festari-900' : 'text-white'
+          }`}>
             Festari
           </span>
         </Link>
-
+        
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
-          {navigationItems.map((item) => (
-            item.dropdown ? (
-              <DropdownMenu key={item.name}>
-                <DropdownMenuTrigger asChild>
-                  <button 
-                    className={cn(
-                      'nav-link flex items-center gap-1',
-                      location.pathname === item.path && 'text-festari-accent font-medium'
-                    )}
-                  >
-                    {item.name}
-                    <ChevronDown size={16} />
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="center" className="w-48">
-                  {item.dropdown.map((dropdownItem) => (
-                    <DropdownMenuItem key={dropdownItem.name} asChild>
-                      <Link to={dropdownItem.path}>{dropdownItem.name}</Link>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <Link
-                key={item.name}
-                to={item.path}
-                className={cn(
-                  'nav-link',
-                  location.pathname === item.path && 'text-festari-accent font-medium'
-                )}
-              >
-                {item.name}
-              </Link>
-            )
+          {navItems.map((item) => (
+            <Link
+              key={item.name}
+              to={item.path}
+              className={`text-sm hover:text-accent ${
+                isScrolled || location.pathname !== '/' ? 'text-festari-700' : 'text-white'
+              } ${location.pathname === item.path ? 'font-medium' : ''}`}
+            >
+              {item.name}
+            </Link>
           ))}
         </nav>
-
-        {/* Action buttons */}
+        
+        {/* Login/Register Buttons */}
         <div className="hidden md:flex items-center space-x-3">
-          <Button variant="outline" size="sm" asChild>
-            <Link to="/properties">
-              <Search size={16} className="mr-1" />
-              Properties
-            </Link>
-          </Button>
-          <Button className="bg-festari-accent hover:bg-festari-accent/90" size="sm" asChild>
-            <Link to="/login">
-              <LogIn size={16} className="mr-1" />
-              Sign In
-            </Link>
-          </Button>
-        </div>
+          <Link to="/login">
+            <Button variant="outline" className={`${
+              isScrolled || location.pathname !== '/' ? 'border-festari-200 text-festari-900' : 'border-white/20 text-white hover:text-white'
+            }`}>
+              Login
+            </Button>
+          </Link>
+          <Link to="/register">
+            <Button className="bg-festari-accent hover:bg-festari-accent/90 text-white">
+              Register
+            </Button>
+          </Link>
 
+          {/* User menu (when logged in) */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className={`rounded-full ${
+                  isScrolled || location.pathname !== '/' ? 'text-festari-900' : 'text-white'
+                }`}
+              >
+                <User size={18} />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link to="/dashboard" className="w-full cursor-pointer">Dashboard</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/properties" className="w-full cursor-pointer">Saved Properties</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/research" className="w-full cursor-pointer">My Courses</Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+        
         {/* Mobile Menu Button */}
-        <button
-          type="button"
-          className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-festari-800"
+        <button 
+          className="md:hidden"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-expanded={mobileMenuOpen}
-          aria-label="Toggle menu"
+          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
         >
           {mobileMenuOpen ? (
-            <X className="w-6 h-6" />
+            <X size={24} className="text-festari-900" />
           ) : (
-            <Menu className="w-6 h-6" />
+            <Menu size={24} className={isScrolled || location.pathname !== '/' ? 'text-festari-900' : 'text-white'} />
           )}
         </button>
       </div>
-
-      {/* Mobile Navigation */}
-      <div
-        className={cn(
-          'md:hidden fixed inset-0 bg-white z-40 transform transition-transform duration-300 ease-in-out pt-16',
-          mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-        )}
-      >
-        <nav className="flex flex-col space-y-1 p-4">
-          {navigationItems.map((item) => (
-            <div key={item.name} className="py-2">
-              {item.dropdown ? (
-                <div className="space-y-2">
-                  <div className="text-lg font-medium text-festari-900 px-4 py-2">
-                    {item.name}
-                  </div>
-                  <div className="pl-4 space-y-1 border-l-2 border-gray-100">
-                    {item.dropdown.map((dropdownItem) => (
-                      <Link
-                        key={dropdownItem.name}
-                        to={dropdownItem.path}
-                        className="block px-4 py-2 text-festari-600 hover:text-festari-accent"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {dropdownItem.name}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              ) : (
+      
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 top-[68px] bg-white/95 backdrop-blur-md z-30 overflow-y-auto">
+          <div className="container-custom py-8 flex flex-col space-y-8">
+            <nav className="flex flex-col space-y-4">
+              {navItems.map((item) => (
                 <Link
+                  key={item.name}
                   to={item.path}
-                  className={cn(
-                    'block px-4 py-2 text-lg',
-                    location.pathname === item.path
-                      ? 'text-festari-accent font-medium'
-                      : 'text-festari-800 hover:text-festari-accent'
-                  )}
-                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center text-festari-900 text-lg ${
+                    location.pathname === item.path ? 'font-medium' : ''
+                  }`}
                 >
+                  {item.icon && <span className="mr-2">{item.icon}</span>}
                   {item.name}
                 </Link>
-              )}
-            </div>
-          ))}
-          
-          <div className="pt-4 space-y-2 border-t border-gray-100 mt-4">
-            <Link
-              to="/properties"
-              className="flex items-center gap-2 px-4 py-2 text-festari-800 hover:text-festari-accent"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <Search size={18} />
-              Search Properties
-            </Link>
+              ))}
+            </nav>
             
-            <Link
-              to="/login"
-              className="flex items-center gap-2 px-4 py-2 text-festari-800 hover:text-festari-accent"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <User size={18} />
-              Sign In / Register
-            </Link>
+            <div className="flex flex-col space-y-3 pt-4 border-t border-festari-100">
+              <Link to="/login" className="w-full">
+                <Button variant="outline" className="w-full">
+                  Login
+                </Button>
+              </Link>
+              <Link to="/register" className="w-full">
+                <Button className="w-full bg-festari-accent hover:bg-festari-accent/90 text-white">
+                  Register
+                </Button>
+              </Link>
+              <Link to="/dashboard" className="w-full">
+                <Button variant="ghost" className="w-full justify-start">
+                  <User size={18} className="mr-2" />
+                  Dashboard
+                </Button>
+              </Link>
+            </div>
           </div>
-          
-          <div className="mt-auto pt-6">
-            <Button
-              className="w-full bg-festari-accent hover:bg-festari-accent/90"
-              onClick={() => setMobileMenuOpen(false)}
-              asChild
-            >
-              <Link to="/contact">Contact Us</Link>
-            </Button>
-          </div>
-        </nav>
-      </div>
+        </div>
+      )}
     </header>
   );
 };
