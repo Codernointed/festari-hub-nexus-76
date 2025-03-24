@@ -1,7 +1,8 @@
 
 import { useToastJS } from '@/components/ui/ToastJS';
 
-export const useToastJS = useToastJS;
+// Export the hook
+export { useToastJS };
 
 // For convenience, expose the toast function directly
 export const toast = (options) => {

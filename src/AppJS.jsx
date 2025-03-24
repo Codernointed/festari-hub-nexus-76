@@ -1,6 +1,6 @@
+
 import React from "react";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
+import { ToastProviderJS } from "@/components/ui/ToastJS";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -9,7 +9,7 @@ import RealEstate from "./pages/RealEstate";
 import Research from "./pages/Research";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Login from "./pages/Login";
+import LoginJS from "./pages/LoginJS";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Properties from "./pages/Properties";
@@ -22,34 +22,34 @@ import NotFound from "./pages/NotFound";
 // Create a client
 const queryClient = new QueryClient();
 
-const App = () => (
+const AppJS = () => (
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/real-estate" element={<RealEstate />} />
-            <Route path="/research" element={<Research />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/properties" element={<Properties />} />
-            <Route path="/property/:id" element={<PropertyDetails />} />
-            <Route path="/agriculture" element={<Agriculture />} />
-            <Route path="/agriculture/product/:id" element={<AgricultureProductDetails />} />
-            <Route path="/founder" element={<Founder />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <ToastProviderJS>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/real-estate" element={<RealEstate />} />
+              <Route path="/research" element={<Research />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/login" element={<LoginJS />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/properties" element={<Properties />} />
+              <Route path="/property/:id" element={<PropertyDetails />} />
+              <Route path="/agriculture" element={<Agriculture />} />
+              <Route path="/agriculture/product/:id" element={<AgricultureProductDetails />} />
+              <Route path="/founder" element={<Founder />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </ToastProviderJS>
       </TooltipProvider>
     </QueryClientProvider>
   </React.StrictMode>
 );
 
-export default App;
+export default AppJS;

@@ -1,45 +1,111 @@
 
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { X } from 'lucide-react';
 
-// Toast context
-const ToastContext = createContext({
-  toasts: [],
-  toast: () => {},
-  dismiss: () => {},
-});
+// Toast context to manage toasts
+const ToastContext = createContext(null);
+
+/**
+ * Toast component for showing notifications
+ */
+const ToastJS = ({ 
+  id, 
+  title, 
+  description, 
+  variant = 'default', 
+  duration = 5000,
+  onClose 
+}) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onClose(id);
+    }, duration);
+
+    return () => clearTimeout(timer);
+  }, [id, duration, onClose]);
+
+  const baseClasses = "group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-md border p-6 pr-8 shadow-lg";
+  const variantClasses = {
+    default: "border-border bg-background text-foreground",
+    destructive: "border-destructive bg-destructive text-destructive-foreground",
+    success: "border-green-600 bg-green-600 text-white",
+  };
+
+  const toastClasses = [
+    baseClasses,
+    variantClasses[variant] || variantClasses.default
+  ].join(' ');
+
+  return (
+    <div className={toastClasses}>
+      <div className="grid gap-1">
+        {title && <h5 className="text-sm font-semibold">{title}</h5>}
+        {description && <p className="text-sm opacity-90">{description}</p>}
+      </div>
+      <button 
+        onClick={() => onClose(id)}
+        className="absolute right-2 top-2 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none group-hover:opacity-100"
+      >
+        <X className="h-4 w-4" />
+      </button>
+    </div>
+  );
+};
 
 /**
  * Toast provider component
  */
-export const ToastProvider = ({ children }) => {
+const ToastProviderJS = ({ children }) => {
   const [toasts, setToasts] = useState([]);
 
-  const toast = useCallback((options) => {
-    const id = Math.random().toString(36).substring(2, 9);
-    const newToast = { id, ...options };
-    
-    setToasts((prevToasts) => [...prevToasts, newToast]);
-    
-    // Auto-dismiss after timeout if not persistent
-    if (!options.persistent) {
-      setTimeout(() => {
-        dismiss(id);
-      }, options.duration || 5000);
-    }
-    
-    return id;
-  }, []);
-
-  const dismiss = useCallback((id) => {
+  const removeToast = useCallback((id) => {
     setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
   }, []);
 
+  const addToast = useCallback((toast) => {
+    const id = Math.random().toString(36).substring(2, 9);
+    setToasts((prevToasts) => [...prevToasts, { ...toast, id }]);
+    return id;
+  }, []);
+
+  const value = {
+    toasts,
+    addToast,
+    removeToast,
+    toast: (options) => addToast(options)
+  };
+
   return (
-    <ToastContext.Provider value={{ toasts, toast, dismiss }}>
+    <ToastContext.Provider value={value}>
       {children}
-      <ToastContainer />
+      <ToasterJS />
     </ToastContext.Provider>
+  );
+};
+
+/**
+ * Toaster component that displays all active toasts
+ */
+const ToasterJS = () => {
+  const context = useContext(ToastContext);
+  
+  if (!context) {
+    return null;
+  }
+  
+  const { toasts, removeToast } = context;
+
+  return (
+    <div className="fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]">
+      {toasts.map((toast) => (
+        <div key={toast.id} className="mb-2 transform-gpu animate-in fade-in-50 slide-in-from-right-full">
+          <ToastJS
+            {...toast}
+            onClose={removeToast}
+          />
+        </div>
+      ))}
+    </div>
   );
 };
 
@@ -49,63 +115,11 @@ export const ToastProvider = ({ children }) => {
 export const useToastJS = () => {
   const context = useContext(ToastContext);
   
-  if (context === undefined) {
-    throw new Error('useToastJS must be used within a ToastProvider');
+  if (!context) {
+    throw new Error("useToastJS must be used within a ToastProviderJS");
   }
   
   return context;
 };
 
-/**
- * Toast container component
- */
-const ToastContainer = () => {
-  const { toasts, dismiss } = useContext(ToastContext);
-  
-  if (toasts.length === 0) return null;
-  
-  return (
-    <div className="fixed top-0 right-0 z-50 flex flex-col p-4 space-y-4 max-w-md w-full sm:top-auto sm:bottom-0">
-      {toasts.map((toast) => (
-        <Toast key={toast.id} toast={toast} onDismiss={dismiss} />
-      ))}
-    </div>
-  );
-};
-
-/**
- * Individual toast component
- */
-const Toast = ({ toast, onDismiss }) => {
-  const { id, title, description, variant = 'default' } = toast;
-  
-  const variantClasses = {
-    default: 'bg-white border-gray-200 text-gray-900',
-    success: 'bg-green-50 border-green-200 text-green-900',
-    error: 'bg-red-50 border-red-200 text-red-900',
-    warning: 'bg-yellow-50 border-yellow-200 text-yellow-900',
-    info: 'bg-blue-50 border-blue-200 text-blue-900',
-    destructive: 'bg-red-50 border-red-200 text-red-900',
-  };
-  
-  return (
-    <div
-      className={`rounded-lg border shadow-md p-4 flex items-start justify-between transition-all duration-300 animate-in slide-in-from-right-full ${variantClasses[variant]}`}
-      role="alert"
-    >
-      <div className="flex-1">
-        {title && <h3 className="font-semibold text-sm">{title}</h3>}
-        {description && <div className="text-sm mt-1 opacity-90">{description}</div>}
-      </div>
-      <button
-        onClick={() => onDismiss(id)}
-        className="ml-4 text-gray-500 hover:text-gray-900 focus:outline-none"
-        aria-label="Close"
-      >
-        <X className="h-4 w-4" />
-      </button>
-    </div>
-  );
-};
-
-export default Toast;
+export { ToastJS, ToastProviderJS, ToasterJS };
