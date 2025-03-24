@@ -16,6 +16,7 @@ import Dashboard from "./pages/Dashboard";
 import Properties from "./pages/Properties";
 import PropertyDetails from "./pages/PropertyDetails";
 import Agriculture from "./pages/Agriculture";
+import AgricultureProductDetails from "./pages/AgricultureProductDetails";
 import Founder from "./pages/Founder";
 import NotFound from "./pages/NotFound";
 
@@ -41,6 +42,7 @@ const App = () => (
             <Route path="/properties" element={<Properties />} />
             <Route path="/property/:id" element={<PropertyDetails />} />
             <Route path="/agriculture" element={<Agriculture />} />
+            <Route path="/agriculture/product/:id" element={<AgricultureProductDetails />} />
             <Route path="/founder" element={<Founder />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
