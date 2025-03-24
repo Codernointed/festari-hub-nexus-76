@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, User, ShoppingCart, BookOpen, Home, MapPin } from 'lucide-react';
+import { Menu, X, User, ShoppingCart, BookOpen, Home, MapPin, LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import {
@@ -79,9 +79,11 @@ const Header = () => {
         {/* Login/Register Buttons */}
         <div className="hidden md:flex items-center space-x-3">
           <Link to="/login">
-            <Button variant="outline" className={`${
-              isScrolled || location.pathname !== '/' ? 'border-festari-200 text-festari-900' : 'border-white/20 text-white hover:text-white'
-            }`}>
+            <Button 
+              variant="highlight" 
+              className="flex items-center gap-2 px-5"
+            >
+              <LogIn size={18} />
               Login
             </Button>
           </Link>
@@ -190,7 +192,8 @@ const Header = () => {
               
               <div className="flex flex-col space-y-3 pt-6 mt-6 border-t border-festari-100">
                 <Link to="/login" className="w-full">
-                  <Button variant="outline" className="w-full">
+                  <Button variant="highlight" className="w-full flex items-center justify-center">
+                    <LogIn className="mr-2" size={18} />
                     Login
                   </Button>
                 </Link>

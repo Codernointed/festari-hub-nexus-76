@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, LogIn } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
@@ -125,10 +125,17 @@ const Login = () => {
 
             <Button
               type="submit"
-              className="w-full bg-festari-accent hover:bg-festari-accent/90 text-white"
+              className="w-full text-base py-5"
+              variant="highlight"
+              size="lg"
               disabled={isLoading}
             >
-              {isLoading ? "Signing in..." : "Sign in"}
+              {isLoading ? "Signing in..." : (
+                <>
+                  <LogIn className="h-5 w-5" />
+                  Sign in
+                </>
+              )}
             </Button>
             
             <div className="text-center text-sm">
