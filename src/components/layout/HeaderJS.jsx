@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
@@ -31,7 +30,7 @@ const HeaderJS = () => {
       label: 'About', 
       href: '/about',
       subItems: [
-        { label: 'Our Founder', href: '/founder' }
+        { label: 'Dr. Festus Kunkyin-Saadaari', href: '/founder' }
       ]
     },
     { 

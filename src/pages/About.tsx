@@ -1,75 +1,75 @@
 
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { Award, Briefcase, MapPin, Mail, ExternalLink, FileText, BookOpen, Calendar } from 'lucide-react';
+import { Award, Briefcase, MapPin, Mail, ExternalLink, FileText, BookOpen, Calendar, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const About = () => {
   // Founder information
   const founderInfo = {
-    name: "Dr. Alexandra Bennett",
-    title: "Founder & CEO, Festari",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&q=80",
-    bio: "Dr. Alexandra Bennett is a distinguished real estate economist and educator with over 15 years of experience in property markets, urban development, and housing policy. After completing her Ph.D. in Urban Economics at Stanford University, she held faculty positions at several prestigious institutions before founding Festari to bridge the gap between academic research and practical real estate solutions.",
+    name: "Dr. Festus Kunkyin-Saadaari",
+    title: "CEO and Founder, Festari Group Limited",
+    image: "/lovable-uploads/a6a7726e-4c17-47d2-beef-4193ca9b8444.png",
+    bio: "Dr. Festus Kunkyin-Saadaari is the CEO and founder of Festari Group Limited, a company that provides innovative and sustainable solutions for the mining industry. He has over three years of experience as a lecturer and researcher at the University of Mines and Technology (UMaT), Tarkwa, where he teaches and supervises students in mining engineering topics and projects.",
     education: [
-      { degree: "Ph.D. in Urban Economics", institution: "Stanford University", year: "2008" },
-      { degree: "Master's in Real Estate Development", institution: "MIT", year: "2005" },
-      { degree: "Bachelor's in Economics", institution: "Harvard University", year: "2003" },
+      { degree: "Ph.D. in Mining Engineering (Rock Mechanics Major)", institution: "University of Mines and Technology, Tarkwa", year: "2021" },
+      { degree: "B.Sc. in Mining Engineering", institution: "University of Mines and Technology, Tarkwa", year: "2015" },
     ],
     experience: [
-      { position: "Associate Professor", organization: "Columbia University", period: "2013-2019" },
-      { position: "Research Fellow", organization: "Urban Land Institute", period: "2011-2013" },
-      { position: "Consultant", organization: "World Bank Housing Division", period: "2009-2011" },
+      { position: "CEO and Founder", organization: "Festari Group Limited", period: "2023-Present" },
+      { position: "Lecturer/Researcher", organization: "University of Mines and Technology, Tarkwa", period: "2021-Present" },
+      { position: "Postdoctoral Researcher", organization: "Missouri University of Science and Technology", period: "2022" },
     ],
-    awards: [
-      { title: "Urban Housing Policy Innovation Award", year: "2018" },
-      { title: "Young Economist Achievement Award", year: "2015" },
-      { title: "Best Paper Award, Journal of Urban Economics", year: "2013" },
-    ],
-    vision: "My vision for Festari is to create a platform where real estate practice, academic research, and education converge to foster innovation and sustainable development in the property sector. By bridging theory and practice, we aim to empower stakeholders with evidence-based insights and practical solutions to address the complex challenges of modern urban environments."
+    contactInfo: {
+      email: "festus@festari.com",
+      phone: "+233 240699535",
+      mobilePhone: "+1 5732026443",
+      location: "Tarkwa, Ghana"
+    },
+    vision: "My vision is to advance the knowledge and practice of mining engineering, and create positive social and environmental impacts through innovative and sustainable solutions for the mining industry."
   };
 
   // Recent publications
   const recentPublications = [
     {
-      title: "Urban Housing Affordability in Developing Economies",
-      journal: "Journal of Urban Economics",
+      title: "A Comparative Study on the Application of Intelligent Models in the Estimation of Backbreak in Mine Blasting Operations",
+      journal: "American Journal of Science, Engineering and Technology",
+      year: "2024",
+      url: "http://dx.doi.org/10.11648/j.ajset.20240901.11",
+    },
+    {
+      title: "Maintaining production levels in underground mining operations during pandemics - a case study",
+      journal: "Journal of the Ghana Institution of Engineering (JGhIE)",
+      year: "2024",
+      url: "http://dx.doi.org/10.56049/jghie.v24i1.138",
+    },
+    {
+      title: "Slope stability assessment of some waste rock dumps at a typical gold mine in Ghana",
+      journal: "Nigerian Journal of Technology",
       year: "2023",
-      url: "https://example.com/publication1",
-    },
-    {
-      title: "Sustainable Development Practices in Real Estate: A Comparative Analysis",
-      journal: "Environmental Economics Review",
-      year: "2022",
-      url: "https://example.com/publication2",
-    },
-    {
-      title: "The Impact of Climate Change on Coastal Property Markets",
-      journal: "Real Estate Finance Journal",
-      year: "2021",
-      url: "https://example.com/publication3",
+      url: "http://dx.doi.org/10.4314/njt.v42i1.10",
     },
   ];
 
   // Speaking engagements
   const speakingEngagements = [
     {
-      event: "International Real Estate Summit",
-      topic: "Future of Housing in Megacities",
-      location: "Singapore",
-      date: "May 2023",
+      event: "AusIMM Tarkwa Student Chapter Webinar",
+      topic: "Ghana's Mining Investment",
+      location: "Virtual",
+      date: "2023",
     },
     {
-      event: "Urban Development Conference",
-      topic: "Sustainable Cities and Property Investment",
-      location: "Barcelona",
-      date: "November 2022",
+      event: "Mining Engineering Department Seminar",
+      topic: "Application of AI in Mining Engineering",
+      location: "University of Mines and Technology, Tarkwa",
+      date: "2022",
     },
     {
-      event: "Property Technology Forum",
-      topic: "Digital Transformation in Real Estate",
-      location: "New York",
-      date: "March 2022",
+      event: "Mining Industry Forum",
+      topic: "Sustainable Mining Practices",
+      location: "Accra, Ghana",
+      date: "2022",
     },
   ];
 
@@ -109,17 +109,23 @@ const About = () => {
                   <div className="space-y-4">
                     <div className="flex items-start gap-3">
                       <MapPin size={18} className="text-accent mt-0.5" />
-                      <span className="text-festari-700">New York, NY</span>
+                      <span className="text-festari-700">{founderInfo.contactInfo.location}</span>
                     </div>
                     <div className="flex items-start gap-3">
                       <Mail size={18} className="text-accent mt-0.5" />
-                      <a href="mailto:alexandra@festari.com" className="text-accent hover:underline">
-                        alexandra@festari.com
+                      <a href={`mailto:${founderInfo.contactInfo.email}`} className="text-accent hover:underline">
+                        {founderInfo.contactInfo.email}
+                      </a>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <Phone size={18} className="text-accent mt-0.5" />
+                      <a href={`tel:${founderInfo.contactInfo.phone}`} className="text-festari-700">
+                        {founderInfo.contactInfo.phone}
                       </a>
                     </div>
                     <div className="flex items-start gap-3">
                       <Briefcase size={18} className="text-accent mt-0.5" />
-                      <span className="text-festari-700">15+ years in real estate and urban economics</span>
+                      <span className="text-festari-700">Mining engineering and rock mechanics expert</span>
                     </div>
                   </div>
                   
@@ -166,14 +172,20 @@ const About = () => {
                   
                   <h3 className="text-xl font-bold text-festari-900 mb-4 flex items-center gap-2">
                     <Award size={20} className="text-accent" />
-                    Awards & Recognition
+                    Fields of Expertise
                   </h3>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
-                    {founderInfo.awards.map((award, index) => (
+                    {[
+                      "Rock Mechanics", 
+                      "Mining Engineering", 
+                      "Geotechnical Engineering", 
+                      "Slope Stability Analysis",
+                      "Artificial Intelligence in Mining",
+                      "Soil Dynamics"
+                    ].map((expertise, index) => (
                       <div key={index} className="bg-white p-4 rounded-lg border border-festari-200 shadow-sm">
-                        <h4 className="font-medium text-festari-900">{award.title}</h4>
-                        <p className="text-sm text-festari-500">{award.year}</p>
+                        <h4 className="font-medium text-festari-900">{expertise}</h4>
                       </div>
                     ))}
                   </div>

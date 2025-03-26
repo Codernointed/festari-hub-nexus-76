@@ -2,113 +2,102 @@
 import { useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { CalendarDays, MapPin, Book, Globe, Award, ExternalLink, GraduationCap, Briefcase } from 'lucide-react';
+import { CalendarDays, MapPin, Book, Globe, Award, ExternalLink, GraduationCap, Briefcase, Mail, Phone, Linkedin } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 
-// Dummy founder data
+// Dr. Festus Kunkyin-Saadaari data
 const founderData = {
-  name: "Dr. Jonathan Festari",
-  title: "Real Estate Expert & Agricultural Innovator",
-  bio: "Dr. Jonathan Festari is a distinguished authority in real estate development and agricultural innovation with over 20 years of experience. He holds a Ph.D. in Urban Planning from Harvard University and has pioneered sustainable development practices across multiple continents.",
-  profileImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&q=80",
-  location: "New York, NY",
-  expertise: ["Real Estate Development", "Sustainable Agriculture", "Urban Planning", "Investment Strategy"],
+  name: "Dr. Festus Kunkyin-Saadaari",
+  title: "CEO and Founder, Festari Group Limited",
+  bio: "Dr. Festus Kunkyin-Saadaari is the CEO and founder of Festari Group Limited, a company that provides innovative and sustainable solutions for the mining industry. He has over three years of experience as a lecturer and researcher at the University of Mines and Technology (UMaT), Tarkwa, where he teaches and supervises students in mining engineering topics and projects.",
+  longBio: "Dr. Festus Kunkyin-Saadaari holds a PhD and a BSc in Mining Engineering from UMaT, and has published several papers in reputable journals on mine reclamation and rehabilitation, rock mechanics and excavation stability, and the application of artificial intelligence and machine learning techniques to mining engineering systems. He is also a member of professional societies such as the ISRM, ARMA, and IAENG. He is passionate about advancing the knowledge and practice of mining engineering, and creating positive social and environmental impacts through his work.",
+  profileImage: "/lovable-uploads/a6a7726e-4c17-47d2-beef-4193ca9b8444.png",
+  location: "Tarkwa, Ghana",
+  expertise: ["Geotechnical Engineering", "Rock Mechanics", "Mining Engineering", "Artificial Intelligence", "Machine Learning", "Slope Stability Analysis"],
   stats: {
-    publications: 28,
-    courses: 15,
-    speakingEngagements: 47,
-    yearsExperience: 20
+    publications: 5,
+    connections: 3,
+    yearsExperience: 6
   },
   education: [
     {
-      degree: "Ph.D. in Urban Planning",
-      institution: "Harvard University",
-      year: "2003"
+      degree: "Ph.D. in Mining Engineering (Rock Mechanics Major)",
+      institution: "University of Mines and Technology, Tarkwa",
+      year: "2018 - 2021"
     },
     {
-      degree: "Master of Science in Real Estate Development",
-      institution: "Massachusetts Institute of Technology",
-      year: "1999"
-    },
-    {
-      degree: "Bachelor of Architecture",
-      institution: "Cornell University",
-      year: "1997"
+      degree: "B.Sc. in Mining Engineering",
+      institution: "University of Mines and Technology, Tarkwa",
+      year: "2011 - 2015"
     }
   ],
   experience: [
     {
-      position: "Founder & CEO",
-      company: "Festari Real Estate & Agriculture",
-      period: "2010 - Present",
-      description: "Founded and leads a multi-dimensional platform integrating real estate services, agricultural innovation, and educational resources."
+      position: "CEO and Founder",
+      company: "Festari Group Limited",
+      period: "Nov 2023 - Present",
+      description: "Leading a company that provides innovative and sustainable solutions for the mining industry."
     },
     {
-      position: "Senior Consultant",
-      company: "Global Development Partners",
-      period: "2005 - 2010",
-      description: "Advised major real estate developers and agricultural enterprises on sustainable development strategies and market expansion."
+      position: "Lecturer/Researcher",
+      company: "University of Mines and Technology, Tarkwa",
+      period: "Dec 2021 - Present",
+      description: "Teaching and supervising students in mining engineering topics and projects."
     },
     {
-      position: "Research Fellow",
-      company: "Urban Future Institute",
-      period: "2003 - 2005",
-      description: "Led research initiatives on urban planning and sustainable development in rapidly growing metropolitan areas."
+      position: "Postdoctoral Researcher",
+      company: "Missouri University of Science and Technology",
+      period: "Jan 2022 - Dec 2022",
+      description: "Conducted research in mining engineering and rock mechanics."
+    },
+    {
+      position: "Postgraduate Assistant",
+      company: "University of Mines and Technology, Tarkwa",
+      period: "Feb 2020 - Nov 2021",
+      description: "Assisted in teaching and research activities."
     }
   ],
   publications: [
     {
-      title: "Sustainable Urban Development: Balancing Growth and Environmental Preservation",
-      publisher: "Journal of Urban Planning",
+      title: "A Comparative Study on the Application of Intelligent Models in the Estimation of Backbreak in Mine Blasting Operations",
+      publisher: "American Journal of Science, Engineering and Technology",
+      year: "2024",
+      link: "http://dx.doi.org/10.11648/j.ajset.20240901.11"
+    },
+    {
+      title: "Maintaining production levels in underground mining operations during pandemics - a case study",
+      publisher: "Journal of the Ghana Institution of Engineering (JGhIE)",
+      year: "2024",
+      link: "http://dx.doi.org/10.56049/jghie.v24i1.138"
+    },
+    {
+      title: "Slope stability assessment of some waste rock dumps at a typical gold mine in Ghana",
+      publisher: "Nigerian Journal of Technology",
+      year: "2023",
+      link: "http://dx.doi.org/10.4314/njt.v42i1.10"
+    },
+    {
+      title: "A Feasibility Study on The Implementation of Neural Network Classifiers for Open Stope Design",
+      publisher: "Geotechnical and Geological Engineering",
       year: "2021",
-      link: "#"
+      link: "http://dx.doi.org/10.1007/s10706-021-01915-8"
     },
     {
-      title: "Agricultural Innovation in Urban Spaces",
-      publisher: "Agricultural Economics Review",
-      year: "2019",
-      link: "#"
-    },
-    {
-      title: "The Future of Real Estate: Technology Integration in Property Management",
-      publisher: "Real Estate Economics",
-      year: "2018",
-      link: "#"
-    },
-    {
-      title: "Investment Strategies in Emerging Real Estate Markets",
-      publisher: "International Journal of Property Investment",
-      year: "2017",
-      link: "#"
+      title: "Development of a Stope Stability Prediction Model Using Ensemble Learning Techniques - A Case Study",
+      publisher: "Ghana Mining Journal",
+      year: "2020",
+      link: "http://dx.doi.org/10.4314/gm.v20i2.3"
     }
   ],
-  upcomingEvents: [
-    {
-      title: "Future of Urban Development Conference",
-      date: "June 15-16, 2023",
-      location: "Chicago, IL",
-      description: "Keynote speaker on sustainable urban planning strategies",
-      link: "#"
-    },
-    {
-      title: "Agricultural Innovation Summit",
-      date: "August 10, 2023",
-      location: "San Francisco, CA",
-      description: "Panel discussion on integrating technology in farming",
-      link: "#"
-    },
-    {
-      title: "Real Estate Investment Workshop",
-      date: "September 5, 2023",
-      location: "Online (Virtual)",
-      description: "Interactive workshop on property investment strategies",
-      link: "#"
-    }
-  ]
+  contactInfo: {
+    email: "festus@festari.com",
+    phone: "+233 240699535",
+    mobilePhone: "+1 5732026443"
+  }
 };
 
 const Founder = () => {
@@ -153,18 +142,14 @@ const Founder = () => {
         {/* Stats section */}
         <section className="py-8 bg-white border-b">
           <div className="container-custom">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               <div className="text-center p-4">
                 <p className="text-3xl font-bold text-festari-accent">{founderData.stats.publications}</p>
                 <p className="text-sm text-festari-600">Publications</p>
               </div>
               <div className="text-center p-4">
-                <p className="text-3xl font-bold text-festari-accent">{founderData.stats.courses}</p>
-                <p className="text-sm text-festari-600">Courses Created</p>
-              </div>
-              <div className="text-center p-4">
-                <p className="text-3xl font-bold text-festari-accent">{founderData.stats.speakingEngagements}</p>
-                <p className="text-sm text-festari-600">Speaking Engagements</p>
+                <p className="text-3xl font-bold text-festari-accent">{founderData.stats.connections}</p>
+                <p className="text-sm text-festari-600">Professional Connections</p>
               </div>
               <div className="text-center p-4">
                 <p className="text-3xl font-bold text-festari-accent">{founderData.stats.yearsExperience}+</p>
@@ -181,7 +166,7 @@ const Founder = () => {
               <TabsList className="grid grid-cols-2 md:grid-cols-4 mb-8">
                 <TabsTrigger value="about">About</TabsTrigger>
                 <TabsTrigger value="publications">Publications</TabsTrigger>
-                <TabsTrigger value="events">Speaking Events</TabsTrigger>
+                <TabsTrigger value="experience">Experience</TabsTrigger>
                 <TabsTrigger value="contact">Contact</TabsTrigger>
               </TabsList>
               
@@ -189,6 +174,8 @@ const Founder = () => {
               <TabsContent value="about" className="space-y-8">
                 <Card>
                   <CardContent className="pt-6">
+                    <p className="text-festari-700 mb-6">{founderData.longBio}</p>
+                
                     <h2 className="text-xl font-bold text-festari-900 mb-4">Education</h2>
                     <div className="space-y-6">
                       {founderData.education.map((edu, index) => (
@@ -207,22 +194,19 @@ const Founder = () => {
                     
                     <Separator className="my-6" />
                     
-                    <h2 className="text-xl font-bold text-festari-900 mb-4">Professional Experience</h2>
-                    <div className="space-y-6">
-                      {founderData.experience.map((exp, index) => (
-                        <div key={index} className="flex items-start">
-                          <div className="mt-1 mr-4">
-                            <Briefcase size={20} className="text-festari-accent" />
-                          </div>
-                          <div>
-                            <h3 className="font-semibold text-festari-900">{exp.position}</h3>
-                            <p className="text-festari-600">{exp.company}</p>
-                            <p className="text-sm text-festari-500">{exp.period}</p>
-                            <p className="text-sm text-festari-700 mt-1">{exp.description}</p>
-                          </div>
-                        </div>
+                    <h2 className="text-xl font-bold text-festari-900 mb-4">Fields of Expertise</h2>
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {founderData.expertise.map((skill, index) => (
+                        <Badge key={index} variant="outline" className="bg-festari-50">
+                          {skill}
+                        </Badge>
                       ))}
                     </div>
+                    
+                    <p className="text-festari-700 mt-4">
+                      Dr. Kunkyin-Saadaari specializes in rock mass characterization, slope stability analysis, 
+                      soil dynamics testing, and the application of artificial intelligence techniques to mining engineering problems.
+                    </p>
                   </CardContent>
                 </Card>
               </TabsContent>
@@ -243,53 +227,36 @@ const Founder = () => {
                             <p className="text-festari-600">{pub.publisher}</p>
                             <p className="text-sm text-festari-500">{pub.year}</p>
                           </div>
-                          <a href={pub.link} className="text-festari-accent hover:underline flex items-center">
+                          <a href={pub.link} target="_blank" rel="noopener noreferrer" className="text-festari-accent hover:underline flex items-center">
                             <span className="mr-1">View</span>
                             <ExternalLink size={14} />
                           </a>
                         </div>
                       ))}
                     </div>
-                    
-                    <div className="mt-8 text-center">
-                      <Button>View All Publications</Button>
-                    </div>
                   </CardContent>
                 </Card>
               </TabsContent>
               
-              {/* Events Tab */}
-              <TabsContent value="events" className="space-y-6">
+              {/* Experience Tab */}
+              <TabsContent value="experience" className="space-y-6">
                 <Card>
                   <CardContent className="pt-6">
-                    <h2 className="text-xl font-bold text-festari-900 mb-6">Upcoming Speaking Engagements</h2>
+                    <h2 className="text-xl font-bold text-festari-900 mb-6">Professional Experience</h2>
                     <div className="space-y-6">
-                      {founderData.upcomingEvents.map((event, index) => (
-                        <div key={index} className="border rounded-lg overflow-hidden">
-                          <div className="p-5">
-                            <h3 className="font-semibold text-festari-900 text-lg">{event.title}</h3>
-                            <div className="flex items-center mt-2 text-festari-600">
-                              <CalendarDays size={16} className="mr-2" />
-                              <span>{event.date}</span>
-                            </div>
-                            <div className="flex items-center mt-1 text-festari-600">
-                              <MapPin size={16} className="mr-2" />
-                              <span>{event.location}</span>
-                            </div>
-                            <p className="mt-3 text-festari-700">{event.description}</p>
-                            <div className="mt-4">
-                              <a href={event.link} className="text-festari-accent hover:underline flex items-center">
-                                <span className="mr-1">Event Details</span>
-                                <ExternalLink size={14} />
-                              </a>
-                            </div>
+                      {founderData.experience.map((exp, index) => (
+                        <div key={index} className="flex items-start p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+                          <div className="mt-1 mr-4">
+                            <Briefcase size={20} className="text-festari-accent" />
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-festari-900">{exp.position}</h3>
+                            <p className="text-festari-600">{exp.company}</p>
+                            <p className="text-sm text-festari-500">{exp.period}</p>
+                            <p className="text-sm text-festari-700 mt-1">{exp.description}</p>
                           </div>
                         </div>
                       ))}
-                    </div>
-                    
-                    <div className="mt-8 text-center">
-                      <Button>View All Events</Button>
                     </div>
                   </CardContent>
                 </Card>
@@ -300,15 +267,36 @@ const Founder = () => {
                 <Card>
                   <CardContent className="pt-6">
                     <h2 className="text-xl font-bold text-festari-900 mb-6">Contact Information</h2>
-                    <div className="text-center p-8 space-y-4">
-                      <p className="text-festari-700">
-                        For speaking engagements, consulting requests, or general inquiries, please contact:
-                      </p>
-                      <p className="font-medium text-lg text-festari-900">office@festari.com</p>
-                      <p className="text-festari-700">or</p>
+                    <div className="space-y-4 p-4">
+                      <div className="flex items-center space-x-3">
+                        <Mail size={20} className="text-festari-accent" />
+                        <a href={`mailto:${founderData.contactInfo.email}`} className="text-festari-700 hover:text-festari-accent">
+                          {founderData.contactInfo.email}
+                        </a>
+                      </div>
+                      
+                      <div className="flex items-center space-x-3">
+                        <Phone size={20} className="text-festari-accent" />
+                        <a href={`tel:${founderData.contactInfo.phone}`} className="text-festari-700 hover:text-festari-accent">
+                          {founderData.contactInfo.phone}
+                        </a>
+                      </div>
+                      
+                      <div className="flex items-center space-x-3">
+                        <Phone size={20} className="text-festari-accent" />
+                        <span className="text-festari-700">Mobile: {founderData.contactInfo.mobilePhone}</span>
+                      </div>
+                      
+                      <div className="flex items-center space-x-3">
+                        <MapPin size={20} className="text-festari-accent" />
+                        <span className="text-festari-700">{founderData.location}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-8 text-center">
                       <Button className="mt-2">
-                        <Globe size={16} className="mr-2" />
-                        Contact via Form
+                        <Mail size={16} className="mr-2" />
+                        Send a Message
                       </Button>
                     </div>
                   </CardContent>
