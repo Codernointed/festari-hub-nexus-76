@@ -4,6 +4,7 @@ import { ToastProviderJS } from "@/components/ui/ToastJS";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Index from "./pages/Index";
+import IndexJS from "./pages/IndexJS";
 import RealEstate from "./pages/RealEstate";
 import Research from "./pages/Research";
 import About from "./pages/About";
@@ -27,7 +28,8 @@ const AppJSWithRoutes = () => (
       <ToastProviderJS>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
+            <Route path="/" element={<IndexJS />} />
+            <Route path="/index-ts" element={<Index />} />
             <Route path="/real-estate" element={<RealEstate />} />
             <Route path="/research" element={<Research />} />
             <Route path="/about" element={<About />} />
