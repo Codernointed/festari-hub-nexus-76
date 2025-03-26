@@ -7,7 +7,7 @@ import Index from "./pages/Index";
 import RealEstate from "./pages/RealEstate";
 import Research from "./pages/Research";
 import About from "./pages/About";
-import Contact from "./pages/Contact";
+import ContactJS from "./pages/ContactJS";
 import LoginJS from "./pages/LoginJS";
 import RegisterJS from "./pages/RegisterJS";
 import Dashboard from "./pages/Dashboard";
@@ -31,7 +31,7 @@ const AppJSWithRoutes = () => (
             <Route path="/real-estate" element={<RealEstate />} />
             <Route path="/research" element={<Research />} />
             <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
+            <Route path="/contact" element={<ContactJS />} />
             <Route path="/login" element={<LoginJS />} />
             <Route path="/register" element={<RegisterJS />} />
             <Route path="/dashboard" element={<Dashboard />} />
