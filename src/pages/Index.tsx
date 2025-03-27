@@ -6,6 +6,9 @@ import Hero from '@/components/home/Hero';
 import FeaturedSection from '@/components/home/FeaturedSection';
 import NavigationCards from '@/components/home/NavigationCards';
 import NewsletterSignup from '@/components/home/NewsletterSignup';
+import Testimonials from '@/components/home/Testimonials';
+import AnimatedStats from '@/components/home/AnimatedStats';
+import Features from '@/components/home/Features';
 
 const Index = () => {
   // Page load animation state
@@ -25,8 +28,11 @@ const Index = () => {
       <Header />
       <main>
         <Hero />
+        <AnimatedStats />
         <NavigationCards />
+        <Features />
         <FeaturedSection />
+        <Testimonials />
         <NewsletterSignup />
       </main>
       <Footer />
