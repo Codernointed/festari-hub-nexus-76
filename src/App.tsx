@@ -18,6 +18,8 @@ import PropertyDetails from "./pages/PropertyDetails";
 import Agriculture from "./pages/Agriculture";
 import AgricultureProductDetails from "./pages/AgricultureProductDetails";
 import Founder from "./pages/Founder";
+import Publications from "./pages/Publications";
+import CourseDetails from "./pages/CourseDetails";
 import NotFound from "./pages/NotFound";
 
 // Create a client
@@ -34,6 +36,8 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/real-estate" element={<RealEstate />} />
             <Route path="/research" element={<Research />} />
+            <Route path="/research/publications" element={<Publications />} />
+            <Route path="/research/courses/:id" element={<CourseDetails />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
