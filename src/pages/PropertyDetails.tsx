@@ -305,7 +305,10 @@ const PropertyDetails = () => {
                   <h3 className="text-xl font-bold text-festari-900 mb-6">
                     Schedule a Viewing
                   </h3>
-                  <BookingForm propertyId={propertyData.id} propertyTitle={propertyData.title} />
+                  <BookingForm 
+                    propertyId={1} // Fixed: Converted string 'prop1' to number 1
+                    propertyTitle={propertyData.title} 
+                  />
                 </div>
               </div>
             </div>
