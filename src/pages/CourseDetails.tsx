@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { 
   ArrowLeft, Clock, GraduationCap, PlayCircle, CheckCircle, 
-  Star, StarHalf, BarChart, FileText, Download, Globe, Award
+  Star, StarHalf, BarChart, FileText, Download, Globe, Award, User
 } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
