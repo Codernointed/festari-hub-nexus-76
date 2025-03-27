@@ -1,20 +1,16 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from "@/components/ui/button";
-
 const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
-  
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(true);
     }, 100);
     return () => clearTimeout(timer);
   }, []);
-  
   return <section className="relative min-h-screen flex items-center">
       {/* Background */}
       <div className="absolute inset-0 z-0">
@@ -61,30 +57,7 @@ const Hero = () => {
       </div>
 
       {/* Statistics Bar */}
-      <div className={cn(
-        "absolute bottom-0 left-0 right-0 bg-white/10 backdrop-blur-md border-t border-white/10 py-4 transform transition-all duration-700 delay-500 ease-out",
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      )}>
-        <div className="container-custom grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="text-center">
-            <p className="text-2xl md:text-3xl font-bold text-white">500+</p>
-            <p className="text-white/70 text-sm">Properties</p>
-          </div>
-          <div className="text-center">
-            <p className="text-2xl md:text-3xl font-bold text-white">50+</p>
-            <p className="text-white/70 text-sm">Courses</p>
-          </div>
-          <div className="text-center">
-            <p className="text-2xl md:text-3xl font-bold text-white">15+</p>
-            <p className="text-white/70 text-sm">Years Experience</p>
-          </div>
-          <div className="text-center">
-            <p className="text-2xl md:text-3xl font-bold text-white">10K+</p>
-            <p className="text-white/70 text-sm">Happy Clients</p>
-          </div>
-        </div>
-      </div>
+      
     </section>;
 };
-
 export default Hero;
