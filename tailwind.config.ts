@@ -70,6 +70,10 @@ export default {
 					900: '#171923',
 					accent: '#6E59A5'
 				},
+                // Added per client requirements
+                chili: '#DA281C',    // Chili Red
+                mikado: '#F5BE01',   // Mikado Yellow
+                indigo: '#440098',   // Indigo
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

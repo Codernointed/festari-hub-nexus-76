@@ -1,16 +1,20 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from "@/components/ui/button";
+
 const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
+  
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(true);
     }, 100);
     return () => clearTimeout(timer);
   }, []);
+  
   return <section className="relative min-h-screen flex items-center">
       {/* Background */}
       <div className="absolute inset-0 z-0">
@@ -37,7 +41,7 @@ const Hero = () => {
                 Explore Properties
               </Link>
             </Button>
-            <Button asChild variant="secondary" className="bg-white text-festari-900 hover:bg-white/90 px-6 py-6 text-base flex items-center" size="lg">
+            <Button asChild variant="highlight" className="px-6 py-6 text-base flex items-center" size="lg">
               <Link to="/research">
                 Research Hub <ChevronRight size={16} className="ml-1" />
               </Link>
@@ -55,9 +59,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
-
-      {/* Statistics Bar */}
-      
     </section>;
 };
+
 export default Hero;
