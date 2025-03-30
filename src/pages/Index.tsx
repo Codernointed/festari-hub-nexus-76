@@ -9,6 +9,9 @@ import NewsletterSignup from '@/components/home/NewsletterSignup';
 import Testimonials from '@/components/home/Testimonials';
 import AnimatedStats from '@/components/home/AnimatedStats';
 import Features from '@/components/home/Features';
+import BusinessDivisions from '@/components/home/BusinessDivisions';
+import CoreValues from '@/components/home/CoreValues';
+import MissionVision from '@/components/home/MissionVision';
 
 const Index = () => {
   // Page load animation state
@@ -29,9 +32,12 @@ const Index = () => {
       <main>
         <Hero />
         <AnimatedStats />
-        <NavigationCards />
+        <BusinessDivisions />
         <Features />
+        <MissionVision />
+        <CoreValues />
         <FeaturedSection />
+        <NavigationCards />
         <Testimonials />
         <NewsletterSignup />
       </main>

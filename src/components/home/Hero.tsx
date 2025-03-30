@@ -41,7 +41,7 @@ const Hero = () => {
                 Explore Properties
               </Link>
             </Button>
-            <Button asChild variant="highlight" className="px-6 py-6 text-base flex items-center" size="lg">
+            <Button asChild variant="outline" className="bg-white/10 text-white border-white hover:bg-white/20 hover:text-white px-6 py-6 text-base flex items-center" size="lg">
               <Link to="/research">
                 Research Hub <ChevronRight size={16} className="ml-1" />
               </Link>

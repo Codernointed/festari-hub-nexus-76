@@ -70,7 +70,7 @@ export default {
 					900: '#171923',
 					accent: '#6E59A5'
 				},
-                // Added per client requirements
+                // Client-specified accent colors
                 chili: '#DA281C',    // Chili Red
                 mikado: '#F5BE01',   // Mikado Yellow
                 indigo: '#440098',   // Indigo
@@ -100,6 +100,14 @@ export default {
 				'slide-in': {
 					from: { transform: 'translateX(-100%)' },
 					to: { transform: 'translateX(0)' }
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-10px)' }
+				},
+				'pulse-soft': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.8' }
 				}
 			},
 			animation: {
@@ -107,7 +115,9 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.5s ease-out',
 				'fade-up': 'fade-up 0.5s ease-out',
-				'slide-in': 'slide-in 0.3s ease-out'
+				'slide-in': 'slide-in 0.3s ease-out',
+				'float': 'float 5s ease-in-out infinite',
+				'pulse-soft': 'pulse-soft 3s ease-in-out infinite'
 			}
 		}
 	},
