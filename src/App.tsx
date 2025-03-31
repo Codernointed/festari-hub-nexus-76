@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -6,8 +5,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-import RealEstate from "./pages/RealEstate";
-import Research from "./pages/Research";
+import EstatesAgency from "./pages/EstatesAgency";
+import Research from "./pages/ResearchAndConsultancy";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
@@ -21,8 +20,10 @@ import Founder from "./pages/Founder";
 import Publications from "./pages/Publications";
 import CourseDetails from "./pages/CourseDetails";
 import NotFound from "./pages/NotFound";
-
-// Create a client
+import Enterprise from "./pages/Enterprise";
+import ConsultationForm from "./pages/ConsultationForm";
+import ConsultationPage from "./pages/ConsultationForm";
+// // Create a client
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -34,8 +35,12 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/real-estate" element={<RealEstate />} />
-            <Route path="/research" element={<Research />} />
+            <Route path="/research/*" element={<Research />} />
+            <Route path="/estates/*" element={<EstatesAgency />} />
+            <Route path="/agriculture" element={<Agriculture />} /> {/* Keep original path but display as Agribusiness */}
+            <Route path="/agriculture/product/:id" element={<AgricultureProductDetails />} />
+            <Route path="/enterprise/*" element={<Enterprise />} />
+            <Route path="/consultation" element={<ConsultationPage />} />
             <Route path="/research/publications" element={<Publications />} />
             <Route path="/research/courses/:id" element={<CourseDetails />} />
             <Route path="/about" element={<About />} />
@@ -49,6 +54,7 @@ const App = () => (
             <Route path="/agriculture/product/:id" element={<AgricultureProductDetails />} />
             <Route path="/founder" element={<Founder />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="/consultation" element={<ConsultationForm />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

@@ -159,7 +159,7 @@ const Research = () => {
         <section className="relative py-20 bg-festari-900 text-white">
           <div className="container-custom">
             <div className="max-w-2xl">
-              <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">Research & Education Hub</h1>
+              <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">Research & Consultancy Hub</h1>
               <p className="text-festari-100 mb-6">Access cutting-edge research papers and educational courses in real estate and related fields.</p>
               
               {/* Search bar */}

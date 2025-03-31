@@ -1,0 +1,128 @@
+import { ServiceCategory } from '@/types/navigation';
+
+export const serviceCategories: ServiceCategory[] = [
+  {
+    title: "research & consultancy",
+    path: "/research",
+    description: "Professional research and consulting services in mining and engineering",
+    activities: [
+      { title: "Mining and Geotechnical Consulting", description: "Expert consulting services for mining operations" },
+      { title: "Geotechnical Engineering", description: "Specialized engineering solutions" },
+      { title: "Mineral Exploration", description: "Comprehensive mineral exploration services" },
+      { title: "Mining Education and Training", description: "Professional development programs" },
+      { title: "Environmental Impact Assessments", description: "Thorough environmental evaluations" },
+      { title: "Resource Management", description: "Efficient resource allocation and management" },
+      { title: "Geotechnical Instrumentation", description: "Advanced monitoring solutions" },
+      { title: "Mining Equipment Sales and Rental", description: "Quality equipment solutions" },
+      { title: "Research and Development", description: "Innovative research programs" },
+      { title: "Regulatory Compliance", description: "Compliance consulting and auditing" },
+      { title: "Geological Data Analysis", description: "In-depth geological assessments" },
+      { title: "Market Analysis", description: "Comprehensive market research" },
+      { title: "Safety Audits", description: "thorough safety evaluations" },
+      { title: "Feasibility Studies", description: "Detailed project assessment" },
+      { title: "Geotechnical Remediation", description: "Site improvement solutions" },
+      { title: "Academic Services", description: "Research and academic support" },
+      { title: "Professional Certification", description: "Industry-recognized certifications" },
+      { title: "Technical Writing", description: "Expert documentation services" },
+      { title: "Data Analysis", description: "Advanced data interpretation" },
+      { title: "Training Programs", description: "Comprehensive training solutions" },
+      { title: "Advisory Services", description: "Expert consultation services" },
+      { title: "Document Services", description: "Professional document handling" }
+    ]
+  },
+  {
+    title: "estates agency",
+    path: "/estates",
+    description: "Comprehensive real estate and property management services",
+    activities: [
+      { title: "Real Estate Sales", description: "Property sales services" },
+      { title: "Property Listings", description: "Comprehensive property listings" },
+      { title: "Property Purchase Assistance", description: "Buying guidance and support" },
+      { title: "Property Rentals", description: "Rental property services" },
+      { title: "Hostel Rentals", description: "Student accommodation services" },
+      { title: "Market Analysis", description: "Real estate market insights" },
+      { title: "Property Marketing", description: "Professional marketing services" },
+      { title: "Negotiation Services", description: "Expert property negotiations" },
+      { title: "Property Appraisals", description: "Value assessment services" },
+      { title: "Property Management", description: "Complete management solutions" },
+      { title: "Real Estate Consultation", description: "Expert property advice" },
+      { title: "Legal Compliance", description: "Regulatory compliance services" },
+      { title: "Property Inspections", description: "Thorough property assessments" },
+      { title: "Tenant Placement", description: "Tenant screening and placement" },
+      { title: "Property Renovation", description: "Renovation and staging services" },
+      { title: "Financing Assistance", description: "Financial guidance services" },
+      { title: "Land Development", description: "Land sales and development" },
+      { title: "Hostel Management", description: "Student housing management" }
+    ]
+  },
+  {
+    title: "agribusiness",
+    path: "/agribusiness",
+    description: "Agricultural business and farming solutions",
+    activities: [
+      { title: "Crop Farming", description: "Sustainable crop production" },
+      { title: "Livestock Farming", description: "Animal husbandry services" },
+      { title: "Agribusiness Consulting", description: "Expert agricultural advice" },
+      { title: "Equipment Services", description: "Farming equipment solutions" },
+      { title: "Crop Analysis", description: "Soil and crop testing services" },
+      { title: "Farm Management", description: "Complete farm management" },
+      { title: "Agro-processing", description: "Agricultural processing services" },
+      { title: "Organic Farming", description: "Organic cultivation practices" },
+      { title: "Direct Sales", description: "Farm-to-table programs" },
+      { title: "Agricultural Research", description: "Research and development" },
+      { title: "Farm Education", description: "Training and education" },
+      { title: "Pest Control", description: "Pest management solutions" },
+      { title: "Investment Services", description: "Agribusiness investments" },
+      { title: "Marketing Services", description: "Agricultural marketing" },
+      { title: "Rural Development", description: "Community development programs" },
+      { title: "Modern Farming", description: "Advanced farming techniques" },
+      { title: "Supply Chain", description: "Supply chain management" },
+      { title: "Sustainable Agriculture", description: "Eco-friendly farming" },
+      { title: "Agrochemicals", description: "Quality agricultural supplies" }
+    ]
+  },
+  {
+    title: "enterprise",
+    path: "/enterprise",
+    description: "Diverse business and service solutions",
+    activities: [
+      // Trading Activities
+      { title: "Retail Sales", description: "Consumer retail services" },
+      { title: "Wholesale Distribution", description: "B2B distribution services" },
+      { title: "Import Export", description: "International trade services" },
+      { title: "Product Sourcing", description: "Supply chain solutions" },
+      { title: "Inventory Management", description: "Stock control services" },
+      { title: "Supply Chain", description: "Supply chain optimization" },
+      { title: "Marketing Services", description: "Promotional services" },
+      { title: "E-commerce", description: "Online retail solutions" },
+      { title: "Customer Service", description: "Client support services" },
+      { title: "Quality Control", description: "Product quality assurance" },
+      { title: "Vendor Management", description: "Supplier relationship services" },
+      { title: "Market Research", description: "Market analysis services" },
+      { title: "Logistics", description: "Distribution services" },
+      { title: "Product Development", description: "New product innovation" },
+      { title: "Business Expansion", description: "Growth consulting services" },
+      { title: "Trade Shows", description: "Exhibition services" },
+      { title: "General Trading", description: "Merchandise services" },
+      { title: "Money Services", description: "Financial transfer services" },
+
+      // Service Activities
+      { title: "Delivery Services", description: "Transport and delivery" },
+      { title: "Waste Management", description: "Waste handling solutions" },
+      { title: "Catering Services", description: "Food service solutions" },
+      { title: "Personal Care", description: "Grooming services" },
+      { title: "Fashion Services", description: "Clothing and boutique" },
+      { title: "Cleaning Services", description: "Professional cleaning" },
+      { title: "Event Planning", description: "Event management services" },
+      { title: "Home Services", description: "Maintenance and repair" },
+      { title: "Landscaping", description: "Outdoor maintenance" },
+      { title: "Transportation", description: "Transport services" },
+      { title: "Personal Services", description: "Errand and shopping" },
+      { title: "Pet Care", description: "Animal care services" },
+      { title: "Digital Marketing", description: "Online marketing solutions" },
+      { title: "Home Renovation", description: "Remodeling services" },
+      { title: "Health Services", description: "Wellness programs" },
+      { title: "Hospitality", description: "Hotel and accommodation" }
+    ]
+  }
+];

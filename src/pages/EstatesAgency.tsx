@@ -74,7 +74,7 @@ const propertyListings = [
   },
 ];
 
-const RealEstate = () => {
+const EstatesAgency = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('All');
   const [priceRange, setPriceRange] = useState('All');
@@ -294,4 +294,4 @@ const RealEstate = () => {
   );
 };
 
-export default RealEstate;
+export default EstatesAgency;
