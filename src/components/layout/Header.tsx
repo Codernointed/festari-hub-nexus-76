@@ -16,13 +16,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LOGOS } from '@/constants/logos';
+import Logo from '@/components/common/Logo';
+import { cn } from '@/lib/utils';
 
 const Header = () => {
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const isMobile = useIsMobile();
   
+  const isHomePage = location.pathname === '/';
+
   // Define navigation items
   const navItems = [
     { name: 'Home', path: '/' },
@@ -46,41 +49,75 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-festari-100">
+    <header 
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        {
+          // Transparent only on home page when not scrolled
+          "bg-transparent": isHomePage && !isScrolled,
+          // White with blur on scroll or other pages
+          "bg-white/80 backdrop-blur-md border-b border-festari-100": isScrolled || !isHomePage,
+        }
+      )}
+    >
       <div className="container-custom">
-        <nav className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center gap-2">
-            <img 
-              src={LOGOS.BASE_TRANSPARENT}
-              alt="Festari"
-              className="h-10"
+            <Logo 
+              variant="icon" 
+              theme={(isHomePage && !isScrolled) ? "light" : "dark"} 
+              size="sm" 
+            />
+            <Logo 
+              variant="text" 
+              theme={(isHomePage && !isScrolled) ? "light" : "dark"}
+              className="hidden md:block" 
+              size="sm" 
             />
           </Link>
-          <div className="hidden md:flex items-center space-x-6">
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-6">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`text-sm hover:text-accent ${
-                  isScrolled || location.pathname !== '/' ? 'text-festari-700' : 'text-white'
-                } ${location.pathname === item.path ? 'font-medium' : ''}`}
+                className={cn(
+                  "text-sm transition-colors",
+                  (isHomePage && !isScrolled)
+                    ? "text-white/90 hover:text-white"
+                    : "text-festari-700 hover:text-accent",
+                  location.pathname === item.path && "font-medium"
+                )}
               >
                 {item.name}
               </Link>
             ))}
-          </div>
+          </nav>
+          
+          {/* Login/Register Buttons */}
           <div className="hidden md:flex items-center space-x-3">
             <Link to="/login">
               <Button 
-                variant="highlight" 
-                className="flex items-center gap-2 px-5"
+                variant={(isHomePage && !isScrolled) ? "ghost" : "highlight"}
+                className={cn(
+                  "flex items-center gap-2 px-5",
+                  (isHomePage && !isScrolled) && "text-white hover:bg-white/10"
+                )}
               >
                 <LogIn size={18} />
                 Login
               </Button>
             </Link>
             <Link to="/register">
-              <Button className="bg-festari-accent hover:bg-festari-accent/90 text-white">
+              <Button 
+                className={cn(
+                  "transition-colors",
+                  (isHomePage && !isScrolled)
+                    ? "bg-white text-festari-900 hover:bg-white/90"
+                    : "bg-festari-accent hover:bg-festari-accent/90 text-white"
+                )}
+              >
                 Register
               </Button>
             </Link>
@@ -91,9 +128,10 @@ const Header = () => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className={`rounded-full ${
-                    isScrolled || location.pathname !== '/' ? 'text-festari-900' : 'text-white'
-                  }`}
+                  className={cn(
+                    "rounded-full",
+                    (isHomePage && !isScrolled) ? "text-white" : "text-festari-900"
+                  )}
                 >
                   <User size={18} />
                 </Button>
@@ -126,9 +164,10 @@ const Header = () => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className={`rounded-full ${
-                    isScrolled || location.pathname !== '/' ? 'text-festari-900' : 'text-white'
-                  }`}
+                  className={cn(
+                    "rounded-full",
+                    (isHomePage && !isScrolled) ? "text-white" : "text-festari-900"
+                  )}
                 >
                   <User size={18} />
                 </Button>
@@ -158,9 +197,10 @@ const Header = () => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className={`rounded-full ${
-                    isScrolled || location.pathname !== '/' ? 'text-festari-900' : 'text-white'
-                  }`}
+                  className={cn(
+                    "rounded-full",
+                    (isHomePage && !isScrolled) ? "text-white" : "text-festari-900"
+                  )}
                   aria-label="Toggle menu"
                 >
                   <Menu size={24} />
@@ -198,7 +238,7 @@ const Header = () => {
               </SheetContent>
             </Sheet>
           </div>
-        </nav>
+        </div>
       </div>
     </header>
   );

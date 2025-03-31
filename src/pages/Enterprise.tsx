@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BarChart3, Briefcase, CheckCircle, Store, User } from 'lucide-react';
+import Logo from '@/components/common/Logo';
 
 const serviceCategories = [
   {
@@ -97,7 +98,10 @@ const Enterprise = () => {
     <div className={`min-h-screen flex flex-col transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
       <Header />
       <main className="flex-grow">
-        <section className="bg-gradient-to-r from-festari-900 to-festari-800 py-16 text-white">
+        <section className="relative py-16 bg-gradient-to-r from-festari-900 to-festari-800 text-white overflow-hidden">
+          <div className="absolute right-0 top-1/2 transform -translate-y-1/2 opacity-5">
+            <Logo variant="icon" theme="light" size="lg" className="w-96" />
+          </div>
           <div className="container-custom">
             <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">
               Festari Enterprise

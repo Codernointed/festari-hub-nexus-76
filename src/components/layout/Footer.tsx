@@ -1,20 +1,16 @@
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Linkedin, Instagram, Mail } from 'lucide-react';
-import { LOGOS } from '@/constants/logos';
+import Logo from '@/components/common/Logo';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-festari-900 text-white pt-16 pb-8">
+    <footer className="bg-festari-900 text-white py-16">
       <div className="container-custom">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          <div>
-            <img 
-              src={LOGOS.TEXT_TRANSPARENT}
-              alt="Festari"
-              className="h-8 mb-6"
-            />
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+          <div className="space-y-4">
+            <Logo variant="full" theme="light" size="lg" className="mb-6" />
             <Link to="/" className="inline-block">
               <span className="text-2xl font-display font-bold">Festari</span>
             </Link>
@@ -92,22 +88,14 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="mt-16 pt-8 border-t border-white/10">
-          <div className="flex items-center justify-between">
-            <img 
-              src={LOGOS.ICON_BLACK}
-              alt="Festari Icon"
-              className="h-6"
-            />
-            <div className="flex flex-col md:flex-row justify-between items-center text-festari-300 text-sm">
-              <div>
-                &copy; {currentYear} Festari. All rights reserved.
-              </div>
-              <div className="mt-4 md:mt-0 flex gap-6">
-                <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
-                <Link to="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>
-              </div>
-            </div>
+        <div className="mt-12 pt-8 border-t border-white/10 flex items-center justify-between">
+          <Logo variant="icon" theme="light" size="sm" />
+          <div className="text-festari-300 text-sm">
+            &copy; {currentYear} Festari. All rights reserved.
+          </div>
+          <div className="flex gap-6">
+            <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>
