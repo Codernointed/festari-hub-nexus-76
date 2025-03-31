@@ -1,4 +1,3 @@
-
 # Festari Hub
 
 ## Project info
@@ -54,6 +53,10 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+
+## Internal Documentation
+
+For a detailed explanation of the codebase, including inline comments, file structure, and key components, refer to the internal documentation file: [DEV_DOCUMENTATION.md](./DEV_NOTES.md).
 
 ## How can I deploy this project?
 

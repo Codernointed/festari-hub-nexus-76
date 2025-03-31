@@ -178,6 +178,7 @@ const serviceCategories = [
   }
 ];
 
+// Import necessary components and libraries
 const Research = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [courseLevel, setCourseLevel] = useState('All');
@@ -208,8 +209,10 @@ const Research = () => {
   // Get all unique tags for filter options
   const allTags = Array.from(new Set(publications.flatMap(pub => pub.tags)));
 
+  // Main component rendering the Research and Consultancy page
   return (
     <div>
+      {/* Header component */}
       <Header />
       <main className="pt-20">
         {/* Hero section */}
@@ -233,9 +236,10 @@ const Research = () => {
           </div>
         </section>
 
-        {/* Tabs section */}
+        {/* Main content area */}
         <section className="section-padding bg-festari-50" id="research-content">
           <div className="container-custom">
+            {/* Tabs for switching between different research content */}
             <Tabs defaultValue="courses" className="w-full">
               <TabsList className="grid w-full grid-cols-4 mb-8">
                 <TabsTrigger value="courses">Courses</TabsTrigger>
@@ -263,23 +267,26 @@ const Research = () => {
                   </div>
                 </div>
                 
-                {/* Course cards */}
+                {/* Grid layout for displaying filtered courses */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {filteredCourses.map((course) => (
                     <div 
-                      key={course.id}
+                      key={course.id} // Unique key for each course
                       className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col"
                     >
+                      {/* Course image */}
                       <div className="h-48 relative overflow-hidden">
                         <img 
                           src={course.image} 
                           alt={course.title} 
                           className="w-full h-full object-cover"
                         />
+                        {/* Badge for course level */}
                         <div className="absolute top-4 right-4 bg-accent text-white text-xs font-bold py-1 px-2 rounded">
                           {course.level}
                         </div>
                       </div>
+                      {/* Course details */}
                       <div className="p-6 flex-1 flex flex-col">
                         <h3 className="text-lg font-semibold text-festari-900 mb-2">
                           {course.title}
@@ -287,6 +294,7 @@ const Research = () => {
                         <p className="text-sm text-festari-600 mb-4">
                           {course.description}
                         </p>
+                        {/* Additional course information */}
                         <div className="grid grid-cols-2 gap-3 mb-4">
                           <div className="flex items-center gap-2">
                             <User size={14} className="text-festari-500" />
@@ -305,6 +313,7 @@ const Research = () => {
                             <span className="text-sm text-festari-700">{course.enrolled} enrolled</span>
                           </div>
                         </div>
+                        {/* Course price and action button */}
                         <div className="flex items-center justify-between mt-auto pt-4 border-t border-festari-100">
                           <span className="text-lg font-bold text-accent">{course.price}</span>
                           <button className="text-sm text-white bg-accent hover:bg-accent/90 px-4 py-2 rounded transition-colors">
@@ -481,6 +490,7 @@ const Research = () => {
           </div>
         </section>
       </main>
+      {/* Footer component */}
       <Footer />
     </div>
   );

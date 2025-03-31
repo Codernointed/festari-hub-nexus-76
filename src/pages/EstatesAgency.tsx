@@ -8,6 +8,7 @@ import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ConsultationForm from '@/components/consultation/ConsultationForm';
 
+// Sample property listings data
 const propertyListings = [
   {
     id: 'prop1',
@@ -123,6 +124,8 @@ const serviceCategories = [
 ];
 
 const EstatesAgency = () => {
+  // State for managing active tab
+  const [activeTab, setActiveTab] = useState('properties');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('All');
   const [priceRange, setPriceRange] = useState('All');
@@ -146,6 +149,7 @@ const EstatesAgency = () => {
 
   return (
     <div>
+      {/* Header component */}
       <Header />
       <main className="pt-20">
         {/* Hero section */}
@@ -170,170 +174,186 @@ const EstatesAgency = () => {
           </div>
         </section>
         
-        {/* Property listings */}
+        {/* Main content */}
         <section className="section-padding bg-festari-50">
           <div className="container-custom">
-            {/* Filters */}
-            <div className="flex flex-col md:flex-row gap-4 mb-10 p-6 bg-white rounded-lg shadow-sm">
-              <div className="flex flex-col md:flex-row gap-4 w-full">
-                <div className="w-full md:w-1/3">
-                  <label className="text-sm text-festari-600 mb-1 block">Property Type</label>
-                  <div className="relative">
-                    <select
-                      className="w-full p-2 border border-festari-200 rounded-md appearance-none bg-white pr-10 focus:outline-none focus:ring-1 focus:ring-accent"
-                      value={selectedType}
-                      onChange={(e) => setSelectedType(e.target.value)}
-                    >
-                      <option value="All">All Types</option>
-                      <option value="Sale">For Sale</option>
-                      <option value="Rental">For Rent</option>
-                    </select>
-                    <ChevronDown size={16} className="absolute right-3 top-1/2 transform -translate-y-1/2 text-festari-500" />
+            {/* Tabs for switching between properties and consultation */}
+            <Tabs defaultValue="properties" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-8">
+                <TabsTrigger value="properties">Properties</TabsTrigger>
+                <TabsTrigger value="consultation">Consultation</TabsTrigger>
+              </TabsList>
+
+              {/* Properties Tab */}
+              <TabsContent value="properties">
+                {/* Filters */}
+                <div className="flex flex-col md:flex-row gap-4 mb-10 p-6 bg-white rounded-lg shadow-sm">
+                  <div className="flex flex-col md:flex-row gap-4 w-full">
+                    <div className="w-full md:w-1/3">
+                      <label className="text-sm text-festari-600 mb-1 block">Property Type</label>
+                      <div className="relative">
+                        <select
+                          className="w-full p-2 border border-festari-200 rounded-md appearance-none bg-white pr-10 focus:outline-none focus:ring-1 focus:ring-accent"
+                          value={selectedType}
+                          onChange={(e) => setSelectedType(e.target.value)}
+                        >
+                          <option value="All">All Types</option>
+                          <option value="Sale">For Sale</option>
+                          <option value="Rental">For Rent</option>
+                        </select>
+                        <ChevronDown size={16} className="absolute right-3 top-1/2 transform -translate-y-1/2 text-festari-500" />
+                      </div>
+                    </div>
+                    
+                    <div className="w-full md:w-1/3">
+                      <label className="text-sm text-festari-600 mb-1 block">Price Range</label>
+                      <div className="relative">
+                        <select
+                          className="w-full p-2 border border-festari-200 rounded-md appearance-none bg-white pr-10 focus:outline-none focus:ring-1 focus:ring-accent"
+                          value={priceRange}
+                          onChange={(e) => setPriceRange(e.target.value)}
+                        >
+                          <option value="All">All Prices</option>
+                          <option value="Under $500K">Under $500,000</option>
+                          <option value="$500K-$1M">$500,000 - $1,000,000</option>
+                          <option value="Over $1M">Over $1,000,000</option>
+                        </select>
+                        <ChevronDown size={16} className="absolute right-3 top-1/2 transform -translate-y-1/2 text-festari-500" />
+                      </div>
+                    </div>
+                    
+                    <div className="w-full md:w-1/3">
+                      <label className="text-sm text-festari-600 mb-1 block">Sort By</label>
+                      <div className="relative">
+                        <select
+                          className="w-full p-2 border border-festari-200 rounded-md appearance-none bg-white pr-10 focus:outline-none focus:ring-1 focus:ring-accent"
+                        >
+                          <option value="newest">Newest First</option>
+                          <option value="price-asc">Price (Low to High)</option>
+                          <option value="price-desc">Price (High to Low)</option>
+                        </select>
+                        <ChevronDown size={16} className="absolute right-3 top-1/2 transform -translate-y-1/2 text-festari-500" />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <button className="bg-festari-100 text-festari-800 hover:bg-festari-200 px-4 py-2 rounded flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent md:self-end">
+                    <Filter size={16} />
+                    <span>More Filters</span>
+                  </button>
+                </div>
+                
+                {/* Results count */}
+                <div className="mb-6 flex items-center justify-between">
+                  <h2 className="text-xl font-display font-bold text-festari-900">
+                    {filteredProperties.length} Properties Found
+                  </h2>
+                  <div className="flex gap-2">
+                    <button className="p-2 rounded bg-white text-festari-800 hover:bg-festari-100">
+                      <MapPin size={20} />
+                    </button>
+                    <button className="p-2 rounded bg-accent text-white">
+                      <Building size={20} />
+                    </button>
                   </div>
                 </div>
                 
-                <div className="w-full md:w-1/3">
-                  <label className="text-sm text-festari-600 mb-1 block">Price Range</label>
-                  <div className="relative">
-                    <select
-                      className="w-full p-2 border border-festari-200 rounded-md appearance-none bg-white pr-10 focus:outline-none focus:ring-1 focus:ring-accent"
-                      value={priceRange}
-                      onChange={(e) => setPriceRange(e.target.value)}
+                {/* Property grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {filteredProperties.map((property) => (
+                    <div 
+                      key={property.id}
+                      className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group"
                     >
-                      <option value="All">All Prices</option>
-                      <option value="Under $500K">Under $500,000</option>
-                      <option value="$500K-$1M">$500,000 - $1,000,000</option>
-                      <option value="Over $1M">Over $1,000,000</option>
-                    </select>
-                    <ChevronDown size={16} className="absolute right-3 top-1/2 transform -translate-y-1/2 text-festari-500" />
-                  </div>
+                      <div className="relative h-60 overflow-hidden">
+                        <img 
+                          src={property.image} 
+                          alt={property.title} 
+                          className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute top-4 right-4 bg-accent text-white text-xs font-bold uppercase py-1 px-2 rounded">
+                          {property.type}
+                        </div>
+                      </div>
+                      <div className="p-6">
+                        <div className="flex justify-between items-start mb-2">
+                          <h3 className="text-lg font-semibold text-festari-900 group-hover:text-accent transition-colors">
+                            {property.title}
+                          </h3>
+                        </div>
+                        <p className="text-festari-600 mb-2">
+                          <span className="flex items-center gap-1">
+                            <Home size={14} className="text-festari-400" />
+                            {property.location}
+                          </span>
+                        </p>
+                        <p className="text-sm text-festari-500 mb-3">
+                          {property.features}
+                        </p>
+                        <p className="text-sm text-festari-600 mb-4 line-clamp-2">
+                          {property.description}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <span className="text-lg font-bold text-accent">{property.price}</span>
+                          <button className="text-sm text-white bg-accent hover:bg-accent/90 px-3 py-1 rounded transition-colors">
+                            View Details
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
                 
-                <div className="w-full md:w-1/3">
-                  <label className="text-sm text-festari-600 mb-1 block">Sort By</label>
-                  <div className="relative">
-                    <select
-                      className="w-full p-2 border border-festari-200 rounded-md appearance-none bg-white pr-10 focus:outline-none focus:ring-1 focus:ring-accent"
+                {/* Empty state */}
+                {filteredProperties.length === 0 && (
+                  <div className="bg-white rounded-lg p-8 text-center">
+                    <div className="flex justify-center mb-4">
+                      <Home size={48} className="text-festari-300" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-festari-800 mb-2">No properties found</h3>
+                    <p className="text-festari-600 mb-4">Try adjusting your search criteria or filters</p>
+                    <button 
+                      className="btn-primary"
+                      onClick={() => {
+                        setSearchTerm('');
+                        setSelectedType('All');
+                        setPriceRange('All');
+                      }}
                     >
-                      <option value="newest">Newest First</option>
-                      <option value="price-asc">Price (Low to High)</option>
-                      <option value="price-desc">Price (High to Low)</option>
-                    </select>
-                    <ChevronDown size={16} className="absolute right-3 top-1/2 transform -translate-y-1/2 text-festari-500" />
+                      Reset Filters
+                    </button>
                   </div>
-                </div>
-              </div>
-              
-              <button className="bg-festari-100 text-festari-800 hover:bg-festari-200 px-4 py-2 rounded flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent md:self-end">
-                <Filter size={16} />
-                <span>More Filters</span>
-              </button>
-            </div>
-            
-            {/* Results count */}
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-xl font-display font-bold text-festari-900">
-                {filteredProperties.length} Properties Found
-              </h2>
-              <div className="flex gap-2">
-                <button className="p-2 rounded bg-white text-festari-800 hover:bg-festari-100">
-                  <MapPin size={20} />
-                </button>
-                <button className="p-2 rounded bg-accent text-white">
-                  <Building size={20} />
-                </button>
-              </div>
-            </div>
-            
-            {/* Property grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredProperties.map((property) => (
-                <div 
-                  key={property.id}
-                  className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group"
-                >
-                  <div className="relative h-60 overflow-hidden">
-                    <img 
-                      src={property.image} 
-                      alt={property.title} 
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-4 right-4 bg-accent text-white text-xs font-bold uppercase py-1 px-2 rounded">
-                      {property.type}
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-lg font-semibold text-festari-900 group-hover:text-accent transition-colors">
-                        {property.title}
-                      </h3>
-                    </div>
-                    <p className="text-festari-600 mb-2">
-                      <span className="flex items-center gap-1">
-                        <Home size={14} className="text-festari-400" />
-                        {property.location}
-                      </span>
-                    </p>
-                    <p className="text-sm text-festari-500 mb-3">
-                      {property.features}
-                    </p>
-                    <p className="text-sm text-festari-600 mb-4 line-clamp-2">
-                      {property.description}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-lg font-bold text-accent">{property.price}</span>
-                      <button className="text-sm text-white bg-accent hover:bg-accent/90 px-3 py-1 rounded transition-colors">
-                        View Details
+                )}
+                
+                {/* Pagination (simplified) */}
+                {filteredProperties.length > 0 && (
+                  <div className="mt-12 flex justify-center">
+                    <div className="flex space-x-1">
+                      <button className="px-4 py-2 border border-festari-300 rounded-md text-festari-800 bg-white hover:bg-festari-50">
+                        Previous
+                      </button>
+                      <button className="px-4 py-2 bg-accent text-white rounded-md hover:bg-accent/90">
+                        1
+                      </button>
+                      <button className="px-4 py-2 border border-festari-300 rounded-md text-festari-800 bg-white hover:bg-festari-50">
+                        2
+                      </button>
+                      <button className="px-4 py-2 border border-festari-300 rounded-md text-festari-800 bg-white hover:bg-festari-50">
+                        3
+                      </button>
+                      <button className="px-4 py-2 border border-festari-300 rounded-md text-festari-800 bg-white hover:bg-festari-50">
+                        Next
                       </button>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-            
-            {/* Empty state */}
-            {filteredProperties.length === 0 && (
-              <div className="bg-white rounded-lg p-8 text-center">
-                <div className="flex justify-center mb-4">
-                  <Home size={48} className="text-festari-300" />
-                </div>
-                <h3 className="text-xl font-semibold text-festari-800 mb-2">No properties found</h3>
-                <p className="text-festari-600 mb-4">Try adjusting your search criteria or filters</p>
-                <button 
-                  className="btn-primary"
-                  onClick={() => {
-                    setSearchTerm('');
-                    setSelectedType('All');
-                    setPriceRange('All');
-                  }}
-                >
-                  Reset Filters
-                </button>
-              </div>
-            )}
-            
-            {/* Pagination (simplified) */}
-            {filteredProperties.length > 0 && (
-              <div className="mt-12 flex justify-center">
-                <div className="flex space-x-1">
-                  <button className="px-4 py-2 border border-festari-300 rounded-md text-festari-800 bg-white hover:bg-festari-50">
-                    Previous
-                  </button>
-                  <button className="px-4 py-2 bg-accent text-white rounded-md hover:bg-accent/90">
-                    1
-                  </button>
-                  <button className="px-4 py-2 border border-festari-300 rounded-md text-festari-800 bg-white hover:bg-festari-50">
-                    2
-                  </button>
-                  <button className="px-4 py-2 border border-festari-300 rounded-md text-festari-800 bg-white hover:bg-festari-50">
-                    3
-                  </button>
-                  <button className="px-4 py-2 border border-festari-300 rounded-md text-festari-800 bg-white hover:bg-festari-50">
-                    Next
-                  </button>
-                </div>
-              </div>
-            )}
+                )}
+              </TabsContent>
+
+              {/* Consultation Tab */}
+              <TabsContent value="consultation">
+                <ConsultationForm serviceCategories={[]} />
+              </TabsContent>
+            </Tabs>
           </div>
         </section>
 
@@ -363,6 +383,7 @@ const EstatesAgency = () => {
           </div>
         </section>
       </main>
+      {/* Footer component */}
       <Footer />
     </div>
   );

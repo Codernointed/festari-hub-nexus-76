@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -253,6 +252,7 @@ const Founder = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
+      {/* Header component */}
       <Header />
       <main className="flex-grow pt-20">
         {/* Hero section */}
@@ -772,6 +772,7 @@ const Founder = () => {
           </div>
         </section>
       </main>
+      {/* Footer component */}
       <Footer />
     </div>
   );

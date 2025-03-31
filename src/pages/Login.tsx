@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, LogIn } from 'lucide-react';
@@ -9,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 
 const Login = () => {
+  // State hooks for form fields and visibility toggle
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -16,11 +16,12 @@ const Login = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   
+  // Function to handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
+    e.preventDefault(); // Prevent default form submission behavior
+    setIsLoading(true); // Set loading state
     
-    // Simulate login - in a real app, this would connect to an auth system
+    // Simulate login process
     try {
       // Mock authentication
       setTimeout(() => {
@@ -28,8 +29,8 @@ const Login = () => {
           title: "Success",
           description: "You've been logged in successfully.",
         });
-        navigate('/dashboard');
-        setIsLoading(false);
+        navigate('/dashboard'); // Redirect to dashboard
+        setIsLoading(false); // Reset loading state
       }, 1500);
     } catch (error) {
       toast({
@@ -37,15 +38,17 @@ const Login = () => {
         description: "Failed to login. Please check your credentials.",
         variant: "destructive",
       });
-      setIsLoading(false);
+      setIsLoading(false); // Reset loading state
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Header component */}
       <Header />
       <main className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-md">
+          {/* Form title and description */}
           <div className="text-center">
             <h2 className="mt-6 text-3xl font-bold text-festari-900 font-display">
               Welcome Back
@@ -55,8 +58,10 @@ const Login = () => {
             </p>
           </div>
           
+          {/* Login form */}
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
+              {/* Email input field */}
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <Mail className="h-5 w-5 text-festari-400" />
@@ -74,6 +79,7 @@ const Login = () => {
                 />
               </div>
               
+              {/* Password input field */}
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <Lock className="h-5 w-5 text-festari-400" />
@@ -147,6 +153,7 @@ const Login = () => {
           </form>
         </div>
       </main>
+      {/* Footer component */}
       <Footer />
     </div>
   );

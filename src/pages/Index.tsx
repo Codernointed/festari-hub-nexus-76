@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -29,6 +28,7 @@ const Index = () => {
 
   return (
     <div className={`transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+      {/* Header component */}
       <Header />
       <main>
         <Hero />
@@ -43,6 +43,7 @@ const Index = () => {
         <CallToAction />
         <NewsletterSignup />
       </main>
+      {/* Footer component */}
       <Footer />
     </div>
   );

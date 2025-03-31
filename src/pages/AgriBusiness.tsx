@@ -61,6 +61,7 @@ const serviceCategories = [
 ];
 
 const AgriBusiness = () => {
+  // State hooks for managing filters, pagination, and modal
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [sortOrder, setSortOrder] = useState('newest');
@@ -80,6 +81,7 @@ const AgriBusiness = () => {
   ));
   
   useEffect(() => {
+    // Set page as loaded after a short delay
     const timer = setTimeout(() => {
       setIsLoaded(true);
     }, 100);
@@ -88,6 +90,7 @@ const AgriBusiness = () => {
   }, []);
   
   useEffect(() => {
+    // Load saved products from localStorage
     const saved = localStorage.getItem('savedAgricultureProducts');
     if (saved) {
       setSavedProducts(JSON.parse(saved));
@@ -136,6 +139,7 @@ const AgriBusiness = () => {
   };
   
   const resetFilters = () => {
+    // Reset all filters to default values
     setSearchTerm('');
     setSelectedCategory('All');
     setSortOrder('newest');
@@ -143,6 +147,7 @@ const AgriBusiness = () => {
   };
   
   const getFilteredProducts = () => {
+    // Filter products based on search term, category, and price range
     let filtered = agricultureProducts.filter(product => {
       const matchesSearch = 
         product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -194,8 +199,10 @@ const AgriBusiness = () => {
   
   return (
     <div className={`transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+      {/* Header component */}
       <Header />
       <main className="pt-20">
+        {/* Hero section */}
         <section className="relative py-20 bg-festari-900 text-white">
           <div className="container-custom">
             <div className="max-w-2xl">
@@ -216,6 +223,7 @@ const AgriBusiness = () => {
           </div>
         </section>
         
+        {/* Main content */}
         <section className="section-padding bg-festari-50">
           <div className="container-custom">
             <ProductFilters 
@@ -298,6 +306,7 @@ const AgriBusiness = () => {
           </div>
         </section>
 
+        {/* Services section */}
         <section className="py-12 bg-gray-50">
           <div className="container-custom">
             <h2 className="text-2xl font-display font-bold mb-8">Our Services</h2>
@@ -333,6 +342,7 @@ const AgriBusiness = () => {
           </div>
         </section>
 
+        {/* Inquiry Modal */}
         <InquiryModal
           product={inquiryProduct}
           isOpen={isModalOpen}
@@ -340,6 +350,7 @@ const AgriBusiness = () => {
           onSubmit={handleInquirySubmit}
         />
       </main>
+      {/* Footer component */}
       <Footer />
     </div>
   );

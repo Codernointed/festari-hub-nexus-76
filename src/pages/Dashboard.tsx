@@ -59,6 +59,7 @@ const enrolledCourses = [
 ];
 
 const Dashboard = () => {
+  // State for managing active tab
   const [activeTab, setActiveTab] = useState("overview");
   const { toast } = useToast();
 
@@ -71,6 +72,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Header component */}
       <Header />
       <main className="flex-grow py-8 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="container-custom">
@@ -403,6 +405,7 @@ const Dashboard = () => {
           </Tabs>
         </div>
       </main>
+      {/* Footer component */}
       <Footer />
     </div>
   );

@@ -96,6 +96,7 @@ const Enterprise = () => {
 
   return (
     <div className={`min-h-screen flex flex-col transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+      {/* Header component */}
       <Header />
       <main className="flex-grow">
         <section className="relative py-16 bg-gradient-to-r from-festari-900 to-festari-800 text-white overflow-hidden">
@@ -189,6 +190,7 @@ const Enterprise = () => {
           </div>
         </section>
       </main>
+      {/* Footer component */}
       <Footer />
     </div>
   );

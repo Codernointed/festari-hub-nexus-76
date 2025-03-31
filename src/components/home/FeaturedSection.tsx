@@ -1,4 +1,3 @@
-
 import { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Home, GraduationCap, DollarSign, User, ChevronRight, BuildingIcon, Leaf } from 'lucide-react';
@@ -14,6 +13,7 @@ import {
 } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
+// Array of featured properties with necessary details for rendering
 const featuredProperties = [
   {
     id: 'prop1',
@@ -94,11 +94,15 @@ const featuredProducts = [
 ];
 
 const FeaturedSection = () => {
+  // Reference for the container element for intersection observer
   const containerRef = useRef<HTMLDivElement>(null);
+  // State to toggle visibility for animation purposes
   const [isVisible, setIsVisible] = useState(false);
   const [activeTab, setActiveTab] = useState('properties');
 
+  // Effect: Set up IntersectionObserver to trigger animation when element is in view
   useEffect(() => {
+    // Create the observer with threshold 0.1
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -113,20 +117,26 @@ const FeaturedSection = () => {
       observer.observe(containerRef.current);
     }
 
+    // Cleanup: disconnect the observer on unmount
     return () => observer.disconnect();
   }, []);
 
   return (
+    // Section container with background gradient and padding
     <section ref={containerRef} className="section-padding bg-gradient-to-b from-white to-festari-50">
       <div className="container-custom">
+        {/* Header area: Title and subtitle */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10">
           <div>
+            {/* Tagline badge */}
             <span className="inline-block py-1 px-3 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4">
               Featured at Festari
             </span>
+            {/* Main title */}
             <h2 className="text-3xl md:text-4xl font-display font-bold text-festari-900">Explore Our Offerings</h2>
           </div>
           
+          {/* Tab buttons for switching between properties, courses, and agriculture */}
           <div className="mt-4 md:mt-0 flex flex-wrap gap-2">
             <Button 
               variant={activeTab === 'properties' ? "default" : "outline"} 
@@ -157,6 +167,7 @@ const FeaturedSection = () => {
         
         {/* Properties Tab */}
         <div className={activeTab === 'properties' ? 'block' : 'hidden'}>
+          {/* Grid presentation of featured properties */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {featuredProperties.map((property, index) => (
               <Card 
@@ -167,16 +178,19 @@ const FeaturedSection = () => {
                   isVisible && `transition-all duration-500 ease-out delay-${index * 150}`
                 )}
               >
+                {/* Card image with hover zoom effect */}
                 <div className="relative h-60 overflow-hidden">
                   <img 
                     src={property.image} 
                     alt={property.title} 
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                   />
+                  {/* Badge indicating property type */}
                   <Badge className="absolute top-4 right-4">
                     {property.type}
                   </Badge>
                 </div>
+                {/* Card header: Title and other details */}
                 <CardHeader className="pb-2">
                   <CardTitle className="text-lg text-festari-900 group-hover:text-accent transition-colors">
                     {property.title}
@@ -202,6 +216,7 @@ const FeaturedSection = () => {
               </Card>
             ))}
           </div>
+          {/* Button to view all properties */}
           <div className="flex justify-center mt-8">
             <Button asChild variant="outline" className="gap-1">
               <Link to="/real-estate">

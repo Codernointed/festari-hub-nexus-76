@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
@@ -37,24 +36,25 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+// AgricultureProductDetails component
 const AgricultureProductDetails = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const { toast } = useToast();
+  const { id } = useParams(); // Get product ID from URL params
+  const navigate = useNavigate(); // Navigation hook
+  const { toast } = useToast(); // Toast notifications
   const [product, setProduct] = useState(agricultureProducts.find(p => p.id === id));
   const [isLoaded, setIsLoaded] = useState(false);
   const [savedProducts, setSavedProducts] = useState<string[]>([]);
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(product?.image || '');
   
-  // We'll simulate multiple images using the same image for demonstration
+  // Simulate multiple images using the same image for demonstration
   const productImages = product 
     ? [product.image, product.image, product.image] 
     : [];
   
   useEffect(() => {
     if (!product) {
-      navigate('/agriculture', { replace: true });
+      navigate('/agriculture', { replace: true }); // Redirect if product not found
       return;
     }
 
@@ -97,7 +97,7 @@ const AgricultureProductDetails = () => {
   };
   
   const shareProduct = () => {
-    navigator.clipboard.writeText(window.location.href);
+    navigator.clipboard.writeText(window.location.href); // Copy product link to clipboard
     toast({
       title: "Link copied",
       description: "Product link copied to clipboard.",
@@ -111,7 +111,7 @@ const AgricultureProductDetails = () => {
       description: "Your inquiry has been sent. We'll contact you shortly.",
       variant: "default",
     });
-    setIsInquiryModalOpen(false);
+    setIsInquiryModalOpen(false); // Close inquiry modal
   };
   
   if (!product) return null;
@@ -120,6 +120,7 @@ const AgricultureProductDetails = () => {
   
   return (
     <div className={`transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+      {/* Header component */}
       <Header />
       <main className="pt-24">
         <div className="container-custom pb-16">
@@ -362,6 +363,7 @@ const AgricultureProductDetails = () => {
           onSubmit={handleInquirySubmit}
         />
       </main>
+      {/* Footer component */}
       <Footer />
     </div>
   );

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -7,7 +6,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { cn } from '@/lib/utils';
 
 const Contact = () => {
-  const { toast } = useToast();
+  const { toast } = useToast(); // Toast notifications for form submission feedback
   
   // Form state
   const [formData, setFormData] = useState({
@@ -83,6 +82,7 @@ const Contact = () => {
 
   return (
     <div>
+      {/* Header component */}
       <Header />
       <main className="pt-20">
         {/* Hero section */}
@@ -276,6 +276,7 @@ const Contact = () => {
           </div>
         </section>
       </main>
+      {/* Footer component */}
       <Footer />
     </div>
   );

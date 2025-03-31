@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, User, CheckCircle } from 'lucide-react';
@@ -10,7 +9,9 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 
+// Import necessary hooks and components
 const Register = () => {
+  // State hooks for form fields and loading state
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,12 +20,16 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [accountType, setAccountType] = useState('user');
   const [agreeTerms, setAgreeTerms] = useState(false);
+  // Navigation hook for redirecting users
   const navigate = useNavigate();
+  // Toast hook for displaying notifications
   const { toast } = useToast();
   
+  // Function to handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default form submission behavior
     
+    // Validate password and terms agreement
     if (password !== confirmPassword) {
       toast({
         title: "Error",
@@ -43,18 +48,17 @@ const Register = () => {
       return;
     }
     
-    setIsLoading(true);
+    setIsLoading(true); // Set loading state
     
-    // Simulate registration - in a real app, this would connect to an auth system
+    // Simulate registration process
     try {
-      // Mock registration
       setTimeout(() => {
         toast({
           title: "Success",
           description: "Your account has been created successfully.",
         });
-        navigate('/login');
-        setIsLoading(false);
+        navigate('/login'); // Redirect to login page
+        setIsLoading(false); // Reset loading state
       }, 1500);
     } catch (error) {
       toast({
@@ -62,15 +66,17 @@ const Register = () => {
         description: "Failed to register. Please try again.",
         variant: "destructive",
       });
-      setIsLoading(false);
+      setIsLoading(false); // Reset loading state
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Header component */}
       <Header />
       <main className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-md">
+          {/* Form title and description */}
           <div className="text-center">
             <h2 className="mt-6 text-3xl font-bold text-festari-900 font-display">
               Create Your Account
@@ -80,8 +86,10 @@ const Register = () => {
             </p>
           </div>
           
+          {/* Registration form */}
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
+              {/* Name input field */}
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <User className="h-5 w-5 text-festari-400" />
@@ -99,6 +107,7 @@ const Register = () => {
                 />
               </div>
               
+              {/* Email input field */}
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <Mail className="h-5 w-5 text-festari-400" />
@@ -116,6 +125,7 @@ const Register = () => {
                 />
               </div>
               
+              {/* Password input field */}
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <Lock className="h-5 w-5 text-festari-400" />
@@ -144,6 +154,7 @@ const Register = () => {
                 </button>
               </div>
               
+              {/* Confirm Password input field */}
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <Lock className="h-5 w-5 text-festari-400" />
@@ -161,6 +172,7 @@ const Register = () => {
                 />
               </div>
               
+              {/* Account Type selection */}
               <div className="space-y-2">
                 <p className="text-sm font-medium text-festari-700">Account Type</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -199,6 +211,7 @@ const Register = () => {
               </div>
             </div>
 
+            {/* Terms and conditions checkbox */}
             <div className="flex items-center">
               <div className="flex items-center h-5">
                 <Checkbox 
@@ -214,6 +227,7 @@ const Register = () => {
               </div>
             </div>
 
+            {/* Submit button */}
             <Button
               type="submit"
               className="w-full bg-festari-accent hover:bg-festari-accent/90 text-white"
@@ -222,6 +236,7 @@ const Register = () => {
               {isLoading ? "Creating Account..." : "Create Account"}
             </Button>
             
+            {/* Link to login page */}
             <div className="text-center text-sm">
               <span className="text-festari-600">Already have an account? </span>
               <Link to="/login" className="font-medium text-festari-accent hover:text-festari-accent/80">
@@ -231,6 +246,7 @@ const Register = () => {
           </form>
         </div>
       </main>
+      {/* Footer component */}
       <Footer />
     </div>
   );
