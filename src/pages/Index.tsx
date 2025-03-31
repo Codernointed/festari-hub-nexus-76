@@ -12,6 +12,7 @@ import Features from '@/components/home/Features';
 import BusinessDivisions from '@/components/home/BusinessDivisions';
 import CoreValues from '@/components/home/CoreValues';
 import MissionVision from '@/components/home/MissionVision';
+import CallToAction from '@/components/home/CallToAction';
 
 const Index = () => {
   // Page load animation state
@@ -39,6 +40,7 @@ const Index = () => {
         <FeaturedSection />
         <NavigationCards />
         <Testimonials />
+        <CallToAction />
         <NewsletterSignup />
       </main>
       <Footer />
