@@ -14,7 +14,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Properties from "./pages/Properties";
 import PropertyDetails from "./pages/PropertyDetails";
-import Agriculture from "./pages/Agriculture";
+import Agriculture from "./pages/AgriBusiness";
 import AgricultureProductDetails from "./pages/AgricultureProductDetails";
 import Founder from "./pages/Founder";
 import Publications from "./pages/Publications";
@@ -34,27 +34,23 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
+            {/* Core routes in navigation order */}
             <Route path="/" element={<Index />} />
-            <Route path="/research/*" element={<Research />} />
             <Route path="/estates/*" element={<EstatesAgency />} />
-            <Route path="/agriculture" element={<Agriculture />} /> {/* Keep original path but display as Agribusiness */}
-            <Route path="/agriculture/product/:id" element={<AgricultureProductDetails />} />
+            <Route path="/research/*" element={<Research />} />
+            <Route path="/agriculture/*" element={<Agriculture />} /> {/* Keep path but component shows as Agribusiness */}
             <Route path="/enterprise/*" element={<Enterprise />} />
-            <Route path="/consultation" element={<ConsultationPage />} />
-            <Route path="/research/publications" element={<Publications />} />
-            <Route path="/research/courses/:id" element={<CourseDetails />} />
             <Route path="/about" element={<About />} />
+            <Route path="/founder" element={<Founder />} />
             <Route path="/contact" element={<Contact />} />
+            
+            {/* Supporting routes */}
+            <Route path="/consultation" element={<ConsultationPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/properties" element={<Properties />} />
-            <Route path="/property/:id" element={<PropertyDetails />} />
-            <Route path="/agriculture" element={<Agriculture />} />
-            <Route path="/agriculture/product/:id" element={<AgricultureProductDetails />} />
-            <Route path="/founder" element={<Founder />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="/consultation" element={<ConsultationForm />} />
+            
+            {/* Catch-all route */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

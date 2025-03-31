@@ -1,9 +1,9 @@
-
 import { useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { Search, Home, Building, Map, Filter, ChevronDown } from 'lucide-react';
+import { Search, Home, Building, Map, Filter, ChevronDown, CheckCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
 const propertyListings = [
   {
@@ -15,7 +15,7 @@ const propertyListings = [
     type: 'Rental',
     features: '2 Bed • 2 Bath • 1,200 sqft',
     description: 'This modern apartment offers panoramic city views, premium finishes, and access to luxury amenities including a fitness center and rooftop pool.',
-    path: '/real-estate/luxury-apartment',
+    path: '/estates/luxury-apartment',
   },
   {
     id: 'prop2',
@@ -26,7 +26,7 @@ const propertyListings = [
     type: 'Sale',
     features: '4 Bed • 3 Bath • 2,800 sqft',
     description: 'Stunning contemporary villa with an open floor plan, high ceilings, and a private backyard with pool and outdoor entertainment area.',
-    path: '/real-estate/modern-villa',
+    path: '/estates/modern-villa',
   },
   {
     id: 'prop3',
@@ -37,7 +37,7 @@ const propertyListings = [
     type: 'Rental',
     features: 'Open Floor • 1,800 sqft • 5th Floor',
     description: 'Prime office space in the heart of the business district with modern amenities, meeting rooms, and breathtaking views of the city skyline.',
-    path: '/real-estate/office-space',
+    path: '/estates/office-space',
   },
   {
     id: 'prop4',
@@ -48,7 +48,7 @@ const propertyListings = [
     type: 'Sale',
     features: '3 Bed • 3.5 Bath • 2,400 sqft',
     description: 'Exclusive penthouse with floor-to-ceiling windows offering panoramic water views, premium finishes, and a private rooftop terrace.',
-    path: '/real-estate/waterfront-penthouse',
+    path: '/estates/waterfront-penthouse',
   },
   {
     id: 'prop5',
@@ -59,7 +59,7 @@ const propertyListings = [
     type: 'Rental',
     features: 'Studio • 1 Bath • 650 sqft',
     description: 'Charming studio apartment in the vibrant arts district, featuring hardwood floors, exposed brick, and modern appliances.',
-    path: '/real-estate/cozy-studio',
+    path: '/estates/cozy-studio',
   },
   {
     id: 'prop6',
@@ -70,8 +70,41 @@ const propertyListings = [
     type: 'Sale',
     features: '3 Bed • 2.5 Bath • 2,100 sqft',
     description: 'Beautifully restored historic townhouse with original architectural details, updated systems, and a private garden.',
-    path: '/real-estate/historic-townhouse',
+    path: '/estates/historic-townhouse',
   },
+];
+
+const serviceCategories = [
+  {
+    title: "Sales & Rentals",
+    items: [
+      "Real Estate Sales",
+      "Property Listings",
+      "Property Purchase Assistance",
+      "Property Rentals",
+      "Hostel Rentals"
+    ]
+  },
+  {
+    title: "Management Services",
+    items: [
+      "Property Management",
+      "Hostel Management Services",
+      "Property Marketing",
+      "Property Inspections",
+      "Tenant Placement Services"
+    ]
+  },
+  {
+    title: "Advisory Services",
+    items: [
+      "Market Analysis",
+      "Property Appraisals",
+      "Real Estate Consultation",
+      "Legal and Regulatory Compliance",
+      "Real Estate Financing Assistance"
+    ]
+  }
 ];
 
 const EstatesAgency = () => {
@@ -286,6 +319,32 @@ const EstatesAgency = () => {
                 </div>
               </div>
             )}
+          </div>
+        </section>
+
+        {/* Services section */}
+        <section className="py-16 bg-gray-50">
+          <div className="container-custom">
+            <h2 className="text-2xl font-display font-bold mb-8">Our Services</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {serviceCategories.map((category, idx) => (
+                <Card key={idx}>
+                  <CardHeader>
+                    <CardTitle>{category.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-2">
+                      {category.items.map((item, i) => (
+                        <li key={i} className="flex items-center gap-2">
+                          <CheckCircle className="h-4 w-4 text-accent" />
+                          <span className="text-sm">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </section>
       </main>

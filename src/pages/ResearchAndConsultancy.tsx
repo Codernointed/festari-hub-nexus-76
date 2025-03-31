@@ -1,10 +1,10 @@
-
 import { useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { GraduationCap, BookOpen, FileText, User, Clock, Calendar, ExternalLink } from 'lucide-react';
+import { GraduationCap, BookOpen, FileText, User, Clock, Calendar, ExternalLink, CheckCircle, HardHat, Search, Leaf, Link } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
 // Sample courses data
 const courses = [
@@ -119,6 +119,61 @@ const publications = [
     url: 'https://example.com/journal5',
     openAccess: true,
   },
+];
+
+const serviceCategories = [
+  {
+    title: "Mining & Engineering",
+    icon: <HardHat size={24} />,
+    items: [
+      "Mining and Geotechnical Consulting",
+      "Geotechnical Engineering",
+      "Mineral Exploration",
+      "Geotechnical Instrumentation",
+      "Mining Equipment Sales and Rental"
+    ]
+  },
+  {
+    title: "Research & Analysis",
+    icon: <Search size={24} />,
+    items: [
+      "Research and Development",
+      "Geological and Geotechnical Data Analysis",
+      "Market Analysis",
+      "Data Analysis, Modeling and Interpretation",
+      "Safety Audits",
+      "Feasibility Studies"
+    ]
+  },
+  {
+    title: "Education & Training",
+    icon: <GraduationCap size={24} />,
+    items: [
+      "Mining Education and Training",
+      "Training, Short Courses, and Capacity Building",
+      "Professional and Proficiency Certification Programs",
+      "Academic Research Support Services"
+    ]
+  },
+  {
+    title: "Environmental & Safety",
+    icon: <Leaf size={24} />,
+    items: [
+      "Environmental Impact Assessments",
+      "Resource Management",
+      "Geotechnical Remediation",
+      "Mining, Geotechnical and Environmental Advisory Services"
+    ]
+  },
+  {
+    title: "Documentation & Writing",
+    icon: <FileText size={24} />,
+    items: [
+      "Professional and Technical Writing Services",
+      "Editing, Proofreading and Document Formatting",
+      "Printing, Binding and Document Production"
+    ]
+  }
 ];
 
 const Research = () => {
@@ -376,6 +431,38 @@ const Research = () => {
                     </button>
                   </div>
                 )}
+              </TabsContent>
+
+              <TabsContent value="services" className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {serviceCategories.map((category, idx) => (
+                    <Card key={idx} className="hover:shadow-md transition-shadow">
+                      <CardHeader>
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-lg bg-accent/10 text-accent">
+                            {category.icon}
+                          </div>
+                          <CardTitle>{category.title}</CardTitle>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <ul className="space-y-3">
+                          {category.items.map((item, i) => (
+                            <li key={i} className="flex items-start gap-2 group">
+                              <CheckCircle className="h-5 w-5 text-accent mt-0.5 group-hover:text-accent/80" />
+                              <Link 
+                                to="/consultation"
+                                className="text-sm text-festari-700 hover:text-accent transition-colors"
+                              >
+                                {item}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
               </TabsContent>
             </Tabs>
           </div>

@@ -10,8 +10,53 @@ import InquiryModal from '@/components/agriculture/InquiryModal';
 import { agricultureProducts } from '@/data/agricultureProducts';
 import { AgricultureProduct } from '@/types/agriculture';
 import { useNavigate } from 'react-router-dom';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
+import { Sprout, ClipboardList, Wrench, BarChart, CheckCircle } from 'lucide-react';
 
-const Agriculture = () => {
+const serviceCategories = [
+  {
+    title: "Core Farming",
+    icon: <Sprout size={24} />,
+    items: [
+      "Crop Farming",
+      "Livestock Farming",
+      "Organic Farming",
+      "Greenhouse and Hydroponic Farming"
+    ]
+  },
+  {
+    title: "Advisory & Support",
+    icon: <ClipboardList size={24} />,
+    items: [
+      "Agribusiness Consulting",
+      "Farm Management Services",
+      "Agricultural Research",
+      "Farm Education and Training"
+    ]
+  },
+  {
+    title: "Equipment & Analysis",
+    icon: <Wrench size={24} />,
+    items: [
+      "Agricultural Equipment Sales and Rental",
+      "Crop and Soil Analysis",
+      "Pest and Disease Control"
+    ]
+  },
+  {
+    title: "Business & Marketing",
+    icon: <BarChart size={24} />,
+    items: [
+      "Agricultural Marketing",
+      "Farm-to-Table Sales",
+      "Agribusiness Investment",
+      "Agricultural Supply Chain Management"
+    ]
+  }
+];
+
+const AgriBusiness = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [sortOrder, setSortOrder] = useState('newest');
@@ -248,7 +293,42 @@ const Agriculture = () => {
             )}
           </div>
         </section>
-        
+
+        <section className="py-12 bg-gray-50">
+          <div className="container-custom">
+            <h2 className="text-2xl font-display font-bold mb-8">Our Services</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {serviceCategories.map((category, idx) => (
+                <Card key={idx} className="hover:shadow-md transition-shadow">
+                  <CardHeader>
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-accent/10 text-accent">
+                        {category.icon}
+                      </div>
+                      <CardTitle className="text-lg">{category.title}</CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3">
+                      {category.items.map((item, i) => (
+                        <li key={i} className="flex items-center gap-2 group">
+                          <CheckCircle className="h-4 w-4 text-accent" />
+                          <Link 
+                            to="/consultation"
+                            className="text-sm text-festari-700 hover:text-accent transition-colors"
+                          >
+                            {item}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <InquiryModal
           product={inquiryProduct}
           isOpen={isModalOpen}
@@ -261,4 +341,4 @@ const Agriculture = () => {
   );
 };
 
-export default Agriculture;
+export default AgriBusiness;

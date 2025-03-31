@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, User, ShoppingCart, BookOpen, Home, MapPin, LogIn } from 'lucide-react';
+import { Menu, X, User, ShoppingCart, BookOpen, Home, MapPin, LogIn, Briefcase } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import {
@@ -26,10 +26,11 @@ const Header = () => {
   // Define navigation items
   const navItems = [
     { name: 'Home', path: '/' },
-    { name: 'Real Estate', path: '/real-estate', icon: <Home size={18} /> },
-    { name: 'Research', path: '/research', icon: <BookOpen size={18} /> },
-    { name: 'Agriculture', path: '/agriculture', icon: <ShoppingCart size={18} /> },
-    { name: 'About', path: '/about' },
+    { name: 'Estate Agency', path: '/estates', icon: <Home size={18} /> },
+    { name: 'Research & Consultation', path: '/research', icon: <BookOpen size={18} /> },
+    { name: 'Agribusiness', path: '/agriculture', icon: <ShoppingCart size={18} /> },
+    { name: 'Enterprise', path: '/enterprise', icon: <Briefcase size={18} /> },
+    { name: 'About', path: '/about', icon: <User size={18} /> },
     { name: 'Founder', path: '/founder', icon: <User size={18} /> },
     { name: 'Contact', path: '/contact', icon: <MapPin size={18} /> },
   ];
