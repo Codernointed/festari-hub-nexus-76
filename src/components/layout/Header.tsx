@@ -66,13 +66,15 @@ const Header = () => {
             <Logo 
               variant="icon" 
               theme={(isHomePage && !isScrolled) ? "light" : "dark"} 
-              size="sm" 
+              size="sm"
+              showOnLight={false} // Hide icon in light/transparent mode
             />
             <Logo 
               variant="text" 
               theme={(isHomePage && !isScrolled) ? "light" : "dark"}
               className="hidden md:block" 
-              size="sm" 
+              
+              showOnLight={true} // Always show text
             />
           </Link>
 

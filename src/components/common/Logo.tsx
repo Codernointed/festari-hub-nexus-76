@@ -5,24 +5,36 @@ interface LogoProps {
   theme?: 'light' | 'dark';
   className?: string;
   size?: 'sm' | 'md' | 'lg';
+  showOnLight?: boolean;
 }
 
-const Logo = ({ variant = 'full', theme = 'light', className, size = 'md' }: LogoProps) => {
+const Logo = ({ 
+  variant = 'full', 
+  theme = 'light', 
+  className, 
+  size = 'md',
+  showOnLight = true 
+}: LogoProps) => {
+  // Hide based on theme and showOnLight prop
+  const shouldHide = theme === 'light' && !showOnLight && variant === 'icon';
+  if (shouldHide) {
+    return null;
+  }
+
   const getLogoSrc = () => {
-    if (variant === 'full') {
-      return theme === 'light' 
-        ? '/base_logo_transparent_background.png'
-        : '/black_text-logoname_transparent_background.png';
+    switch (variant) {
+      case 'icon':
+        return theme === 'light' ? '/logo-icon.png' : '/logo-icon-black.png';
+      case 'text':
+        return theme === 'light' 
+          ? '/base_logo_transparent_background.png'
+          : '/black_text-logoname_transparent_background.png';
+      case 'full':
+      default:
+        return theme === 'light'
+          ? '/base_logo_transparent_background.png'
+          : '/black_text-logoname_transparent_background.png';
     }
-    if (variant === 'icon') {
-      return theme === 'light' 
-        ? '/logo-icon.png'
-        : '/logo-icon-black.png';
-    }
-    // text-only variant
-    return theme === 'light'
-      ? '/base_logo_transparent_background.png'
-      : '/black_text-logoname_transparent_background.png';
   };
 
   const sizeClasses = {
