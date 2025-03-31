@@ -22,7 +22,8 @@ const serviceCategories = [
       "Crop Farming",
       "Livestock Farming",
       "Organic Farming",
-      "Greenhouse and Hydroponic Farming"
+      "Greenhouse and Hydroponic Farming",
+      "Sustainable Agriculture"
     ]
   },
   {
@@ -32,7 +33,8 @@ const serviceCategories = [
       "Agribusiness Consulting",
       "Farm Management Services",
       "Agricultural Research",
-      "Farm Education and Training"
+      "Farm Education and Training",
+      "Rural Development"
     ]
   },
   {
@@ -41,7 +43,8 @@ const serviceCategories = [
     items: [
       "Agricultural Equipment Sales and Rental",
       "Crop and Soil Analysis",
-      "Pest and Disease Control"
+      "Pest and Disease Control",
+      "Sale of Agrochemicals"
     ]
   },
   {
@@ -51,7 +54,8 @@ const serviceCategories = [
       "Agricultural Marketing",
       "Farm-to-Table Sales",
       "Agribusiness Investment",
-      "Agricultural Supply Chain Management"
+      "Agricultural Supply Chain Management",
+      "Agro-processing"
     ]
   }
 ];

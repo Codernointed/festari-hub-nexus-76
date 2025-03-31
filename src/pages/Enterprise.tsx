@@ -7,22 +7,19 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BarChart3, Briefcase, CheckCircle, Store, User } from 'lucide-react';
-// import { CheckCircle } from 'react-icons/fi';
-// import { Store } from 'react-icons/md';
-// import { BarChart3 } from 'react-icons/bi';
-// import { User } from 'react-icons/fa';
-// import { Briefcase } from 'react-icons/hi';
 
 const serviceCategories = [
   {
-    title: "Trading Services",
+    title: "Trading & Distribution",
     icon: <Store size={24} />,
     items: [
       "Retail Sales",
       "Wholesale Distribution",
       "Import and Export",
       "Product Sourcing",
-      "E-commerce Operations"
+      "E-commerce Operations",
+      "General Trading and Merchandise",
+      "Trade Shows and Exhibitions"
     ]
   },
   {
@@ -31,19 +28,33 @@ const serviceCategories = [
     items: [
       "Inventory Management",
       "Supply Chain Management",
+      "Marketing and Promotion",
+      "Customer Service",
+      "Product Quality Control",
+      "Vendor Relationships",
       "Market Research",
-      "Business Expansion",
-      "Product Development"
+      "Logistics and Distribution",
+      "Inventory Forecasting",
+      "Product Development",
+      "Business Expansion"
     ]
   },
   {
     title: "Personal Services",
     icon: <User size={24} />,
     items: [
-      "Personal Care Services",
-      "Event Planning",
-      "Home Services",
+      "Delivery Services",
+      "Waste Management Services",
+      "Catering Services",
+      "Barbering Services",
+      "Hairdressing and Salon",
+      "Clothing and Boutique",
+      "House Cleaning Services",
+      "Event Planning and Hosting",
+      "Home Repair and Maintenance",
+      "Lawn Care and Landscaping",
       "Transportation Services",
+      "Personal Shopping and Errand Services",
       "Pet Care Services"
     ]
   },
@@ -51,11 +62,12 @@ const serviceCategories = [
     title: "Professional Services",
     icon: <Briefcase size={24} />,
     items: [
-      "Digital Marketing",
-      "Health and Wellness",
+      "Digital Marketing Services",
+      "Health and Wellness Services",
       "Hospitality Services",
-      "Cleaning Services",
-      "Mobile Money Services"
+      "Home Renovation and Remodeling",
+      "Mobile Money Services",
+      "Credit Transfer Services"
     ]
   }
 ];

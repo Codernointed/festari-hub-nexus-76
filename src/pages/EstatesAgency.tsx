@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Building, Home, Key, Banknote, FileCheck, Search, CheckCircle, ChevronDown, Filter, MapPin } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { Search, Home, Building, Map, Filter, ChevronDown, CheckCircle } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import ConsultationForm from '@/components/consultation/ConsultationForm';
 
 const propertyListings = [
   {
@@ -76,32 +79,44 @@ const propertyListings = [
 
 const serviceCategories = [
   {
-    title: "Sales & Rentals",
+    title: "Sales & Purchases",
+    icon: <Building size={24} />,
     items: [
       "Real Estate Sales",
       "Property Listings",
       "Property Purchase Assistance",
-      "Property Rentals",
-      "Hostel Rentals"
+      "Land Sales and Development"
     ]
   },
   {
-    title: "Management Services",
+    title: "Rentals & Management",
+    icon: <Key size={24} />,
     items: [
+      "Property Rentals",
+      "Hostel Rentals",
       "Property Management",
-      "Hostel Management Services",
-      "Property Marketing",
-      "Property Inspections",
-      "Tenant Placement Services"
+      "Tenant Placement Services",
+      "Hostel Management Services"
     ]
   },
   {
     title: "Advisory Services",
+    icon: <Search size={24} />,
     items: [
       "Market Analysis",
+      "Property Marketing",
+      "Negotiation",
       "Property Appraisals",
-      "Real Estate Consultation",
+      "Real Estate Consultation"
+    ]
+  },
+  {
+    title: "Support Services",
+    icon: <FileCheck size={24} />,
+    items: [
       "Legal and Regulatory Compliance",
+      "Property Inspections",
+      "Property Renovation and Staging",
       "Real Estate Financing Assistance"
     ]
   }
@@ -222,7 +237,7 @@ const EstatesAgency = () => {
               </h2>
               <div className="flex gap-2">
                 <button className="p-2 rounded bg-white text-festari-800 hover:bg-festari-100">
-                  <Map size={20} />
+                  <MapPin size={20} />
                 </button>
                 <button className="p-2 rounded bg-accent text-white">
                   <Building size={20} />

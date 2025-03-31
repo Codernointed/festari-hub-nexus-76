@@ -1,104 +1,89 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { serviceCategories } from '@/data/services';
+import { useToast } from '@/hooks/use-toast';
 
-export function ConsultationForm() {
-  const [selectedService, setSelectedService] = useState('');
-  const [selectedActivity, setSelectedActivity] = useState('');
+interface ConsultationFormProps {
+  serviceCategories: Array<{
+    title: string;
+    items: string[];
+  }>;
+  onSubmit?: (data: any) => void;
+}
 
-  const handleSubmit = (e: React.FormEvent) => {
+const ConsultationForm = ({ serviceCategories, onSubmit }: ConsultationFormProps) => {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
+    setIsSubmitting(true);
+    
+    // Simulate form submission
+    setTimeout(() => {
+      toast({
+        title: "Consultation Request Sent",
+        description: "We'll get back to you soon to discuss your needs.",
+      });
+      setIsSubmitting(false);
+      if (onSubmit) onSubmit(formData);
+    }, 1500);
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="space-y-4">
-          <div>
-            <label className="text-sm font-medium">Service Category</label>
-            <Select onValueChange={setSelectedService}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select service category" />
-              </SelectTrigger>
-              <SelectContent>
-                {serviceCategories.map(category => (
-                  <SelectItem key={category.title} value={category.title}>
-                    {category.title}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {selectedService && (
-            <div>
-              <label className="text-sm font-medium">Activity</label>
-              <Select onValueChange={setSelectedActivity}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select activity" />
-                </SelectTrigger>
-                <SelectContent>
-                  {serviceCategories
-                    .find(cat => cat.title === selectedService)
-                    ?.activities.map(activity => (
-                      <SelectItem key={activity.title} value={activity.title}>
-                        {activity.title}
-                      </SelectItem>
-                    ))}
-                </SelectContent>
-              </Select>
-            </div>
-          )}
-
-          <div className="space-y-4">
-            <div>
-              <label className="text-sm font-medium">Full Name</label>
-              <Input placeholder="Your full name" required />
-            </div>
-
-            <div>
-              <label className="text-sm font-medium">Email</label>
-              <Input type="email" placeholder="Your email address" required />
-            </div>
-
-            <div>
-              <label className="text-sm font-medium">Phone</label>
-              <Input type="tel" placeholder="Your phone number" required />
-            </div>
-
-            <div>
-              <label className="text-sm font-medium">Message</label>
-              <Textarea 
-                placeholder="Please describe your requirements or questions"
-                className="h-32"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="text-sm font-medium">Preferred Contact Method</label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select contact method" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="email">Email</SelectItem>
-                  <SelectItem value="phone">Phone</SelectItem>
-                  <SelectItem value="whatsapp">WhatsApp</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <Label htmlFor="name">Full Name</Label>
+          <Input id="name" required placeholder="John Doe" />
         </div>
+        
+        <div className="space-y-2">
+          <Label htmlFor="email">Email Address</Label>
+          <Input id="email" type="email" required placeholder="john@example.com" />
+        </div>
+      </div>
 
-        <Button type="submit" className="w-full">
-          Submit Consultation Request
-        </Button>
-      </form>
-    </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <Label htmlFor="phone">Phone Number</Label>
+          <Input id="phone" type="tel" placeholder="+1 (555) 000-0000" />
+        </div>
+        
+        <div className="space-y-2">
+          <Label htmlFor="service">Service Category</Label>
+          <Select>
+            <SelectTrigger>
+              <SelectValue placeholder="Select a service" />
+            </SelectTrigger>
+            <SelectContent>
+              {serviceCategories.map(category => (
+                <SelectItem key={category.title} value={category.title}>
+                  {category.title}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="message">Project Details</Label>
+        <Textarea 
+          id="message" 
+          placeholder="Please describe your project or requirements..."
+          className="min-h-[150px]"
+        />
+      </div>
+
+      <Button type="submit" className="w-full" disabled={isSubmitting}>
+        {isSubmitting ? "Sending..." : "Submit Consultation Request"}
+      </Button>
+    </form>
   );
-}
+};
+
+export default ConsultationForm;

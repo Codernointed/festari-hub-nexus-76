@@ -1,4 +1,4 @@
-import { ConsultationForm } from '@/components/consultation/ConsultationForm';
+import ConsultationForm from '@/components/consultation/ConsultationForm';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
@@ -11,7 +11,7 @@ const ConsultationPage = () => {
           <h1 className="text-3xl font-display font-bold text-festari-900 mb-8 text-center">
             Request a Consultation
           </h1>
-          <ConsultationForm />
+          <ConsultationForm serviceCategories={[]} />
         </div>
       </main>
       <Footer />

@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GraduationCap, BookOpen, FileText, User, Clock, Calendar, ExternalLink, CheckCircle, HardHat, Search, Leaf, Link } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import ConsultationForm from '@/components/consultation/ConsultationForm';
 
 // Sample courses data
 const courses = [
@@ -171,7 +172,8 @@ const serviceCategories = [
     items: [
       "Professional and Technical Writing Services",
       "Editing, Proofreading and Document Formatting",
-      "Printing, Binding and Document Production"
+      "Printing, Binding and Document Production",
+      "Regulatory Compliance Documentation"
     ]
   }
 ];
@@ -235,15 +237,11 @@ const Research = () => {
         <section className="section-padding bg-festari-50" id="research-content">
           <div className="container-custom">
             <Tabs defaultValue="courses" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-8">
-                <TabsTrigger value="courses" className="flex items-center gap-2">
-                  <GraduationCap size={18} />
-                  <span className="font-medium">Courses</span>
-                </TabsTrigger>
-                <TabsTrigger value="publications" className="flex items-center gap-2">
-                  <BookOpen size={18} />
-                  <span className="font-medium">Publications</span>
-                </TabsTrigger>
+              <TabsList className="grid w-full grid-cols-4 mb-8">
+                <TabsTrigger value="courses">Courses</TabsTrigger>
+                <TabsTrigger value="publications">Publications</TabsTrigger>
+                <TabsTrigger value="consultation">Consultation</TabsTrigger>
+                <TabsTrigger value="services">Services</TabsTrigger>
               </TabsList>
               
               <TabsContent value="courses" className="space-y-8" id="courses">
@@ -462,6 +460,21 @@ const Research = () => {
                       </CardContent>
                     </Card>
                   ))}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="consultation" className="space-y-8">
+                <div className="max-w-3xl mx-auto">
+                  <div className="bg-white rounded-lg p-8 shadow-md">
+                    <h2 className="text-2xl font-display font-bold text-festari-900 mb-2">
+                      Request a Consultation
+                    </h2>
+                    <p className="text-festari-600 mb-6">
+                      Fill out the form below to request a consultation with our experts.
+                      We'll get back to you within 24-48 hours to discuss your needs.
+                    </p>
+                    <ConsultationForm serviceCategories={serviceCategories} />
+                  </div>
                 </div>
               </TabsContent>
             </Tabs>
