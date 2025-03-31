@@ -20,11 +20,11 @@ import Logo from '@/components/common/Logo';
 import { cn } from '@/lib/utils';
 
 const Header = () => {
-  const location = useLocation();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const isMobile = useIsMobile();
+  const location = useLocation(); // Get the current route location
+  const [isScrolled, setIsScrolled] = useState(false); // State to track if the page is scrolled
+  const isMobile = useIsMobile(); // Hook to detect if the device is mobile
   
-  const isHomePage = location.pathname === '/';
+  const isHomePage = location.pathname === '/'; // Check if the current page is the homepage
 
   // Define navigation items
   const navItems = [
@@ -38,14 +38,14 @@ const Header = () => {
     { name: 'Contact', path: '/contact', icon: <MapPin size={18} /> },
   ];
 
-  // Watch for scroll position to add background to header
+  // Watch for scroll position to add background to the header
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 20); // Set `isScrolled` to true if the page is scrolled down
     };
     
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll); // Add scroll event listener
+    return () => window.removeEventListener('scroll', handleScroll); // Cleanup on unmount
   }, []);
 
   return (
@@ -53,7 +53,7 @@ const Header = () => {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         {
-          // Transparent only on home page when not scrolled
+          // Transparent only on the homepage when not scrolled
           "bg-transparent": isHomePage && !isScrolled,
           // White with blur on scroll or other pages
           "bg-white/80 backdrop-blur-md border-b border-festari-100": isScrolled || !isHomePage,
@@ -62,6 +62,7 @@ const Header = () => {
     >
       <div className="container-custom">
         <div className="flex items-center justify-between h-20">
+          {/* Logo section */}
           <Link to="/" className="flex items-center gap-2">
             <Logo 
               variant="icon" 
@@ -73,7 +74,6 @@ const Header = () => {
               variant="text" 
               theme={(isHomePage && !isScrolled) ? "light" : "dark"}
               className="hidden md:block" 
-              
               showOnLight={true} // Always show text
             />
           </Link>
@@ -89,7 +89,7 @@ const Header = () => {
                   (isHomePage && !isScrolled)
                     ? "text-white/90 hover:text-white"
                     : "text-festari-700 hover:text-accent",
-                  location.pathname === item.path && "font-medium"
+                  location.pathname === item.path && "font-medium" // Highlight active link
                 )}
               >
                 {item.name}

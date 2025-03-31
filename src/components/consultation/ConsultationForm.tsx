@@ -18,10 +18,27 @@ const ConsultationForm = ({ serviceCategories, onSubmit }: ConsultationFormProps
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // State hooks for form fields
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [selectedService, setSelectedService] = useState('');
+  const [message, setMessage] = useState('');
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
+    if (!selectedService) {
+      toast({
+        title: "Error",
+        description: "Please select a service category.",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
     // Simulate form submission
     setTimeout(() => {
       toast({
@@ -30,6 +47,13 @@ const ConsultationForm = ({ serviceCategories, onSubmit }: ConsultationFormProps
       });
       setIsSubmitting(false);
       if (onSubmit) onSubmit(FormData);
+
+      // Reset form fields
+      setName('');
+      setEmail('');
+      setPhone('');
+      setSelectedService('');
+      setMessage('');
     }, 1500);
   };
 
@@ -38,19 +62,38 @@ const ConsultationForm = ({ serviceCategories, onSubmit }: ConsultationFormProps
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <Label htmlFor="name">Full Name</Label>
-          <Input id="name" required placeholder="John Doe" />
+          <Input 
+            id="name" 
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required 
+            placeholder="John Doe" 
+          />
         </div>
         
         <div className="space-y-2">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" type="email" required placeholder="john@example.com" />
+          <Input 
+            id="email" 
+            type="email" 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required 
+            placeholder="john@example.com" 
+          />
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <Label htmlFor="phone">Phone Number</Label>
-          <Input id="phone" type="tel" placeholder="+1 (555) 000-0000" />
+          <Input 
+            id="phone" 
+            type="tel" 
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="+1 (555) 000-0000" 
+          />
         </div>
         
         <div className="space-y-2">
@@ -74,6 +117,8 @@ const ConsultationForm = ({ serviceCategories, onSubmit }: ConsultationFormProps
         <Label htmlFor="message">Project Details</Label>
         <Textarea 
           id="message" 
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
           placeholder="Please describe your project or requirements..."
           className="min-h-[150px]"
         />

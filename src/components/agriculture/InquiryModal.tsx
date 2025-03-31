@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -24,6 +23,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { AgricultureProduct } from '@/types/agriculture';
 
+// Define the schema for form validation using Zod
 const formSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters' }),
   email: z.string().email({ message: 'Please enter a valid email address' }),
@@ -33,10 +33,10 @@ const formSchema = z.object({
 });
 
 interface InquiryModalProps {
-  product: AgricultureProduct | null;
-  isOpen: boolean;
-  onClose: () => void;
-  onSubmit: (values: z.infer<typeof formSchema>) => void;
+  product: AgricultureProduct | null; // The product being inquired about
+  isOpen: boolean; // Whether the modal is open
+  onClose: () => void; // Function to close the modal
+  onSubmit: (values: z.infer<typeof formSchema>) => void; // Function to handle form submission
 }
 
 const InquiryModal: React.FC<InquiryModalProps> = ({ 
@@ -45,6 +45,7 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
   onClose,
   onSubmit
 }) => {
+  // Initialize the form with default values and validation schema
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -56,11 +57,13 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
     },
   });
 
+  // Handle form submission
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    onSubmit(values);
-    form.reset();
+    onSubmit(values); // Pass form values to the parent component
+    form.reset(); // Reset the form fields
   };
 
+  // Return null if no product is selected
   if (!product) return null;
 
   return (
@@ -73,6 +76,7 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
           </DialogDescription>
         </DialogHeader>
         
+        {/* Product details section */}
         <div className="flex items-center space-x-4 my-4 p-3 bg-festari-50 rounded-lg">
           <img 
             src={product.image} 
@@ -85,9 +89,11 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
           </div>
         </div>
         
+        {/* Inquiry form */}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Name field */}
               <FormField
                 control={form.control}
                 name="name"
@@ -102,6 +108,7 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
                 )}
               />
               
+              {/* Email field */}
               <FormField
                 control={form.control}
                 name="email"
@@ -118,6 +125,7 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Phone field */}
               <FormField
                 control={form.control}
                 name="phone"
@@ -132,6 +140,7 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
                 )}
               />
               
+              {/* Quantity field */}
               <FormField
                 control={form.control}
                 name="quantity"
@@ -147,6 +156,7 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
               />
             </div>
             
+            {/* Message field */}
             <FormField
               control={form.control}
               name="message"
@@ -165,6 +175,7 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
               )}
             />
             
+            {/* Form actions */}
             <DialogFooter className="mt-6">
               <Button variant="outline" type="button" onClick={onClose}>Cancel</Button>
               <Button type="submit">Submit Inquiry</Button>
