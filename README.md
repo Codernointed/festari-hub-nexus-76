@@ -46,6 +46,8 @@ Ensure Node.js and npm are installed. For managing Node.js versions, consider us
 
 The codebase follows a typical structure for Vite + React applications:
 
+> **Note**: For detailed code implementation and structure documentation, refer to [devnotes.md](./devnotes.md)
+
 ### Key Directories
 
 | Directory         | Purpose                                                                 |
