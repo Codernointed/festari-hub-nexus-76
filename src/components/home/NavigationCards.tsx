@@ -1,4 +1,3 @@
-
 import { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Building, BookOpen, User, ArrowRight, Leaf, MapPin, School } from 'lucide-react';
@@ -42,7 +41,7 @@ const navigationCards = [
     description: 'Browse through publications, research papers, and academic contributions.',
     icon: School,
     path: '/research/publications',
-    color: 'bg-gradient-to-br from-indigo-500 to-indigo-700',
+    color: 'bg-gradient-to-br from-slate-500 to-slate-700',
     delay: 400,
   },
   {
@@ -91,6 +90,7 @@ const NavigationCards = () => {
             Festari Group brings together a unique blend of real estate opportunities, educational resources, 
             agricultural innovation, and professional expertise in one seamless platform.
           </p>
+          
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -106,14 +106,14 @@ const NavigationCards = () => {
             >
               <div className={cn("p-8 h-full text-white", card.color)}>
                 <div className="flex items-center justify-between mb-6">
-                  <card.icon size={32} className="text-white/80" />
+                  {card.icon && <card.icon size={32} className="text-white/90" />}
                   <ArrowRight 
                     size={20} 
-                    className="transform translate-x-0 opacity-0 group-hover:translate-x-1 group-hover:opacity-100 transition-all duration-300" 
+                    className="text-white transform translate-x-0 opacity-100 group-hover:translate-x-1 transition-all duration-300" 
                   />
                 </div>
                 <h3 className="text-xl font-semibold mb-3">{card.title}</h3>
-                <p className="text-white/80 text-sm">{card.description}</p>
+                <p className="text-white/90 text-sm">{card.description}</p>
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </Link>

@@ -1,4 +1,3 @@
-
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -24,11 +23,17 @@ const CallToAction = () => {
                 Contact Us
               </Link>
             </Button>
-            <Button asChild variant="outline" className="border-white text-white hover:bg-white/10 px-6 py-6" size="lg">
+            <Button
+              asChild
+              variant="outline"
+              className="border-white text-white font-semibold hover:bg-white/20 bg-black/50 px-6 py-6"
+              size="lg"
+            >
               <Link to="/about" className="flex items-center">
                 Learn More <ArrowRight size={18} className="ml-2" />
               </Link>
             </Button>
+            
           </div>
         </div>
       </div>
