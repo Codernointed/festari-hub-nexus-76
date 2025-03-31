@@ -29,7 +29,7 @@ const ConsultationForm = ({ serviceCategories, onSubmit }: ConsultationFormProps
         description: "We'll get back to you soon to discuss your needs.",
       });
       setIsSubmitting(false);
-      if (onSubmit) onSubmit(formData);
+      if (onSubmit) onSubmit(FormData);
     }, 1500);
   };
 
