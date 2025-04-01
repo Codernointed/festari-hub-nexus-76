@@ -75,15 +75,28 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
             <div className="space-y-3 text-festari-300">
-              <p>123 Festari Way, Suite 100</p>
-              <p>New York, NY 10001</p>
+              <p>University of Mines and Technology</p>
+              <p>Tarkwa, Ghana</p>
               <p>
-                <a href="mailto:info@festari.com" className="hover:text-white transition-colors flex items-center gap-2">
+                <a href="mailto:fksaadaari@festarigroup.com" className="hover:text-white transition-colors flex items-center gap-2">
                   <Mail size={16} />
-                  info@festari.com
+                  fksaadaari@festarigroup.com
                 </a>
               </p>
-              <p>+1 (555) 123-4567</p>
+              <p>
+                <a href="tel:+233240699535" className="hover:text-white transition-colors">
+                  +233 240699535
+                </a>
+              </p>
+              <p>
+                <a href="https://www.linkedin.com/in/festus-kunkyin-saadaari-98462267/" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   className="hover:text-white transition-colors flex items-center gap-2">
+                  <Linkedin size={16} />
+                  Connect on LinkedIn
+                </a>
+              </p>
             </div>
           </div>
         </div>
