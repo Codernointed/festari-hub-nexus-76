@@ -71,7 +71,7 @@
 
 @layer base {
   * {
-    @apply border-[#e5e7eb];
+    @apply border-border;
   }
 
   body {
