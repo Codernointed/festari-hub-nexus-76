@@ -9,10 +9,10 @@ const Footer = () => {
     <footer className="bg-festari-900 text-white py-16">
       <div className="container-custom">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          <div className="space-y-4">
-            <Logo variant="full" theme="light" size="lg" className="mb-6" />
+          <div className="space-y-1">
             <Link to="/" className="inline-block">
-              <span className="text-2xl font-display font-bold">Festari</span>
+              <Logo variant="white-text" theme="light" size="lg" className="mb-6" />
+              {/* <span className="text-2xl font-display font-bold">Festari</span> */}
             </Link>
             <p className="text-festari-100 max-w-xs">
               A premier platform connecting real estate, education, and professional excellence.

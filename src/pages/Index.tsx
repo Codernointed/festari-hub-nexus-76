@@ -32,8 +32,8 @@ const Index = () => {
       <Header />
       <main>
         <Hero />
-        <AnimatedStats />
         <BusinessDivisions />
+        <AnimatedStats />
         <Features />
         <MissionVision />
         <CoreValues />

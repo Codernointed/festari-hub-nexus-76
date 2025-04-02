@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 
 interface LogoProps {
-  variant?: 'full' | 'icon' | 'text';
+  variant?: 'full' | 'icon' | 'text' | 'white-text';
   theme?: 'light' | 'dark';
   className?: string;
   size?: 'sm' | 'md' | 'lg';
@@ -29,6 +29,8 @@ const Logo = ({
         return theme === 'light' 
           ? '/base_logo_transparent_background.png'
           : '/black_text-logoname_transparent_background.png';
+      case 'white-text':
+        return '/white-text.png'
       case 'full':
       default:
         return theme === 'light'

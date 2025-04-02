@@ -30,7 +30,7 @@ const Hero = () => {
           </span>
           
           <h1 className={cn("text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 transform transition-all duration-700 delay-100 ease-out", isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4")}>
-            Comprehensive Solutions Across <span className="text-mikado">Multiple</span> Industries
+            Premiere Business Solutions Under <span className="text-mikado">One</span> Umbrella
           </h1>
           
           <p className={cn("text-lg md:text-xl text-festari-100 mb-8 max-w-2xl transform transition-all duration-700 delay-200 ease-out", isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4")}>
