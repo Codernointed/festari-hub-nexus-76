@@ -18,7 +18,9 @@ import {
   Users,
   ChevronsRight,
   FileText,
-  Check
+  Check,
+  MessageSquare,
+  Star
 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from '@/components/ui/button';
@@ -55,7 +57,20 @@ const founderData = {
   bio: "Dr. Festus Kunkyin-Saadaari is a Ghanaian academic, mining engineer, researcher, and visionary entrepreneur. Currently serving as a Lecturer at UMaT and Faculty Examinations Officer, he has trained over 300 professionals across 8 countries in mining engineering and safety.",
   longBio: `Dr. Festus Kunkyin-Saadaari is a distinguished Ghanaian academic, mining engineer, researcher, and visionary entrepreneur. He holds both a PhD and a BSc in Mining Engineering from the University of Mines and Technology (UMaT), Tarkwa. Beginning his teaching journey with home tutoring at the kindergarten level, Dr. Kunkyin-Saadaari has taught across all levels of Ghana's educational ladder — from basic and secondary education to undergraduate and postgraduate university levels.
 
-  As the founder of Festari Group Ltd (FGL), he established a transformative force bridging academia, industry, and sustainable development through multiple subsidiaries including Festari Research & Consultancy Institute (FRCI), Festari International Academy (FIA), Festari Estates Agency (FEA), Festari Farms & Agribusinesses (FFA), and Festari Enterprise (FEnt).`,
+  He currently serves as a Lecturer at UMaT, where he also functions as the Faculty Examinations Officer for the Faculty of Mining and Minerals Technology. In addition to supervising over 70 students across BSc, PgD, MSc, MPhil, and PhD programs, he has also served as a visiting scholar at the Missouri University of Science and Technology in the USA. His academic and industrial insights span rock mechanics, mining systems, and predictive modeling.`,
+  profesionalImpact: `Since 2018, Dr. Kunkyin-Saadaari has trained over 300 professionals in short courses and certification programs in mining, occupational health and safety, and geotechnical engineering. His participants span across Ghana, Mali, Guinea, Burkina Faso, Côte d'Ivoire, Liberia, Spain, and the United States. These efforts have resulted in professional and proficiency certifications and demonstrate his commitment to industry-aligned capacity building.`,
+  companyVision: `Festari Group Ltd (FGL) was founded by Dr. Saadaari as a transformative force to bridge the gap between academia, industry, and sustainable development. FGL is a multidisciplinary holding company offering services through its subsidiaries: Festari Research & Consultancy Institute (FRCI), Festari International Academy (FIA), Festari Estates Agency (FEA), Festari Farms & Agribusinesses (FFA), and Festari Enterprise (FEnt). These subsidiaries deliver innovative, practical, and scalable solutions in mining consultancy, professional training, real estate, agribusiness, and general trading. Together, they embody FGL's mission to empower individuals, support industry excellence, and drive socio-economic transformation in Ghana and beyond.`,
+  founderMessage: `At Festari Group Ltd., we don't just provide services — we build partnerships that transform industries and empower individuals. Our mission is to offer premier solutions tailored to Africa's growth needs, driven by expertise, ethics, and innovation.`,
+  keyHighlights: [
+    "Lecturer and Faculty Examinations Officer at UMaT's largest faculty",
+    "Over 70 students supervised across BSc, PgD, MSc, MPhil, and PhD programs",
+    "Taught across every level of the Ghanaian educational system",
+    "Trained 300+ professionals from 8 countries in industry-recognized short courses",
+    "Visiting Scholar at Missouri University of Science and Technology, USA",
+    "Founder of FRCI and FIA under Festari Group Ltd",
+    "Over 10 peer-reviewed journal publications",
+    "Member of 8+ international professional bodies"
+  ],
   profileImage: "/lovable-uploads/a6a7726e-4c17-47d2-beef-4193ca9b8444.png",
   location: "Tarkwa, Ghana",
   contactInfo: {
@@ -92,11 +107,14 @@ const founderData = {
     "Occupational Safety"
   ],
   organizations: [
-    { name: "West African Institute of Mining, Metallurgy and Petroleum", role: "Member", period: "2020 - Present" },
+    { name: "West African Institute of Mining, Metallurgy and Petroleum (WAIMM)", role: "Member", period: "2020 - Present" },
     { name: "International Society for Rock Mechanics (ISRM)", role: "Member", period: "2019 - Present" },
+    { name: "Canadian Institute of Mining (CIM)", role: "Member", period: "2020 - Present" },
     { name: "American Rock Mechanics Association (ARMA)", role: "Member", period: "2020 - Present" },
-    { name: "International Association of Engineers (IAENG)", role: "Member", period: "2021 - Present" },
-    { name: "Canadian Institute of Mining (CIM)", role: "Member", period: "2020 - Present" }
+    { name: "Ghana Geotechnical Society (GGS)", role: "Member", period: "2019 - Present" },
+    { name: "International Society for Soil Mechanics and Geotechnical Engineering (ISSMGE)", role: "Member", period: "2020 - Present" },
+    { name: "African Institute of Mining Professionals (AfIMPP)", role: "Member", period: "2021 - Present" },
+    { name: "International Association of Engineers (IAENG)", role: "Member", period: "2021 - Present" }
   ],
   certifications: [
     { name: "Diploma in Research Skills", issuer: "UniAthena", date: "Jan 2023", id: "8675-4134-1122" },
@@ -161,6 +179,11 @@ const founderData = {
       pages: "1-8"
     }
   ] as Publication[],
+  scholarProfiles: {
+    google: "https://scholar.google.com/citations?user=XXXXXXXXXXXX",
+    scopus: "58644424800",
+    orcid: "https://orcid.org/0000-0002-8202-2021"
+  },
   courses: {
     postgraduate: [
       "MN 261 – Introduction to Mining Engineering",
@@ -178,10 +201,12 @@ const founderData = {
       "MN 451 – Project Work I"
     ],
     certificate: [
+      "EV/GA/HS/MT/SU/WR 131 – Basic Mining Principles"
+    ],
+    professional: [
       "Professional Certificate in Mining Engineering Technologies",
       "Advanced Professional Certificate in Drilling, Blasting & Exploration Technologies",
-      "Proficiency Certificate in Mine Occupational Health, Safety & Environment",
-      "EV/GA/HS/MT/SU/WR 131 – Basic Mining Principles"
+      "Proficiency Certificate in Mine Occupational Health, Safety & Environment"
     ]
   }
 };
@@ -206,6 +231,140 @@ const itemVariant = {
   hidden: { opacity: 0, y: 10 },
   visible: { opacity: 1, y: 0 }
 };
+
+const AboutContent = () => (
+  <TabsContent value="about" className="space-y-8">
+    <Card className="border-none shadow-md">
+      <CardContent className="pt-6">
+        <h2 className="text-2xl font-bold text-festari-900 mb-4">Biography</h2>
+        <p className="text-festari-700 mb-6 text-lg leading-relaxed">{founderData.longBio}</p>
+        
+        <div className="grid md:grid-cols-2 gap-8 mt-8">
+          <div>
+            <h2 className="text-xl font-bold text-festari-900 mb-4 flex items-center gap-2">
+              <Award size={20} className="text-festari-accent" />
+              Professional Organizations
+            </h2>
+            <div className="space-y-4">
+              {founderData.organizations.map((org, index) => (
+                <motion.div 
+                  key={index} 
+                  className="flex items-start p-3 rounded-lg border border-festari-100/30 hover:bg-festari-50 transition-colors"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <div>
+                    <h3 className="font-semibold text-festari-900">{org.name}</h3>
+                    <p className="text-festari-600 text-sm">{org.role} • {org.period}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+          
+          <div>
+            <h2 className="text-xl font-bold text-festari-900 mb-4 flex items-center gap-2">
+              <FileText size={20} className="text-festari-accent" />
+              Certifications
+            </h2>
+            <div className="space-y-4">
+              {founderData.certifications.map((cert, index) => (
+                <motion.div 
+                  key={index} 
+                  className="flex items-start p-3 rounded-lg border border-festari-100/30 hover:bg-festari-50 transition-colors"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <div>
+                    <h3 className="font-semibold text-festari-900">{cert.name}</h3>
+                    <p className="text-festari-600 text-sm">{cert.issuer} • {cert.date}</p>
+                    <p className="text-festari-500 text-xs">ID: {cert.id}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+        
+        <Separator className="my-8" />
+        
+        <h2 className="text-xl font-bold text-festari-900 mb-4 flex items-center gap-2">
+          <Check size={20} className="text-festari-accent" />
+          Fields of Expertise
+        </h2>
+        <div className="flex flex-wrap gap-2 mb-6">
+          {founderData.expertise.map((skill, index) => (
+            <Badge key={index} variant="outline" className="bg-festari-50 px-3 py-1 text-sm">
+              {skill}
+            </Badge>
+          ))}
+        </div>
+        
+        <h2 className="text-xl font-bold text-festari-900 mt-8 mb-4 flex items-center gap-2">
+          <Globe size={20} className="text-festari-accent" />
+          Languages
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {founderData.languages.map((language, index) => (
+            <div key={index} className="p-3 rounded-lg border border-festari-100/30 bg-festari-50/50">
+              <h3 className="font-semibold text-festari-900">{language.name}</h3>
+              <p className="text-festari-600 text-sm">{language.level}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* New Message from Founder section */}
+        <div className="my-12 p-8 bg-festari-50/50 rounded-xl border border-festari-100/30">
+          <h2 className="text-2xl font-bold text-festari-900 mb-6 flex items-center gap-2">
+            <MessageSquare size={24} className="text-festari-accent" />
+            Message from the Founder
+          </h2>
+          <blockquote className="text-xl text-festari-700 italic">
+            "{founderData.founderMessage}"
+          </blockquote>
+        </div>
+
+        {/* New Key Highlights section */}
+        <div className="my-12">
+          <h2 className="text-2xl font-bold text-festari-900 mb-6 flex items-center gap-2">
+            <Star size={24} className="text-festari-accent" />
+            Key Highlights
+          </h2>
+          <div className="grid md:grid-cols-2 gap-4">
+            {founderData.keyHighlights.map((highlight, index) => (
+              <div key={index} className="flex items-start gap-3 p-4 bg-white rounded-lg border border-festari-100/30">
+                <Check className="text-festari-accent flex-shrink-0 mt-1" />
+                <p className="text-festari-700">{highlight}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* New Scholar Profiles section */}
+        <div className="my-12">
+          <h2 className="text-2xl font-bold text-festari-900 mb-6 flex items-center gap-2">
+            <BookOpen size={24} className="text-festari-accent" />
+            Academic Profiles
+          </h2>
+          <div className="flex flex-wrap gap-4">
+            <a 
+              href={founderData.scholarProfiles.google}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg border border-festari-100/30 hover:bg-festari-50/50 transition-colors"
+            >
+              <img src="/icons/google-scholar.svg" alt="Google Scholar" className="w-6 h-6" />
+              Google Scholar
+            </a>
+            {/* Add similar buttons for Scopus and ORCID */}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  </TabsContent>
+);
 
 const Founder = () => {
   const [activeTab, setActiveTab] = useState("about");
@@ -311,90 +470,7 @@ const Founder = () => {
                 </TabsList>
                 
                 {/* About Tab */}
-                <TabsContent value="about" className="space-y-8">
-                  <Card className="border-none shadow-md">
-                    <CardContent className="pt-6">
-                      <h2 className="text-2xl font-bold text-festari-900 mb-4">Biography</h2>
-                      <p className="text-festari-700 mb-6 text-lg leading-relaxed">{founderData.longBio}</p>
-                      
-                      <div className="grid md:grid-cols-2 gap-8 mt-8">
-                        <div>
-                          <h2 className="text-xl font-bold text-festari-900 mb-4 flex items-center gap-2">
-                            <Award size={20} className="text-festari-accent" />
-                            Professional Organizations
-                          </h2>
-                          <div className="space-y-4">
-                            {founderData.organizations.map((org, index) => (
-                              <motion.div 
-                                key={index} 
-                                className="flex items-start p-3 rounded-lg border border-festari-100/30 hover:bg-festari-50 transition-colors"
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: index * 0.1 }}
-                              >
-                                <div>
-                                  <h3 className="font-semibold text-festari-900">{org.name}</h3>
-                                  <p className="text-festari-600 text-sm">{org.role} • {org.period}</p>
-                                </div>
-                              </motion.div>
-                            ))}
-                          </div>
-                        </div>
-                        
-                        <div>
-                          <h2 className="text-xl font-bold text-festari-900 mb-4 flex items-center gap-2">
-                            <FileText size={20} className="text-festari-accent" />
-                            Certifications
-                          </h2>
-                          <div className="space-y-4">
-                            {founderData.certifications.map((cert, index) => (
-                              <motion.div 
-                                key={index} 
-                                className="flex items-start p-3 rounded-lg border border-festari-100/30 hover:bg-festari-50 transition-colors"
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: index * 0.1 }}
-                              >
-                                <div>
-                                  <h3 className="font-semibold text-festari-900">{cert.name}</h3>
-                                  <p className="text-festari-600 text-sm">{cert.issuer} • {cert.date}</p>
-                                  <p className="text-festari-500 text-xs">ID: {cert.id}</p>
-                                </div>
-                              </motion.div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <Separator className="my-8" />
-                      
-                      <h2 className="text-xl font-bold text-festari-900 mb-4 flex items-center gap-2">
-                        <Check size={20} className="text-festari-accent" />
-                        Fields of Expertise
-                      </h2>
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        {founderData.expertise.map((skill, index) => (
-                          <Badge key={index} variant="outline" className="bg-festari-50 px-3 py-1 text-sm">
-                            {skill}
-                          </Badge>
-                        ))}
-                      </div>
-                      
-                      <h2 className="text-xl font-bold text-festari-900 mt-8 mb-4 flex items-center gap-2">
-                        <Globe size={20} className="text-festari-accent" />
-                        Languages
-                      </h2>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        {founderData.languages.map((language, index) => (
-                          <div key={index} className="p-3 rounded-lg border border-festari-100/30 bg-festari-50/50">
-                            <h3 className="font-semibold text-festari-900">{language.name}</h3>
-                            <p className="text-festari-600 text-sm">{language.level}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
+                <AboutContent />
                 
                 {/* Experience Tab */}
                 <TabsContent value="experience" className="space-y-6">
