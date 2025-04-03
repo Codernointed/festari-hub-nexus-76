@@ -1,14 +1,67 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Building, Home, Key, Banknote, FileCheck, Search, CheckCircle, ChevronDown, Filter, MapPin } from 'lucide-react';
+import { Building, Home, Key, Banknote, FileCheck, Search, CheckCircle, ChevronDown, Filter, MapPin, Briefcase, LineChart, MessageSquare, Scale, ClipboardList, User, Paintbrush, DollarSign, Flag } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import ConsultationForm from '@/components/consultation/ConsultationForm';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import ServiceGrid from '@/components/common/ServiceGrid';
+import ServiceCard from '@/components/common/ServiceCard';
+import ServiceCategory from '@/components/common/ServiceCategory';
+import ConsultationRequestForm from '@/components/common/ConsultationRequestForm';
 
-// Sample property listings data
+const estateServices = [
+  {
+    title: "Sales & Purchases",
+    icon: Building,
+    description: "Comprehensive property sales and acquisition services",
+    items: [
+      { title: "Real Estate Sales", icon: Home, description: "Professional property sales services" },
+      { title: "Property Listings", icon: MapPin, description: "Comprehensive property listings" },
+      { title: "Property Purchase Assistance", icon: Briefcase, description: "Expert buying guidance and support" },
+      { title: "Land Sales and Development", icon: Flag, description: "Strategic land development opportunities" }
+    ]
+  },
+  {
+    title: "Rentals & Management",
+    icon: Key,
+    description: "Property rental and management solutions",
+    items: [
+      { title: "Property Rentals", icon: Home, description: "Quality rental property services" },
+      { title: "Hostel Rentals", icon: Building, description: "Student accommodation services" },
+      { title: "Property Management", icon: ClipboardList, description: "Complete property management solutions" },
+      { title: "Tenant Placement Services", icon: User, description: "Tenant screening and placement" },
+      { title: "Hostel Management Services", icon: Building, description: "Specialized student housing management" }
+    ]
+  },
+  {
+    title: "Advisory Services",
+    icon: Briefcase,
+    description: "Expert real estate consultation and market insights",
+    items: [
+      { title: "Market Analysis", icon: LineChart, description: "Comprehensive real estate market insights" },
+      { title: "Property Marketing", icon: MessageSquare, description: "Strategic property promotion services" },
+      { title: "Negotiation", icon: Scale, description: "Expert property negotiations" },
+      { title: "Property Appraisals", icon: DollarSign, description: "Accurate property valuation services" },
+      { title: "Real Estate Consultation", icon: Briefcase, description: "Personalized property advice" }
+    ]
+  },
+  {
+    title: "Support Services",
+    icon: FileCheck,
+    description: "Auxiliary real estate services and compliance",
+    items: [
+      { title: "Legal and Regulatory Compliance", icon: FileCheck, description: "Ensuring property transactions meet all legal requirements" },
+      { title: "Property Inspections", icon: Search, description: "Thorough property assessments" },
+      { title: "Property Renovation and Staging", icon: Paintbrush, description: "Property enhancement services" },
+      { title: "Real Estate Financing Assistance", icon: Banknote, description: "Guidance on property financing options" }
+    ]
+  }
+];
+
 const propertyListings = [
   {
     id: 'prop1',
@@ -78,59 +131,35 @@ const propertyListings = [
   },
 ];
 
-const serviceCategories = [
-  {
-    title: "Sales & Purchases",
-    icon: <Building size={24} />,
-    items: [
-      "Real Estate Sales",
-      "Property Listings",
-      "Property Purchase Assistance",
-      "Land Sales and Development"
-    ]
-  },
-  {
-    title: "Rentals & Management",
-    icon: <Key size={24} />,
-    items: [
-      "Property Rentals",
-      "Hostel Rentals",
-      "Property Management",
-      "Tenant Placement Services",
-      "Hostel Management Services"
-    ]
-  },
-  {
-    title: "Advisory Services",
-    icon: <Search size={24} />,
-    items: [
-      "Market Analysis",
-      "Property Marketing",
-      "Negotiation",
-      "Property Appraisals",
-      "Real Estate Consultation"
-    ]
-  },
-  {
-    title: "Support Services",
-    icon: <FileCheck size={24} />,
-    items: [
-      "Legal and Regulatory Compliance",
-      "Property Inspections",
-      "Property Renovation and Staging",
-      "Real Estate Financing Assistance"
-    ]
-  }
-];
-
 const EstatesAgency = () => {
-  // State for managing active tab
   const [activeTab, setActiveTab] = useState('properties');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('All');
   const [priceRange, setPriceRange] = useState('All');
-  
-  // Filter properties based on search term and filters
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [filteredServices, setFilteredServices] = useState<any[]>([]);
+
+  const handleSearch = (query: string) => {
+    setSearchTerm(query);
+    
+    if (!query.trim()) {
+      setFilteredServices([]);
+      return;
+    }
+    
+    const results = estateServices.flatMap(category => 
+      category.items.filter(item => 
+        item.title.toLowerCase().includes(query.toLowerCase()) ||
+        (item.description && item.description.toLowerCase().includes(query.toLowerCase()))
+      ).map(item => ({
+        ...item,
+        category: category.title
+      }))
+    );
+    
+    setFilteredServices(results);
+  };
+
   const filteredProperties = propertyListings.filter(property => {
     const matchesSearch = property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          property.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -138,7 +167,6 @@ const EstatesAgency = () => {
     
     const matchesType = selectedType === 'All' || property.type === selectedType;
     
-    // Simple price range filtering (in a real app, would use numeric values and proper ranges)
     const matchesPrice = priceRange === 'All' || 
                          (priceRange === 'Under $500K' && property.price.includes('$') && !property.price.includes('M')) ||
                          (priceRange === '$500K-$1M' && property.price.includes('$') && !property.price.includes('M')) ||
@@ -148,45 +176,89 @@ const EstatesAgency = () => {
   });
 
   return (
-    <div>
-      {/* Header component */}
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="pt-20">
-        {/* Hero section */}
-        <section className="relative py-20 bg-festari-900 text-white">
+      <main className="flex-grow">
+        <section className="relative py-20 bg-gradient-to-r from-mikado/90 to-mikado/70 text-festari-900">
           <div className="container-custom">
             <div className="max-w-2xl">
               <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">Find Your Ideal Property</h1>
-              <p className="text-festari-100 mb-8">Browse our exclusive collection of premium properties available for sale and rent.</p>
+              <p className="text-festari-800 mb-8">Browse our exclusive collection of premium properties available for sale and rent, and explore our comprehensive real estate services.</p>
               
-              {/* Search bar */}
               <div className="relative">
                 <input
                   type="text"
-                  placeholder="Search by location, property type, or features..."
-                  className="w-full pl-12 pr-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-accent"
+                  placeholder="Search properties, services, or locations..."
+                  className="w-full pl-12 pr-4 py-3 rounded-lg bg-white/90 border border-white/20 text-festari-900 placeholder:text-festari-600 focus:outline-none focus:ring-2 focus:ring-accent"
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e) => handleSearch(e.target.value)}
                 />
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/60" size={18} />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-festari-600" size={18} />
+              </div>
+              
+              {filteredServices.length > 0 && (
+                <div className="mt-4 bg-white text-festari-900 rounded-lg shadow-lg p-4 max-h-60 overflow-y-auto absolute z-10 w-full">
+                  <p className="text-sm font-medium text-festari-600 mb-2">
+                    {filteredServices.length} service{filteredServices.length !== 1 ? 's' : ''} found
+                  </p>
+                  <div className="space-y-2">
+                    {filteredServices.map((service, idx) => (
+                      <Link 
+                        key={idx} 
+                        to={`/consultation?service=${encodeURIComponent(service.title)}&category=${encodeURIComponent(service.category)}`}
+                        className="flex items-start p-2 hover:bg-festari-50 rounded group"
+                      >
+                        <div className="bg-mikado/20 text-festari-900 p-1 rounded mr-3 flex-shrink-0">
+                          {service.icon && <service.icon size={18} />}
+                        </div>
+                        <div>
+                          <p className="font-medium group-hover:text-accent transition-colors">{service.title}</p>
+                          <p className="text-xs text-festari-600">{service.category}</p>
+                          {service.description && <p className="text-xs text-festari-500 mt-1">{service.description}</p>}
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Button asChild className="bg-festari-900 text-white hover:bg-festari-800">
+                  <a href="#properties">View Properties</a>
+                </Button>
+                <Button asChild variant="outline" className="border-festari-800 text-festari-900 hover:bg-festari-800/10">
+                  <a href="#services">Our Services</a>
+                </Button>
               </div>
             </div>
           </div>
         </section>
         
-        {/* Main content */}
-        <section className="section-padding bg-festari-50">
+        <section className="py-16 bg-festari-50" id="properties">
           <div className="container-custom">
-            {/* Tabs for switching between properties and consultation */}
             <Tabs defaultValue="properties" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-8">
-                <TabsTrigger value="properties">Properties</TabsTrigger>
-                <TabsTrigger value="consultation">Consultation</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-3 mb-8">
+                <TabsTrigger value="properties" onClick={() => setActiveTab('properties')}>
+                  <div className="flex items-center gap-2">
+                    <Home size={16} />
+                    <span>Properties</span>
+                  </div>
+                </TabsTrigger>
+                <TabsTrigger value="services" onClick={() => setActiveTab('services')}>
+                  <div className="flex items-center gap-2">
+                    <Briefcase size={16} />
+                    <span>Services</span>
+                  </div>
+                </TabsTrigger>
+                <TabsTrigger value="consultation" onClick={() => setActiveTab('consultation')}>
+                  <div className="flex items-center gap-2">
+                    <MessageSquare size={16} />
+                    <span>Consultation</span>
+                  </div>
+                </TabsTrigger>
               </TabsList>
 
-              {/* Properties Tab */}
               <TabsContent value="properties">
-                {/* Filters */}
                 <div className="flex flex-col md:flex-row gap-4 mb-10 p-6 bg-white rounded-lg shadow-sm">
                   <div className="flex flex-col md:flex-row gap-4 w-full">
                     <div className="w-full md:w-1/3">
@@ -243,7 +315,6 @@ const EstatesAgency = () => {
                   </button>
                 </div>
                 
-                {/* Results count */}
                 <div className="mb-6 flex items-center justify-between">
                   <h2 className="text-xl font-display font-bold text-festari-900">
                     {filteredProperties.length} Properties Found
@@ -258,7 +329,6 @@ const EstatesAgency = () => {
                   </div>
                 </div>
                 
-                {/* Property grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {filteredProperties.map((property) => (
                     <div 
@@ -304,7 +374,6 @@ const EstatesAgency = () => {
                   ))}
                 </div>
                 
-                {/* Empty state */}
                 {filteredProperties.length === 0 && (
                   <div className="bg-white rounded-lg p-8 text-center">
                     <div className="flex justify-center mb-4">
@@ -325,7 +394,6 @@ const EstatesAgency = () => {
                   </div>
                 )}
                 
-                {/* Pagination (simplified) */}
                 {filteredProperties.length > 0 && (
                   <div className="mt-12 flex justify-center">
                     <div className="flex space-x-1">
@@ -349,41 +417,119 @@ const EstatesAgency = () => {
                 )}
               </TabsContent>
 
-              {/* Consultation Tab */}
+              <TabsContent value="services" id="services" className="space-y-12">
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl font-display font-bold mb-3">Our Real Estate Services</h2>
+                  <p className="text-festari-600 max-w-2xl mx-auto">
+                    Comprehensive solutions for all your property needs, from sales and rentals to expert consultation
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                  {estateServices.map((category, idx) => (
+                    <Button 
+                      key={idx}
+                      variant={activeCategory === category.title ? "default" : "outline"}
+                      className="flex items-center gap-2 justify-start"
+                      onClick={() => setActiveCategory(activeCategory === category.title ? null : category.title)}
+                    >
+                      <category.icon size={18} />
+                      <span>{category.title}</span>
+                    </Button>
+                  ))}
+                  {activeCategory && (
+                    <Button 
+                      variant="ghost" 
+                      className="text-festari-500"
+                      onClick={() => setActiveCategory(null)}
+                    >
+                      Clear Filter
+                    </Button>
+                  )}
+                </div>
+                
+                <div className="space-y-12">
+                  {estateServices
+                    .filter(category => !activeCategory || category.title === activeCategory)
+                    .map((category, idx) => (
+                      <div key={idx} className="space-y-6">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-lg bg-mikado/20 text-festari-900">
+                            <category.icon size={24} />
+                          </div>
+                          <div>
+                            <h3 className="text-xl font-semibold">{category.title}</h3>
+                            <p className="text-festari-600 text-sm">{category.description}</p>
+                          </div>
+                        </div>
+                        
+                        <ServiceGrid columns={4}>
+                          {category.items.map((service, serviceIdx) => (
+                            <ServiceCard
+                              key={serviceIdx}
+                              title={service.title}
+                              description={service.description}
+                              icon={service.icon || category.icon}
+                              color="bg-mikado/10 text-festari-900"
+                              link={`/consultation?service=${encodeURIComponent(service.title)}&category=${encodeURIComponent(category.title)}`}
+                            />
+                          ))}
+                        </ServiceGrid>
+                      </div>
+                    ))}
+                </div>
+                
+                <div className="mt-12 text-center">
+                  <Button asChild size="lg" className="bg-mikado text-festari-900 hover:bg-mikado/90">
+                    <Link to="/consultation">Request Real Estate Consultation</Link>
+                  </Button>
+                </div>
+              </TabsContent>
+
               <TabsContent value="consultation">
-                <ConsultationForm serviceCategories={[]} />
+                <div className="max-w-3xl mx-auto">
+                  <ConsultationRequestForm 
+                    serviceCategories={[
+                      {
+                        title: "Estates Agency",
+                        path: "/estates",
+                        description: "Comprehensive real estate services",
+                        activities: estateServices.flatMap(category => 
+                          category.items.map(item => ({ 
+                            title: item.title,
+                            description: item.description
+                          }))
+                        )
+                      }
+                    ]}
+                    title="Real Estate Consultation Request"
+                    description="Our property experts are ready to assist you with your real estate needs. Fill out the form below to get started."
+                  />
+                </div>
               </TabsContent>
             </Tabs>
           </div>
         </section>
-
-        {/* Services section */}
-        <section className="py-16 bg-gray-50">
-          <div className="container-custom">
-            <h2 className="text-2xl font-display font-bold mb-8">Our Services</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {serviceCategories.map((category, idx) => (
-                <Card key={idx}>
-                  <CardHeader>
-                    <CardTitle>{category.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      {category.items.map((item, i) => (
-                        <li key={i} className="flex items-center gap-2">
-                          <CheckCircle className="h-4 w-4 text-accent" />
-                          <span className="text-sm">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              ))}
+        
+        <section className="py-16 bg-mikado/10">
+          <div className="container-custom text-center">
+            <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
+              Ready to Find Your Perfect Property?
+            </h2>
+            <p className="text-festari-600 mb-8 max-w-2xl mx-auto">
+              Our team of qualified real estate professionals is ready to help you find your dream property or provide expert property management services.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button asChild size="lg" className="bg-mikado text-festari-900 hover:bg-mikado/90">
+                <Link to="/consultation">Schedule a Consultation</Link>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <Link to="/contact">Contact Our Team</Link>
+              </Button>
             </div>
           </div>
         </section>
       </main>
-      {/* Footer component */}
       <Footer />
     </div>
   );

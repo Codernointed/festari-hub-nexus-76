@@ -1,356 +1,351 @@
-import { useState, useEffect } from 'react';
-import { Leaf } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import { Button } from '@/components/ui/button';
+
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import ProductCard from '@/components/agriculture/ProductCard';
-import ProductFilters from '@/components/agriculture/ProductFilters';
-import InquiryModal from '@/components/agriculture/InquiryModal';
-import { agricultureProducts } from '@/data/agricultureProducts';
-import { AgricultureProduct } from '@/types/agriculture';
-import { useNavigate } from 'react-router-dom';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Link } from 'react-router-dom';
-import { Sprout, ClipboardList, Wrench, BarChart, CheckCircle } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { 
+  Leaf, 
+  Tractor, 
+  Briefcase, 
+  Tool, 
+  Flask, 
+  Users, 
+  Factory, 
+  Sprout, 
+  ShoppingBag, 
+  Search, 
+  GraduationCap, 
+  Bug, 
+  DollarSign, 
+  LineChart, 
+  Home, 
+  FlowerIcon, 
+  PackageOpen, 
+  Recycle,
+  Download,
+  MessageSquare
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import ServiceGrid from '@/components/common/ServiceGrid';
+import ServiceCard from '@/components/common/ServiceCard';
+import ServiceCategory from '@/components/common/ServiceCategory';
+import ConsultationRequestForm from '@/components/common/ConsultationRequestForm';
 
-const serviceCategories = [
+// Agriculture service categories
+const agriServices = [
   {
-    title: "Core Farming",
-    icon: <Sprout size={24} />,
+    title: "Farming Operations",
+    icon: Tractor,
+    description: "Core agricultural production services",
     items: [
-      "Crop Farming",
-      "Livestock Farming",
-      "Organic Farming",
-      "Greenhouse and Hydroponic Farming",
-      "Sustainable Agriculture"
+      { title: "Crop Farming", icon: Sprout, description: "Sustainable crop production and management" },
+      { title: "Livestock Farming", icon: Leaf, description: "Animal husbandry and livestock management" },
+      { title: "Greenhouse and Hydroponic Farming", icon: FlowerIcon, description: "Modern controlled environment agriculture" },
+      { title: "Organic Farming", icon: Leaf, description: "Certified organic cultivation practices" }
     ]
   },
   {
-    title: "Advisory & Support",
-    icon: <ClipboardList size={24} />,
+    title: "Business Services",
+    icon: Briefcase,
+    description: "Agricultural business development and support",
     items: [
-      "Agribusiness Consulting",
-      "Farm Management Services",
-      "Agricultural Research",
-      "Farm Education and Training",
-      "Rural Development"
+      { title: "Agribusiness Consulting", icon: Briefcase, description: "Expert agricultural business advice" },
+      { title: "Agricultural Equipment Sales and Rental", icon: Tool, description: "Quality farming equipment solutions" },
+      { title: "Farm Management Services", icon: Users, description: "Comprehensive farm operations management" },
+      { title: "Agribusiness Investment", icon: DollarSign, description: "Agricultural investment opportunities" },
+      { title: "Agricultural Marketing", icon: LineChart, description: "Strategic marketing for farm products" }
     ]
   },
   {
-    title: "Equipment & Analysis",
-    icon: <Wrench size={24} />,
+    title: "Technical Services",
+    icon: Flask,
+    description: "Specialized agricultural technical support",
     items: [
-      "Agricultural Equipment Sales and Rental",
-      "Crop and Soil Analysis",
-      "Pest and Disease Control",
-      "Sale of Agrochemicals"
+      { title: "Crop and Soil Analysis", icon: Flask, description: "Scientific testing of crops and soil" },
+      { title: "Pest and Disease Control", icon: Bug, description: "Integrated pest management solutions" },
+      { title: "Agricultural Research", icon: Search, description: "Innovative farming research and development" },
+      { title: "Sale of Agrochemicals", icon: PackageOpen, description: "Quality agricultural supplies and chemicals" }
     ]
   },
   {
-    title: "Business & Marketing",
-    icon: <BarChart size={24} />,
+    title: "Supply & Processing",
+    icon: Factory,
+    description: "Agricultural supply chain and processing services",
     items: [
-      "Agricultural Marketing",
-      "Farm-to-Table Sales",
-      "Agribusiness Investment",
-      "Agricultural Supply Chain Management",
-      "Agro-processing"
+      { title: "Agro-processing", icon: Factory, description: "Value-added agricultural processing" },
+      { title: "Farm-to-Table Sales", icon: ShoppingBag, description: "Direct marketing of farm produce" },
+      { title: "Agricultural Supply Chain Management", icon: PackageOpen, description: "Optimized supply chain solutions" },
+      { title: "Sustainable Agriculture", icon: Recycle, description: "Environmentally responsible farming practices" }
+    ]
+  },
+  {
+    title: "Education & Development",
+    icon: GraduationCap,
+    description: "Agricultural knowledge and community development",
+    items: [
+      { title: "Farm Education and Training", icon: GraduationCap, description: "Practical agricultural training programs" },
+      { title: "Rural Development", icon: Home, description: "Community agricultural development initiatives" }
     ]
   }
 ];
 
 const AgriBusiness = () => {
-  // State hooks for managing filters, pagination, and modal
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [sortOrder, setSortOrder] = useState('newest');
-  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
-  const [savedProducts, setSavedProducts] = useState<string[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(6);
-  const [inquiryProduct, setInquiryProduct] = useState<AgricultureProduct | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 3000]);
-  const { toast } = useToast();
-  const navigate = useNavigate();
+  const [filteredServices, setFilteredServices] = useState<any[]>([]);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   
-  const maxPrice = Math.max(...agricultureProducts.map(product => 
-    product.priceNumeric || 0
-  ));
-  
-  useEffect(() => {
-    // Set page as loaded after a short delay
-    const timer = setTimeout(() => {
-      setIsLoaded(true);
-    }, 100);
+  // Handle service search
+  const handleSearch = (query: string) => {
+    setSearchTerm(query);
     
-    return () => clearTimeout(timer);
-  }, []);
-  
-  useEffect(() => {
-    // Load saved products from localStorage
-    const saved = localStorage.getItem('savedAgricultureProducts');
-    if (saved) {
-      setSavedProducts(JSON.parse(saved));
+    if (!query.trim()) {
+      setFilteredServices([]);
+      return;
     }
     
-    setPriceRange([0, maxPrice]);
-  }, [maxPrice]);
-  
-  const toggleSaveProduct = (productId: string) => {
-    let newSavedProducts;
+    const results = agriServices.flatMap(category => 
+      category.items.filter(item => 
+        item.title.toLowerCase().includes(query.toLowerCase()) ||
+        (item.description && item.description.toLowerCase().includes(query.toLowerCase()))
+      ).map(item => ({
+        ...item,
+        category: category.title
+      }))
+    );
     
-    if (savedProducts.includes(productId)) {
-      newSavedProducts = savedProducts.filter(id => id !== productId);
-      toast({
-        title: "Product removed",
-        description: "The product has been removed from your saved items.",
-      });
-    } else {
-      newSavedProducts = [...savedProducts, productId];
-      toast({
-        title: "Product saved",
-        description: "The product has been added to your saved items.",
-        variant: "default",
-      });
-    }
-    
-    setSavedProducts(newSavedProducts);
-    localStorage.setItem('savedAgricultureProducts', JSON.stringify(newSavedProducts));
+    setFilteredServices(results);
   };
-  
-  const handleInquiry = (productId: string) => {
-    const product = agricultureProducts.find(p => p.id === productId);
-    if (product) {
-      setInquiryProduct(product);
-      setIsModalOpen(true);
-    }
-  };
-  
-  const handleInquirySubmit = (formData: any) => {
-    toast({
-      title: "Inquiry Sent",
-      description: "Your inquiry has been sent. We'll contact you shortly.",
-      variant: "default",
-    });
-    setIsModalOpen(false);
-  };
-  
-  const resetFilters = () => {
-    // Reset all filters to default values
-    setSearchTerm('');
-    setSelectedCategory('All');
-    setSortOrder('newest');
-    setPriceRange([0, maxPrice]);
-  };
-  
-  const getFilteredProducts = () => {
-    // Filter products based on search term, category, and price range
-    let filtered = agricultureProducts.filter(product => {
-      const matchesSearch = 
-        product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.location.toLowerCase().includes(searchTerm.toLowerCase());
-      
-      const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
-      
-      const priceValue = product.priceNumeric || 0;
-      const matchesPrice = priceValue >= priceRange[0] && priceValue <= priceRange[1];
-      
-      return matchesSearch && matchesCategory && matchesPrice;
-    });
-    
-    switch (sortOrder) {
-      case 'price-asc':
-        filtered.sort((a, b) => (a.priceNumeric || 0) - (b.priceNumeric || 0));
-        break;
-      case 'price-desc':
-        filtered.sort((a, b) => (b.priceNumeric || 0) - (a.priceNumeric || 0));
-        break;
-      case 'name-asc':
-        filtered.sort((a, b) => a.title.localeCompare(b.title));
-        break;
-      case 'name-desc':
-        filtered.sort((a, b) => b.title.localeCompare(a.title));
-        break;
-      case 'newest':
-      default:
-        filtered.sort((a, b) => {
-          if (a.dateAdded && b.dateAdded) {
-            return new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime();
-          }
-          return 0;
-        });
-    }
-    
-    return filtered;
-  };
-  
-  const filteredProducts = getFilteredProducts();
-  
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
-  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
-  
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-  
+
   return (
-    <div className={`transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
-      {/* Header component */}
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="pt-20">
+      <main className="flex-grow">
         {/* Hero section */}
-        <section className="relative py-20 bg-festari-900 text-white">
+        <section className="relative py-20 bg-gradient-to-r from-green-500 to-green-700 text-white">
           <div className="container-custom">
             <div className="max-w-2xl">
-              <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">Agriculture Marketplace</h1>
-              <p className="text-festari-100 mb-8">Browse our selection of agricultural products from trusted farmers and suppliers.</p>
+              <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">Festari Agribusiness</h1>
+              <p className="text-white/90 mb-8">Sustainable farming solutions, agricultural expertise, and modern farming technologies for optimal yield and growth.</p>
               
+              {/* Search bar */}
               <div className="relative">
                 <input
                   type="text"
-                  placeholder="Search for agricultural products..."
-                  className="w-full pl-12 pr-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-accent"
+                  placeholder="Search agricultural services..."
+                  className="w-full pl-12 pr-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/30"
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e) => handleSearch(e.target.value)}
                 />
-                <Leaf className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/60" size={18} />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/60" size={18} />
+              </div>
+              
+              {filteredServices.length > 0 && (
+                <div className="mt-4 bg-white text-festari-900 rounded-lg shadow-lg p-4 max-h-60 overflow-y-auto absolute z-10 w-full">
+                  <p className="text-sm font-medium text-festari-600 mb-2">
+                    {filteredServices.length} service{filteredServices.length !== 1 ? 's' : ''} found
+                  </p>
+                  <div className="space-y-2">
+                    {filteredServices.map((service, idx) => (
+                      <Link 
+                        key={idx} 
+                        to={`/consultation?service=${encodeURIComponent(service.title)}&category=${encodeURIComponent(service.category)}`}
+                        className="flex items-start p-2 hover:bg-festari-50 rounded group"
+                      >
+                        <div className="bg-green-100 text-green-700 p-1 rounded mr-3 flex-shrink-0">
+                          {service.icon && <service.icon size={18} />}
+                        </div>
+                        <div>
+                          <p className="font-medium group-hover:text-green-700 transition-colors">{service.title}</p>
+                          <p className="text-xs text-festari-600">{service.category}</p>
+                          {service.description && <p className="text-xs text-festari-500 mt-1">{service.description}</p>}
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Button asChild className="bg-white text-green-700 hover:bg-white/90">
+                  <a href="#services">Our Services</a>
+                </Button>
+                <Button asChild variant="outline" className="border-white/30 text-white hover:bg-white/10">
+                  <Link to="/consultation">Request Consultation</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Main content */}
+        <section className="py-16 bg-festari-50" id="services">
+          <div className="container-custom">
+            <Tabs defaultValue="services" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-8">
+                <TabsTrigger value="services" className="flex items-center gap-2">
+                  <Tractor size={16} />
+                  <span>Services</span>
+                </TabsTrigger>
+                <TabsTrigger value="consultation" className="flex items-center gap-2">
+                  <MessageSquare size={16} />
+                  <span>Consultation</span>
+                </TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="services" className="space-y-10">
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl font-display font-bold mb-3">Agricultural Services</h2>
+                  <p className="text-festari-600 max-w-2xl mx-auto">
+                    Comprehensive agriculture solutions from farming operations to business development and technical support
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+                  {agriServices.map((category, idx) => (
+                    <Button 
+                      key={idx}
+                      variant={activeCategory === category.title ? "default" : "outline"}
+                      className="flex items-center gap-2 justify-start"
+                      onClick={() => setActiveCategory(activeCategory === category.title ? null : category.title)}
+                    >
+                      <category.icon size={18} />
+                      <span>{category.title}</span>
+                    </Button>
+                  ))}
+                  {activeCategory && (
+                    <Button 
+                      variant="ghost" 
+                      className="text-festari-500"
+                      onClick={() => setActiveCategory(null)}
+                    >
+                      Clear Filter
+                    </Button>
+                  )}
+                </div>
+                
+                <div className="space-y-12">
+                  {agriServices
+                    .filter(category => !activeCategory || category.title === activeCategory)
+                    .map((category, idx) => (
+                      <div key={idx} className="space-y-6">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-lg bg-green-100 text-green-700">
+                            <category.icon size={24} />
+                          </div>
+                          <div>
+                            <h3 className="text-xl font-semibold">{category.title}</h3>
+                            <p className="text-festari-600 text-sm">{category.description}</p>
+                          </div>
+                        </div>
+                        
+                        <ServiceGrid columns={3}>
+                          {category.items.map((service, serviceIdx) => (
+                            <ServiceCard
+                              key={serviceIdx}
+                              title={service.title}
+                              description={service.description}
+                              icon={service.icon || category.icon}
+                              color="bg-green-100 text-green-700"
+                              link={`/consultation?service=${encodeURIComponent(service.title)}&category=${encodeURIComponent(category.title)}`}
+                            />
+                          ))}
+                        </ServiceGrid>
+                      </div>
+                    ))}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="consultation">
+                <div className="max-w-3xl mx-auto">
+                  <ConsultationRequestForm 
+                    serviceCategories={[
+                      {
+                        title: "Agribusiness",
+                        path: "/agribusiness",
+                        description: "Agricultural business services",
+                        activities: agriServices.flatMap(category => 
+                          category.items.map(item => ({ 
+                            title: item.title,
+                            description: item.description
+                          }))
+                        )
+                      }
+                    ]}
+                    title="Agricultural Consultation Request"
+                    description="Our agricultural experts are ready to assist you with farming operations, business development, and technical support."
+                  />
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
+        </section>
+        
+        {/* Benefits section */}
+        <section className="py-16 bg-green-50">
+          <div className="container-custom">
+            <div className="text-center mb-12">
+              <h2 className="text-2xl font-display font-bold mb-3">Why Choose Our Agricultural Services</h2>
+              <p className="text-festari-600 max-w-2xl mx-auto">
+                Our team combines agricultural expertise with modern techniques to deliver sustainable and profitable farming solutions
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-white p-8 rounded-lg shadow-sm">
+                <div className="p-3 rounded-full bg-green-100 text-green-700 inline-block mb-4">
+                  <Leaf size={24} />
+                </div>
+                <h3 className="text-xl font-semibold mb-3">Sustainable Practices</h3>
+                <p className="text-festari-600">
+                  We implement environmentally friendly farming methods that maintain long-term productivity while protecting natural resources.
+                </p>
+              </div>
+              
+              <div className="bg-white p-8 rounded-lg shadow-sm">
+                <div className="p-3 rounded-full bg-green-100 text-green-700 inline-block mb-4">
+                  <LineChart size={24} />
+                </div>
+                <h3 className="text-xl font-semibold mb-3">Increased Productivity</h3>
+                <p className="text-festari-600">
+                  Our modern techniques and expert guidance help maximize yield and quality across all types of agricultural operations.
+                </p>
+              </div>
+              
+              <div className="bg-white p-8 rounded-lg shadow-sm">
+                <div className="p-3 rounded-full bg-green-100 text-green-700 inline-block mb-4">
+                  <Briefcase size={24} />
+                </div>
+                <h3 className="text-xl font-semibold mb-3">Business Growth</h3>
+                <p className="text-festari-600">
+                  We provide comprehensive business support to transform your agricultural operations into profitable enterprises.
+                </p>
               </div>
             </div>
           </div>
         </section>
         
-        {/* Main content */}
-        <section className="section-padding bg-festari-50">
-          <div className="container-custom">
-            <ProductFilters 
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              selectedCategory={selectedCategory}
-              setSelectedCategory={setSelectedCategory}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-              priceRange={priceRange}
-              setPriceRange={setPriceRange}
-              showAdvancedFilters={showAdvancedFilters}
-              setShowAdvancedFilters={setShowAdvancedFilters}
-              resetFilters={resetFilters}
-              maxPrice={maxPrice}
-            />
-            
-            <div className="mb-6">
-              <h2 className="text-xl font-display font-bold text-festari-900">
-                {filteredProducts.length} Products Found
-              </h2>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {currentProducts.map((product) => (
-                <ProductCard 
-                  key={product.id}
-                  product={product}
-                  onInquiry={handleInquiry}
-                  onSave={toggleSaveProduct}
-                  isSaved={savedProducts.includes(product.id)}
-                />
-              ))}
-            </div>
-            
-            {filteredProducts.length === 0 && (
-              <div className="bg-white rounded-lg p-8 text-center">
-                <div className="flex justify-center mb-4">
-                  <Leaf size={48} className="text-festari-300" />
-                </div>
-                <h3 className="text-xl font-semibold text-festari-800 mb-2">No products found</h3>
-                <p className="text-festari-600 mb-4">Try adjusting your search criteria or filters</p>
-                <Button onClick={resetFilters}>
-                  Reset Filters
-                </Button>
-              </div>
-            )}
-            
-            {filteredProducts.length > 0 && (
-              <div className="mt-12 flex justify-center">
-                <div className="flex flex-wrap justify-center gap-2">
-                  <Button
-                    variant="outline"
-                    onClick={() => paginate(Math.max(1, currentPage - 1))}
-                    disabled={currentPage === 1}
-                  >
-                    Previous
-                  </Button>
-                  
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
-                    <Button
-                      key={number}
-                      variant={currentPage === number ? "default" : "outline"}
-                      onClick={() => paginate(number)}
-                    >
-                      {number}
-                    </Button>
-                  ))}
-                  
-                  <Button
-                    variant="outline"
-                    onClick={() => paginate(Math.min(totalPages, currentPage + 1))}
-                    disabled={currentPage === totalPages}
-                  >
-                    Next
-                  </Button>
-                </div>
-              </div>
-            )}
-          </div>
-        </section>
-
-        {/* Services section */}
-        <section className="py-12 bg-gray-50">
-          <div className="container-custom">
-            <h2 className="text-2xl font-display font-bold mb-8">Our Services</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {serviceCategories.map((category, idx) => (
-                <Card key={idx} className="hover:shadow-md transition-shadow">
-                  <CardHeader>
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg bg-accent/10 text-accent">
-                        {category.icon}
-                      </div>
-                      <CardTitle className="text-lg">{category.title}</CardTitle>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-3">
-                      {category.items.map((item, i) => (
-                        <li key={i} className="flex items-center gap-2 group">
-                          <CheckCircle className="h-4 w-4 text-accent" />
-                          <Link 
-                            to="/consultation"
-                            className="text-sm text-festari-700 hover:text-accent transition-colors"
-                          >
-                            {item}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              ))}
+        {/* CTA Section */}
+        <section className="py-16 bg-green-700 text-white">
+          <div className="container-custom text-center">
+            <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
+              Ready to Grow with Us?
+            </h2>
+            <p className="text-white/90 mb-8 max-w-2xl mx-auto">
+              Whether you're looking to start farming, improve your current operations, or expand your agricultural business, our team is here to help.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button asChild size="lg" className="bg-white text-green-700 hover:bg-white/90">
+                <Link to="/consultation">Request Agricultural Consultation</Link>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10">
+                <Link to="/contact">Contact Our Team</Link>
+              </Button>
             </div>
           </div>
         </section>
-
-        {/* Inquiry Modal */}
-        <InquiryModal
-          product={inquiryProduct}
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onSubmit={handleInquirySubmit}
-        />
       </main>
-      {/* Footer component */}
       <Footer />
     </div>
   );
