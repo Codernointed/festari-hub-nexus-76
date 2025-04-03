@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, ArrowRight } from 'lucide-react';
@@ -55,27 +54,19 @@ const Hero = () => {
             "flex flex-col sm:flex-row gap-4 justify-center transform transition-all duration-700 delay-300 ease-out",
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           )}>
-            <Button asChild className="bg-chili hover:bg-chili/90 px-6 py-6 text-base border border-chili/30" size="lg">
-              <Link to="/estates">
+            <Button asChild className="bg-chili hover:bg-chili/90 px-6 py-6 text-base" size="lg">
+              <Link to="/real-estate">
                 Explore Properties
               </Link>
             </Button>
-            <Button 
-              asChild 
-              variant="transparent" 
-              className="border-white/40 text-white hover:bg-white/10 px-6 py-6 text-base flex items-center" 
-              size="lg"
-            >
+            <Button asChild variant="outline" className="bg-indigo/10 text-white border-white hover:bg-indigo/20 hover:text-white px-6 py-6 text-base flex items-center" size="lg">
               <Link to="/research">
                 Research Hub <ChevronRight size={16} className="ml-1" />
               </Link>
             </Button>
           </div>
 
-          <div className={cn(
-            "flex items-center gap-2 mt-10 text-white/70 transform transition-all duration-700 delay-400 ease-out justify-center", 
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          )}>
+          <div className={cn("flex items-center gap-2 mt-10 text-white/70 transform transition-all duration-700 delay-400 ease-out justify-center", isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4")}>
             <Link to="/about" className="flex items-center gap-1 hover:text-mikado transition-colors">
               Our Story <ArrowRight size={14} />
             </Link>
