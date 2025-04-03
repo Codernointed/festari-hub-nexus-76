@@ -19,7 +19,9 @@ import {
   Users,
   ChevronsRight,
   FileText,
-  Check
+  Check,
+  MessageSquare,
+  Star
 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from '@/components/ui/button';

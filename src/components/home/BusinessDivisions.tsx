@@ -151,8 +151,14 @@ const BusinessDivisions = () => {
               <div className="p-6">
                 <h3 className="text-xl font-bold text-festari-900 mb-2">{division.title}</h3>
                 <p className="text-sm text-festari-600 mb-4">{division.description}</p>
-                <Button asChild variant="outline" className="w-full">
-                  <Link to={division.link}>{division.subtitle === "Coming Soon" ? "Coming Soon" : "Learn More"}</Link>
+                <Button 
+                  asChild 
+                  variant="outline" 
+                  className="w-full border-2 border-festari-900/20 text-festari-900 hover:bg-festari-50"
+                >
+                  <Link to={division.link}>
+                    {division.subtitle === "Coming Soon" ? "Coming Soon" : "Learn More"}
+                  </Link>
                 </Button>
               </div>
             </div>

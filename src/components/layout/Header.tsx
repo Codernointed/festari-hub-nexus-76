@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, User, ShoppingCart, BookOpen, Home, MapPin, LogIn, Briefcase } from 'lucide-react';
@@ -19,6 +18,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Logo from '@/components/common/Logo';
 import { cn } from '@/lib/utils';
+
+const navigation = [
+  { name: "Estate Agency", href: "/estates", icon: <Home size={18} /> },
+  { name: "Research & Consultation", href: "/research", icon: <BookOpen size={18} /> },
+  { name: "Agribusiness", href: "/agriculture", icon: <ShoppingCart size={18} /> },
+  { name: "Enterprise", href: "/enterprise", icon: <Briefcase size={18} /> },
+  { name: "About", href: "/about", icon: <User size={18} /> },
+  { name: "Founder", href: "/founder", icon: <User size={18} /> },
+  { name: "Contact", href: "/contact", icon: <MapPin size={18} /> }
+];
 
 const Header = () => {
   const location = useLocation(); // Get the current route location
@@ -80,17 +89,17 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation - improved spacing and overflow handling */}
-          <nav className="hidden md:flex items-center space-x-4 lg:space-x-6 overflow-x-auto max-w-[50%] justify-end">
-            {navItems.map((item) => (
+          <nav className="hidden md:flex items-center space-x-6 justify-end">
+            {navigation.map((item) => (
               <Link
                 key={item.name}
-                to={item.path}
+                to={item.href}
                 className={cn(
-                  "text-sm transition-colors whitespace-nowrap px-1",
+                  "text-sm transition-colors whitespace-nowrap",
                   (isHomePage && !isScrolled)
                     ? "text-white/90 hover:text-white"
                     : "text-festari-700 hover:text-accent",
-                  location.pathname === item.path && "font-medium" // Highlight active link
+                  location.pathname === item.href && "font-medium" // Highlight active link
                 )}
               >
                 {item.name}
@@ -206,12 +215,12 @@ const Header = () => {
               </SheetTrigger>
               <SheetContent side="right" className="bg-white/95 backdrop-blur-md pt-16 w-[300px]">
                 <nav className="flex flex-col space-y-4">
-                  {navItems.map((item) => (
+                  {navigation.map((item) => (
                     <Link
                       key={item.name}
-                      to={item.path}
+                      to={item.href}
                       className={`flex items-center text-festari-900 text-lg ${
-                        location.pathname === item.path ? 'font-medium text-accent' : ''
+                        location.pathname === item.href ? 'font-medium text-accent' : ''
                       }`}
                     >
                       {item.icon && <span className="mr-2">{item.icon}</span>}
