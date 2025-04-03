@@ -1,138 +1,149 @@
-
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
-  BarChart3, 
-  Briefcase, 
-  CheckCircle, 
-  Store, 
-  User, 
-  Search, 
   ShoppingCart, 
-  Globe, 
-  Locate, 
+  TruckIcon, 
   Package, 
-  UserCheck, 
-  LineChart, 
-  TrendingUp, 
-  Truck, 
-  DollarSign, 
-  FileSpreadsheet, 
-  Clipboard, 
-  PackageCheck, 
-  Tag, 
-  UsersRound, 
-  Buildings, 
-  Truck as TruckDelivery, 
-  Trash2, 
-  UtensilsCrossed, 
-  Scissors, 
-  Home, 
-  Calendar, 
-  Car, 
+  Store, 
+  BarChart3, 
+  ClipboardList, 
+  Users, 
   ShoppingBag, 
-  Paw, 
-  LayoutDashboard, 
+  Truck, 
+  Briefcase, 
+  CreditCard, 
+  UserCheck, 
+  Settings, 
+  Map, 
+  Package2, 
+  LineChart, 
+  BookOpen, 
+  Building, 
+  DollarSign, 
+  Scissors, 
+  Shirt, 
+  Trash2, 
+  Utensils, 
+  MessageSquare, 
+  Home, 
+  CalendarIcon,
+  Cherry, 
+  Globe, 
+  Smartphone, 
+  Hammer, 
   Heart, 
-  Hotel, 
-  Download,
-  MessageSquare
+  BadgePercent
 } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import Logo from '@/components/common/Logo';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 import ServiceGrid from '@/components/common/ServiceGrid';
 import ServiceCard from '@/components/common/ServiceCard';
 import ServiceCategory from '@/components/common/ServiceCategory';
 import ConsultationRequestForm from '@/components/common/ConsultationRequestForm';
 
-// Updated service categories with icons
-const tradingServiceCategories = [
+// Enterprise service categories
+const tradingServices = [
   {
-    title: "Trading & Distribution",
+    title: "Retail & Distribution",
     icon: Store,
-    description: "Comprehensive retail, wholesale, and distribution services",
+    description: "Retail sales and distribution services",
     items: [
-      { title: "Retail Sales", icon: ShoppingCart, description: "Direct-to-consumer sales operations" },
-      { title: "Wholesale Distribution", icon: Package, description: "Business-to-business product distribution" },
-      { title: "Import and Export", icon: Globe, description: "International trade and customs services" },
-      { title: "Product Sourcing", icon: Locate, description: "Strategic procurement and vendor selection" },
-      { title: "E-commerce Operations", icon: ShoppingCart, description: "Online retail platforms and management" },
-      { title: "General Trading and Merchandise", icon: Tag, description: "Diverse product trading services" },
-      { title: "Trade Shows and Exhibitions", icon: Buildings, description: "Exhibition coordination and participation" }
+      { title: "Retail Sales", icon: ShoppingCart, description: "Consumer retail services" },
+      { title: "Wholesale Distribution", icon: Package, description: "B2B distribution services" },
+      { title: "Import and Export", icon: Globe, description: "International trade services" },
+      { title: "E-commerce Operations", icon: Smartphone, description: "Online retail solutions" },
+      { title: "General Trading and Merchandise", icon: ShoppingBag, description: "Merchandise services" }
+    ]
+  },
+  {
+    title: "Supply Chain",
+    icon: TruckIcon,
+    description: "Supply chain management and logistics",
+    items: [
+      { title: "Product Sourcing", icon: Search, description: "Supply chain solutions" },
+      { title: "Inventory Management", icon: ClipboardList, description: "Stock control services" },
+      { title: "Supply Chain Management", icon: Truck, description: "Supply chain optimization" },
+      { title: "Logistics and Distribution", icon: TruckIcon, description: "Distribution services" },
+      { title: "Vendor Relationships", icon: UserCheck, description: "Supplier relationship services" }
     ]
   },
   {
     title: "Business Operations",
-    icon: BarChart3,
-    description: "Strategic business management and operational services",
+    icon: Briefcase,
+    description: "Business management and operational services",
     items: [
-      { title: "Inventory Management", icon: Clipboard, description: "Efficient stock control systems" },
-      { title: "Supply Chain Management", icon: Truck, description: "End-to-end supply chain optimization" },
-      { title: "Marketing and Promotion", icon: TrendingUp, description: "Strategic marketing campaigns and brand building" },
-      { title: "Customer Service", icon: UserCheck, description: "Superior customer support solutions" },
-      { title: "Product Quality Control", icon: PackageCheck, description: "Rigorous quality assurance processes" },
-      { title: "Vendor Relationships", icon: UserCheck, description: "Strategic supplier management" },
-      { title: "Market Research", icon: Search, description: "Comprehensive market analysis and insights" },
-      { title: "Logistics and Distribution", icon: Truck, description: "Efficient product movement and delivery" },
-      { title: "Inventory Forecasting", icon: LineChart, description: "Predictive inventory management" },
-      { title: "Product Development", icon: Package, description: "New product creation and improvement" },
-      { title: "Business Expansion", icon: TrendingUp, description: "Strategic growth planning and execution" }
+      { title: "Marketing and Promotion", icon: BadgePercent, description: "Promotional services" },
+      { title: "Customer Service", icon: MessageSquare, description: "Client support services" },
+      { title: "Product Quality Control", icon: CheckCircle, description: "Product quality assurance" },
+      { title: "Market Research", icon: BarChart3, description: "Market analysis services" },
+      { title: "Inventory Forecasting", icon: LineChart, description: "Inventory prediction services" },
+      { title: "Product Development", icon: Settings, description: "New product innovation" },
+      { title: "Business Expansion", icon: Building, description: "Growth consulting services" },
+      { title: "Trade Shows and Exhibitions", icon: Users, description: "Exhibition services" }
     ]
   },
+  {
+    title: "Financial Services",
+    icon: DollarSign,
+    description: "Financial and payment services",
+    items: [
+      { title: "Mobile Money Services", icon: Smartphone, description: "Digital financial services" },
+      { title: "Credit Transfer Services", icon: CreditCard, description: "Financial transfer services" }
+    ]
+  }
+];
+
+const serviceActivities = [
   {
     title: "Personal Services",
     icon: User,
-    description: "Diverse personal and household service solutions",
+    description: "Services for individuals and households",
     items: [
-      { title: "Delivery Services", icon: TruckDelivery, description: "Reliable package and food delivery" },
-      { title: "Waste Management Services", icon: Trash2, description: "Residential and commercial waste solutions" },
-      { title: "Catering Services", icon: UtensilsCrossed, description: "Professional food preparation and service" },
-      { title: "Barbering Services", icon: Scissors, description: "Professional hair cutting and styling" },
-      { title: "Hairdressing and Salon", icon: Scissors, description: "Complete hair care and beauty services" },
-      { title: "Clothing and Boutique", icon: ShoppingBag, description: "Fashion retail and styling services" },
-      { title: "House Cleaning Services", icon: Home, description: "Thorough residential cleaning" },
-      { title: "Event Planning and Hosting", icon: Calendar, description: "Comprehensive event management" },
-      { title: "Home Repair and Maintenance", icon: Home, description: "Reliable home improvement services" },
-      { title: "Lawn Care and Landscaping", icon: Home, description: "Professional outdoor maintenance" },
-      { title: "Transportation Services", icon: Car, description: "Reliable personal transport solutions" },
-      { title: "Personal Shopping and Errand Services", icon: ShoppingBag, description: "Convenient personal assistance" },
-      { title: "Pet Care Services", icon: Paw, description: "Professional animal care and services" }
+      { title: "Barbering Services", icon: Scissors, description: "Hair cutting services" },
+      { title: "Hairdressing and Salon", icon: Scissors, description: "Beauty and hair services" },
+      { title: "Clothing and Boutique", icon: Shirt, description: "Fashion retail services" },
+      { title: "Personal Shopping and Errand Services", icon: ShoppingBag, description: "Errand and shopping" },
+      { title: "Health and Wellness Services", icon: Heart, description: "Wellness programs" }
     ]
   },
   {
-    title: "Professional Services",
-    icon: Briefcase,
-    description: "Specialized business and professional support services",
+    title: "Home & Property",
+    icon: Home,
+    description: "Services for home and property maintenance",
     items: [
-      { title: "Digital Marketing Services", icon: LayoutDashboard, description: "Strategic online marketing solutions" },
-      { title: "Health and Wellness Services", icon: Heart, description: "Holistic health and wellness programs" },
-      { title: "Hospitality Services", icon: Hotel, description: "Professional accommodation management" },
-      { title: "Home Renovation and Remodeling", icon: Home, description: "Complete home transformation services" },
-      { title: "Mobile Money Services", icon: DollarSign, description: "Convenient digital payment solutions" },
-      { title: "Credit Transfer Services", icon: DollarSign, description: "Reliable financial transfer services" }
+      { title: "House Cleaning Services", icon: Home, description: "Professional cleaning" },
+      { title: "Home Repair and Maintenance", icon: Hammer, description: "Maintenance and repair" },
+      { title: "Lawn Care and Landscaping", icon: Scissors, description: "Outdoor maintenance" },
+      { title: "Home Renovation and Remodeling", icon: Hammer, description: "Remodeling services" },
+      { title: "Waste Management Services", icon: Trash2, description: "Waste handling solutions" }
+    ]
+  },
+  {
+    title: "Business Services",
+    icon: Briefcase,
+    description: "Services for businesses and organizations",
+    items: [
+      { title: "Delivery Services", icon: Truck, description: "Transport and delivery" },
+      { title: "Catering Services", icon: Utensils, description: "Food service solutions" },
+      { title: "Event Planning and Hosting", icon: CalendarIcon, description: "Event management services" },
+      { title: "Transportation Services", icon: Truck, description: "Transport services" },
+      { title: "Digital Marketing Services", icon: Globe, description: "Online marketing solutions" },
+      { title: "Hospitality Services", icon: Building, description: "Hotel and accommodation" },
+      { title: "Pet Care Services", icon: Cherry, description: "Animal care services" }
     ]
   }
 ];
 
 const Enterprise = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredServices, setFilteredServices] = useState<any[]>([]);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState('trading');
   
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoaded(true);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
-
   // Handle service search
   const handleSearch = (query: string) => {
     setSearchTerm(query);
@@ -142,7 +153,9 @@ const Enterprise = () => {
       return;
     }
     
-    const results = tradingServiceCategories.flatMap(category => 
+    const allServices = [...tradingServices, ...serviceActivities];
+    
+    const results = allServices.flatMap(category => 
       category.items.filter(item => 
         item.title.toLowerCase().includes(query.toLowerCase()) ||
         (item.description && item.description.toLowerCase().includes(query.toLowerCase()))
@@ -156,36 +169,30 @@ const Enterprise = () => {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+    <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
         {/* Hero section */}
-        <section className="relative py-16 bg-gradient-to-r from-chili to-chili/80 text-white overflow-hidden">
-          <div className="absolute right-0 top-1/2 transform -translate-y-1/2 opacity-5">
-            <Logo variant="icon" theme="light" size="lg" className="w-96" />
-          </div>
+        <section className="relative py-20 bg-gradient-to-r from-orange-500 to-orange-600 text-white">
           <div className="container-custom">
             <div className="max-w-2xl">
-              <Badge className="bg-white/20 text-white hover:bg-white/30 mb-4">Trading & Services</Badge>
-              <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">
-                Festari Enterprise
-              </h1>
-              <p className="text-lg text-white/80 max-w-2xl mb-8">
-                Comprehensive business solutions and services for your diverse personal and professional needs
-              </p>
-              <div className="max-w-xl relative">
-                <Input
-                  type="search"
-                  placeholder="Search services..."
-                  className="bg-white/10 border-white/20 text-white placeholder:text-white/60 pl-10"
+              <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">Festari Enterprise</h1>
+              <p className="text-white/90 mb-8">Comprehensive trading and service solutions for businesses and individuals.</p>
+              
+              {/* Search bar */}
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search enterprise services..."
+                  className="w-full pl-12 pr-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/30"
                   value={searchTerm}
                   onChange={(e) => handleSearch(e.target.value)}
                 />
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60" size={18} />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/60" size={18} />
               </div>
               
               {filteredServices.length > 0 && (
-                <div className="mt-4 bg-white text-festari-900 rounded-lg shadow-lg p-4 max-h-60 overflow-y-auto absolute z-10 w-full max-w-xl">
+                <div className="mt-4 bg-white text-festari-900 rounded-lg shadow-lg p-4 max-h-60 overflow-y-auto absolute z-10 w-full">
                   <p className="text-sm font-medium text-festari-600 mb-2">
                     {filteredServices.length} service{filteredServices.length !== 1 ? 's' : ''} found
                   </p>
@@ -196,11 +203,11 @@ const Enterprise = () => {
                         to={`/consultation?service=${encodeURIComponent(service.title)}&category=${encodeURIComponent(service.category)}`}
                         className="flex items-start p-2 hover:bg-festari-50 rounded group"
                       >
-                        <div className="bg-chili/10 text-chili p-1 rounded mr-3 flex-shrink-0">
+                        <div className="bg-orange-100 text-orange-700 p-1 rounded mr-3 flex-shrink-0">
                           {service.icon && <service.icon size={18} />}
                         </div>
                         <div>
-                          <p className="font-medium group-hover:text-chili transition-colors">{service.title}</p>
+                          <p className="font-medium group-hover:text-orange-700 transition-colors">{service.title}</p>
                           <p className="text-xs text-festari-600">{service.category}</p>
                           {service.description && <p className="text-xs text-festari-500 mt-1">{service.description}</p>}
                         </div>
@@ -209,39 +216,75 @@ const Enterprise = () => {
                   </div>
                 </div>
               )}
+              
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Button asChild className="bg-white text-orange-700 hover:bg-white/90">
+                  <a href="#services">Our Services</a>
+                </Button>
+                <Button asChild variant="outline" className="border-white/30 text-white hover:bg-white/10">
+                  <Link to="/consultation">Request Consultation</Link>
+                </Button>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Main content */}
-        <section className="py-12 bg-festari-50">
+        <section className="py-16 bg-festari-50" id="services">
           <div className="container-custom">
-            <Tabs defaultValue="all" className="w-full">
-              <TabsList className="grid w-full grid-cols-3 mb-8">
-                <TabsTrigger value="all" className="flex items-center gap-2">
-                  <Store size={16} />
-                  <span>All Services</span>
-                </TabsTrigger>
-                <TabsTrigger value="business" className="flex items-center gap-2">
-                  <Briefcase size={16} />
-                  <span>Business Services</span>
+            <Tabs defaultValue="services" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-8">
+                <TabsTrigger value="services" className="flex items-center gap-2">
+                  <ShoppingCart size={16} />
+                  <span>Services</span>
                 </TabsTrigger>
                 <TabsTrigger value="consultation" className="flex items-center gap-2">
                   <MessageSquare size={16} />
                   <span>Consultation</span>
                 </TabsTrigger>
               </TabsList>
-
-              <TabsContent value="all" className="space-y-12">
+              
+              <TabsContent value="services" className="space-y-10">
                 <div className="text-center mb-8">
-                  <h2 className="text-2xl font-display font-bold mb-3">Our Enterprise Services</h2>
+                  <h2 className="text-2xl font-display font-bold mb-3">Enterprise Services</h2>
                   <p className="text-festari-600 max-w-2xl mx-auto">
-                    Comprehensive solutions for trading, business operations, personal services, and professional needs
+                    Comprehensive trading and service solutions for businesses and individuals
                   </p>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                  {tradingServiceCategories.map((category, idx) => (
+                <div className="flex border-b border-festari-200 mb-8">
+                  <button
+                    className={cn(
+                      "py-3 px-6 font-medium text-sm border-b-2 transition-colors",
+                      activeTab === 'trading' 
+                        ? "border-orange-500 text-orange-700" 
+                        : "border-transparent text-festari-600 hover:text-festari-900"
+                    )}
+                    onClick={() => setActiveTab('trading')}
+                  >
+                    <div className="flex items-center gap-2">
+                      <ShoppingCart size={18} />
+                      <span>Trading</span>
+                    </div>
+                  </button>
+                  <button
+                    className={cn(
+                      "py-3 px-6 font-medium text-sm border-b-2 transition-colors",
+                      activeTab === 'services' 
+                        ? "border-orange-500 text-orange-700" 
+                        : "border-transparent text-festari-600 hover:text-festari-900"
+                    )}
+                    onClick={() => setActiveTab('services')}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Briefcase size={18} />
+                      <span>Services</span>
+                    </div>
+                  </button>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+                  {(activeTab === 'trading' ? tradingServices : serviceActivities).map((category, idx) => (
                     <Button 
                       key={idx}
                       variant={activeCategory === category.title ? "default" : "outline"}
@@ -264,12 +307,12 @@ const Enterprise = () => {
                 </div>
                 
                 <div className="space-y-12">
-                  {tradingServiceCategories
+                  {(activeTab === 'trading' ? tradingServices : serviceActivities)
                     .filter(category => !activeCategory || category.title === activeCategory)
                     .map((category, idx) => (
                       <div key={idx} className="space-y-6">
                         <div className="flex items-center gap-3">
-                          <div className="p-2 rounded-lg bg-chili/10 text-chili">
+                          <div className="p-2 rounded-lg bg-orange-100 text-orange-700">
                             <category.icon size={24} />
                           </div>
                           <div>
@@ -285,36 +328,12 @@ const Enterprise = () => {
                               title={service.title}
                               description={service.description}
                               icon={service.icon || category.icon}
-                              color="bg-chili/5 text-chili"
+                              color="bg-orange-100 text-orange-700"
                               link={`/consultation?service=${encodeURIComponent(service.title)}&category=${encodeURIComponent(category.title)}`}
                             />
                           ))}
                         </ServiceGrid>
                       </div>
-                    ))}
-                </div>
-              </TabsContent>
-
-              <TabsContent value="business" className="space-y-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {tradingServiceCategories
-                    .filter(category => category.title === "Trading & Distribution" || category.title === "Business Operations")
-                    .flatMap(category => category.items)
-                    .map((service, idx) => (
-                      <Card key={idx} className="hover:shadow-md transition-shadow">
-                        <CardContent className="p-6">
-                          <div className="flex items-center gap-3 mb-4">
-                            <div className="p-2 rounded-lg bg-chili/10 text-chili">
-                              {service.icon && <service.icon size={20} />}
-                            </div>
-                            <h3 className="text-lg font-semibold">{service.title}</h3>
-                          </div>
-                          <p className="text-sm text-festari-600 mb-4">{service.description}</p>
-                          <Button asChild variant="outline" className="w-full">
-                            <Link to={`/consultation?service=${encodeURIComponent(service.title)}`}>Request Service</Link>
-                          </Button>
-                        </CardContent>
-                      </Card>
                     ))}
                 </div>
               </TabsContent>
@@ -326,8 +345,8 @@ const Enterprise = () => {
                       {
                         title: "Enterprise",
                         path: "/enterprise",
-                        description: "Comprehensive business and service solutions",
-                        activities: tradingServiceCategories.flatMap(category => 
+                        description: "Trading and service solutions",
+                        activities: [...tradingServices, ...serviceActivities].flatMap(category => 
                           category.items.map(item => ({ 
                             title: item.title,
                             description: item.description
@@ -335,8 +354,8 @@ const Enterprise = () => {
                         )
                       }
                     ]}
-                    title="Enterprise Services Consultation"
-                    description="Our team is ready to assist with your business and personal service needs. Let us know how we can help."
+                    title="Enterprise Consultation Request"
+                    description="Our enterprise experts are ready to assist you with trading operations, service delivery, and business development."
                   />
                 </div>
               </TabsContent>
@@ -345,53 +364,43 @@ const Enterprise = () => {
         </section>
         
         {/* Benefits section */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-orange-50">
           <div className="container-custom">
             <div className="text-center mb-12">
-              <h2 className="text-2xl font-display font-bold mb-3">Why Choose Festari Enterprise</h2>
+              <h2 className="text-2xl font-display font-bold mb-3">Why Choose Our Enterprise Services</h2>
               <p className="text-festari-600 max-w-2xl mx-auto">
-                We combine exceptional service quality with business expertise to deliver solutions that exceed expectations
+                Our team combines business expertise with modern techniques to deliver efficient and profitable enterprise solutions
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              <div className="bg-festari-50 p-8 rounded-lg text-center">
-                <div className="p-3 rounded-full bg-chili/10 text-chili inline-block mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-white p-8 rounded-lg shadow-sm">
+                <div className="p-3 rounded-full bg-orange-100 text-orange-700 inline-block mb-4">
                   <CheckCircle size={24} />
                 </div>
                 <h3 className="text-xl font-semibold mb-3">Quality Assurance</h3>
                 <p className="text-festari-600">
-                  Rigorous quality control processes ensure exceptional service delivery.
+                  We maintain high standards across all our trading and service operations to ensure customer satisfaction.
                 </p>
               </div>
               
-              <div className="bg-festari-50 p-8 rounded-lg text-center">
-                <div className="p-3 rounded-full bg-chili/10 text-chili inline-block mb-4">
-                  <UserCheck size={24} />
+              <div className="bg-white p-8 rounded-lg shadow-sm">
+                <div className="p-3 rounded-full bg-orange-100 text-orange-700 inline-block mb-4">
+                  <LineChart size={24} />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Expert Team</h3>
+                <h3 className="text-xl font-semibold mb-3">Business Growth</h3>
                 <p className="text-festari-600">
-                  Highly skilled professionals with extensive industry experience.
+                  Our strategic approach helps businesses scale operations and increase market presence effectively.
                 </p>
               </div>
               
-              <div className="bg-festari-50 p-8 rounded-lg text-center">
-                <div className="p-3 rounded-full bg-chili/10 text-chili inline-block mb-4">
-                  <Globe size={24} />
+              <div className="bg-white p-8 rounded-lg shadow-sm">
+                <div className="p-3 rounded-full bg-orange-100 text-orange-700 inline-block mb-4">
+                  <Users size={24} />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Global Reach</h3>
+                <h3 className="text-xl font-semibold mb-3">Customer Focus</h3>
                 <p className="text-festari-600">
-                  International connections for import, export, and distribution.
-                </p>
-              </div>
-              
-              <div className="bg-festari-50 p-8 rounded-lg text-center">
-                <div className="p-3 rounded-full bg-chili/10 text-chili inline-block mb-4">
-                  <TrendingUp size={24} />
-                </div>
-                <h3 className="text-xl font-semibold mb-3">Growth Focus</h3>
-                <p className="text-festari-600">
-                  Strategic solutions designed to accelerate your business growth.
+                  We prioritize customer needs and preferences to deliver personalized and satisfying service experiences.
                 </p>
               </div>
             </div>
@@ -399,16 +408,16 @@ const Enterprise = () => {
         </section>
         
         {/* CTA Section */}
-        <section className="py-16 bg-chili text-white">
+        <section className="py-16 bg-orange-700 text-white">
           <div className="container-custom text-center">
             <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
-              Ready to Elevate Your Business?
+              Ready to Grow Your Business?
             </h2>
             <p className="text-white/90 mb-8 max-w-2xl mx-auto">
-              Whether you need trading solutions, operational support, or personal services, our team is ready to help you succeed.
+              Whether you're looking to start a new venture, improve your current operations, or expand your business, our team is here to help.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button asChild size="lg" className="bg-white text-chili hover:bg-white/90">
+              <Button asChild size="lg" className="bg-white text-orange-700 hover:bg-white/90">
                 <Link to="/consultation">Request Enterprise Consultation</Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10">

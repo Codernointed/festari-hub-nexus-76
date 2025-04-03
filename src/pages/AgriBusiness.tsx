@@ -8,8 +8,8 @@ import {
   Leaf, 
   Tractor, 
   Briefcase, 
-  Tool, 
-  Flask, 
+  Wrench, // Changed from Tool
+  Beaker, // Changed from Flask
   Users, 
   Factory, 
   Sprout, 
@@ -52,7 +52,7 @@ const agriServices = [
     description: "Agricultural business development and support",
     items: [
       { title: "Agribusiness Consulting", icon: Briefcase, description: "Expert agricultural business advice" },
-      { title: "Agricultural Equipment Sales and Rental", icon: Tool, description: "Quality farming equipment solutions" },
+      { title: "Agricultural Equipment Sales and Rental", icon: Wrench, description: "Quality farming equipment solutions" }, // Changed Tool to Wrench
       { title: "Farm Management Services", icon: Users, description: "Comprehensive farm operations management" },
       { title: "Agribusiness Investment", icon: DollarSign, description: "Agricultural investment opportunities" },
       { title: "Agricultural Marketing", icon: LineChart, description: "Strategic marketing for farm products" }
@@ -60,10 +60,10 @@ const agriServices = [
   },
   {
     title: "Technical Services",
-    icon: Flask,
+    icon: Beaker, // Changed Flask to Beaker
     description: "Specialized agricultural technical support",
     items: [
-      { title: "Crop and Soil Analysis", icon: Flask, description: "Scientific testing of crops and soil" },
+      { title: "Crop and Soil Analysis", icon: Beaker, description: "Scientific testing of crops and soil" }, // Changed Flask to Beaker
       { title: "Pest and Disease Control", icon: Bug, description: "Integrated pest management solutions" },
       { title: "Agricultural Research", icon: Search, description: "Innovative farming research and development" },
       { title: "Sale of Agrochemicals", icon: PackageOpen, description: "Quality agricultural supplies and chemicals" }

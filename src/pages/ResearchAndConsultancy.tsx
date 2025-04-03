@@ -17,7 +17,7 @@ import {
   Leaf, 
   Database, 
   Shield, 
-  Tool, 
+  WrenchIcon, 
   FileCheck, 
   Wrench, 
   Microscope,
@@ -46,10 +46,10 @@ const researchServices = [
     description: "Expert services for mining operations and engineering projects",
     items: [
       { title: "Mining and Geotechnical Consulting", icon: Briefcase, description: "Expert consulting services for mining operations" },
-      { title: "Geotechnical Engineering", icon: Wrench, description: "Specialized engineering solutions for ground stability" },
+      { title: "Geotechnical Engineering", icon: WrenchIcon, description: "Specialized engineering solutions for ground stability" },
       { title: "Mineral Exploration", icon: Search, description: "Comprehensive mineral exploration services" },
-      { title: "Geotechnical Instrumentation", icon: Tool, description: "Advanced monitoring solutions for geological stability" },
-      { title: "Mining Equipment Sales and Rental", icon: Tool, description: "Quality equipment solutions for mining operations" }
+      { title: "Geotechnical Instrumentation", icon: Wrench, description: "Advanced monitoring solutions for geological stability" },
+      { title: "Mining Equipment Sales and Rental", icon: Wrench, description: "Quality equipment solutions for mining operations" }
     ]
   },
   {
@@ -83,7 +83,7 @@ const researchServices = [
     items: [
       { title: "Environmental Impact Assessments", icon: Leaf, description: "Thorough environmental evaluations" },
       { title: "Resource Management", icon: Briefcase, description: "Efficient resource allocation and management strategies" },
-      { title: "Geotechnical Remediation", icon: Tool, description: "Site improvement and stabilization solutions" },
+      { title: "Geotechnical Remediation", icon: Wrench, description: "Site improvement and stabilization solutions" },
       { title: "Mining, Geotechnical and Environmental Advisory Services", icon: Briefcase, description: "Expert consultation on environmental compliance" }
     ]
   },

@@ -17,7 +17,7 @@ import {
   BarChart3,
   User,
   Tractor,
-  Flask,
+  Beaker, // Changed from Flask
   Factory
 } from 'lucide-react';
 
