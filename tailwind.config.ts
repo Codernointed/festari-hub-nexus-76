@@ -118,7 +118,11 @@ export default {
 				'slide-in': 'slide-in 0.3s ease-out',
 				'float': 'float 5s ease-in-out infinite',
 				'pulse-soft': 'pulse-soft 3s ease-in-out infinite'
-			}
+			},
+			textWrap: {
+				balance: 'balance',
+				pretty: 'pretty',
+			},
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
