@@ -27,16 +27,15 @@ const Header = () => {
   
   const isHomePage = location.pathname === '/'; // Check if the current page is the homepage
 
-  // Define navigation items
+  // Define navigation items with exact text as requested
   const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Estate Agency', path: '/estates', icon: <Home size={18} /> },
-    { name: 'Research & Consultation', path: '/research', icon: <BookOpen size={18} /> },
-    { name: 'Agribusiness', path: '/agriculture', icon: <ShoppingCart size={18} /> },
-    { name: 'Enterprise', path: '/enterprise', icon: <Briefcase size={18} /> },
-    { name: 'About', path: '/about', icon: <User size={18} /> },
-    { name: 'Founder', path: '/founder', icon: <User size={18} /> },
-    { name: 'Contact', path: '/contact', icon: <MapPin size={18} /> },
+    { name: 'Estate Agency', path: '/estates' },
+    { name: 'Research & Consultation', path: '/research' },
+    { name: 'Agribusiness', path: '/agriculture' },
+    { name: 'Enterprise', path: '/enterprise' },
+    { name: 'About', path: '/about' },
+    { name: 'Founder', path: '/founder' },
+    { name: 'Contact', path: '/contact' },
   ];
 
   // Watch for scroll position to add background to the header
@@ -79,18 +78,18 @@ const Header = () => {
             />
           </Link>
 
-          {/* Desktop Navigation - improved spacing and overflow handling */}
-          <nav className="hidden md:flex items-center space-x-4 lg:space-x-6 overflow-x-auto max-w-[50%] justify-end">
+          {/* Desktop Navigation - full-width for longer text items */}
+          <nav className="hidden md:flex items-center md:space-x-1 lg:space-x-4 justify-end">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
                 className={cn(
-                  "text-sm transition-colors whitespace-nowrap px-1",
+                  "text-sm whitespace-nowrap transition-colors px-2 py-1.5 font-medium hover:bg-festari-50/80 rounded-md",
                   (isHomePage && !isScrolled)
-                    ? "text-white/90 hover:text-white"
+                    ? "text-white hover:bg-white/10 hover:text-white"
                     : "text-festari-700 hover:text-accent",
-                  location.pathname === item.path && "font-medium" // Highlight active link
+                  location.pathname === item.path && "font-bold" // Highlight active link
                 )}
               >
                 {item.name}
@@ -98,7 +97,7 @@ const Header = () => {
             ))}
           </nav>
           
-          {/* Login/Register Buttons with improved responsive design */}
+          {/* Login/Register Buttons with improved contrast */}
           <div className="hidden md:flex items-center space-x-3 shrink-0">
             <Link to="/login">
               <Button 
@@ -112,9 +111,9 @@ const Header = () => {
             </Link>
             <Link to="/register">
               <Button 
-                variant={(isHomePage && !isScrolled) ? "white" : "accent"}
+                variant={(isHomePage && !isScrolled) ? "transparent" : "accent"}
                 size="sm"
-                className="px-4"
+                className="px-4 border border-white/30"
               >
                 Register
               </Button>
@@ -154,7 +153,7 @@ const Header = () => {
             </DropdownMenu>
           </div>
           
-          {/* Mobile Menu - improved spacing and button contrast */}
+          {/* Mobile Menu - improved button contrast and spacing */}
           <div className="md:hidden flex items-center space-x-2">
             {/* Mobile User Menu */}
             <DropdownMenu>
@@ -164,7 +163,7 @@ const Header = () => {
                   size="icon"
                   className={cn(
                     "rounded-full",
-                    (isHomePage && !isScrolled) ? "text-white" : "text-festari-900"
+                    (isHomePage && !isScrolled) ? "text-white hover:bg-white/10" : "text-festari-900 hover:bg-festari-50"
                   )}
                 >
                   <User size={18} />
@@ -197,7 +196,7 @@ const Header = () => {
                   size="icon"
                   className={cn(
                     "rounded-full",
-                    (isHomePage && !isScrolled) ? "text-white" : "text-festari-900"
+                    (isHomePage && !isScrolled) ? "text-white hover:bg-white/10" : "text-festari-900 hover:bg-festari-50"
                   )}
                   aria-label="Toggle menu"
                 >
@@ -214,7 +213,6 @@ const Header = () => {
                         location.pathname === item.path ? 'font-medium text-accent' : ''
                       }`}
                     >
-                      {item.icon && <span className="mr-2">{item.icon}</span>}
                       {item.name}
                     </Link>
                   ))}

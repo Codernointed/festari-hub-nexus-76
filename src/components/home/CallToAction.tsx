@@ -1,3 +1,4 @@
+
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -19,19 +20,23 @@ const CallToAction = () => {
             </p>
           </div>
           
-          {/* Button group for primary actions */}
+          {/* Button group for primary actions with improved contrast */}
           <div className="flex flex-col sm:flex-row gap-4">
             {/* Primary contact button */}
-            <Button asChild className="bg-white text-indigo hover:bg-white/90 px-6 py-6" size="lg">
+            <Button 
+              asChild 
+              className="bg-white text-indigo hover:bg-white/90 px-6 py-6 border border-white/30" 
+              size="lg"
+            >
               <Link to="/contact">
                 Contact Us
               </Link>
             </Button>
-            {/* Secondary button leading to more information */}
+            {/* Secondary button with improved visibility */}
             <Button
               asChild
-              variant="outline"
-              className="border-white text-white font-semibold hover:bg-white/20 bg-black/50 px-6 py-6"
+              variant="transparent"
+              className="border-white/40 text-white hover:bg-white/20 px-6 py-6"
               size="lg"
             >
               <Link to="/about" className="flex items-center">
