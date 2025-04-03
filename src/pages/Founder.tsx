@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -639,3 +640,205 @@ const Founder = () => {
                     </CardContent>
                   </Card>
                 </TabsContent>
+                
+                {/* Publications Tab */}
+                <TabsContent value="publications">
+                  <Card className="border-none shadow-lg">
+                    <CardContent className="pt-6">
+                      <div className="flex items-center justify-between mb-6">
+                        <h2 className="text-2xl font-bold text-festari-900 flex items-center gap-2">
+                          <Book size={24} className="text-festari-accent" />
+                          Publications
+                        </h2>
+                        <a 
+                          href="https://scholar.google.com/citations?user=YOUR_ID" 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-festari-accent hover:text-festari-accent/80 flex items-center gap-2 font-semibold"
+                        >
+                          <span>View on Google Scholar</span>
+                          <ExternalLink size={16} />
+                        </a>
+                      </div>
+                      
+                      <div className="space-y-6">
+                        {founderData.publications.map((pub, index) => (
+                          <motion.div 
+                            key={index} 
+                            className="p-5 rounded-lg border border-festari-100/30 hover:bg-festari-50/10 transition-colors"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1 }}
+                          >
+                            <h3 className="font-bold text-festari-900 text-lg mb-2">{pub.title}</h3>
+                            
+                            <p className="text-festari-700 text-sm italic mb-3">
+                              {pub.authors}
+                            </p>
+                            
+                            <div className="flex flex-wrap gap-y-2 text-sm text-festari-600 mb-3">
+                              <div className="flex items-center mr-4">
+                                <FileText size={14} className="mr-1 text-festari-accent" />
+                                <span>{pub.publisher}</span>
+                              </div>
+                              <div className="flex items-center mr-4">
+                                <CalendarDays size={14} className="mr-1 text-festari-accent" />
+                                <span>{pub.date}</span>
+                              </div>
+                              
+                              {pub.volume && pub.issue && pub.pages && (
+                                <div className="flex items-center">
+                                  <Book size={14} className="mr-1 text-festari-accent" />
+                                  <span>Vol. {pub.volume}, Issue {pub.issue}, pp. {pub.pages}</span>
+                                </div>
+                              )}
+                            </div>
+                            
+                            {pub.description && (
+                              <p className="text-festari-700 mb-4">{pub.description}</p>
+                            )}
+                            
+                            <a 
+                              href={pub.link} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="inline-flex items-center text-sm text-festari-accent hover:text-festari-accent/80 font-medium"
+                            >
+                              <span>Access Publication</span>
+                              <ExternalLink size={14} className="ml-1" />
+                            </a>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+                
+                {/* Contact Tab */}
+                <TabsContent value="contact">
+                  <Card className="border-none shadow-lg">
+                    <CardContent className="pt-6">
+                      <h2 className="text-2xl font-bold text-festari-900 mb-6 flex items-center gap-2">
+                        <Mail size={24} className="text-festari-accent" />
+                        Contact Information
+                      </h2>
+                      
+                      <div className="grid md:grid-cols-2 gap-8">
+                        <div>
+                          <h3 className="text-xl font-semibold text-festari-900 mb-4">Get in Touch</h3>
+                          
+                          <div className="space-y-5">
+                            <a 
+                              href={`mailto:${founderData.contactInfo.email}`}
+                              className="flex items-start p-4 rounded-lg border border-festari-100/30 hover:bg-festari-50 transition-colors"
+                            >
+                              <Mail size={18} className="text-festari-accent mr-3 mt-0.5" />
+                              <div>
+                                <p className="font-medium text-festari-900">Email (Professional)</p>
+                                <p className="text-festari-700">{founderData.contactInfo.email}</p>
+                              </div>
+                            </a>
+                            
+                            <a 
+                              href={`mailto:${founderData.contactInfo.academicEmail}`}
+                              className="flex items-start p-4 rounded-lg border border-festari-100/30 hover:bg-festari-50 transition-colors"
+                            >
+                              <Mail size={18} className="text-festari-accent mr-3 mt-0.5" />
+                              <div>
+                                <p className="font-medium text-festari-900">Email (Academic)</p>
+                                <p className="text-festari-700">{founderData.contactInfo.academicEmail}</p>
+                              </div>
+                            </a>
+                            
+                            <a 
+                              href={`tel:${founderData.contactInfo.phone}`}
+                              className="flex items-start p-4 rounded-lg border border-festari-100/30 hover:bg-festari-50 transition-colors"
+                            >
+                              <Phone size={18} className="text-festari-accent mr-3 mt-0.5" />
+                              <div>
+                                <p className="font-medium text-festari-900">Phone (Ghana)</p>
+                                <p className="text-festari-700">{founderData.contactInfo.phone}</p>
+                              </div>
+                            </a>
+                            
+                            <a 
+                              href={`tel:${founderData.contactInfo.mobilePhone}`}
+                              className="flex items-start p-4 rounded-lg border border-festari-100/30 hover:bg-festari-50 transition-colors"
+                            >
+                              <Phone size={18} className="text-festari-accent mr-3 mt-0.5" />
+                              <div>
+                                <p className="font-medium text-festari-900">Phone (International)</p>
+                                <p className="text-festari-700">{founderData.contactInfo.mobilePhone}</p>
+                              </div>
+                            </a>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <h3 className="text-xl font-semibold text-festari-900 mb-4">Academic & Professional Profiles</h3>
+                          
+                          <div className="space-y-5">
+                            <a 
+                              href={founderData.contactInfo.linkedin}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-start p-4 rounded-lg border border-festari-100/30 hover:bg-festari-50 transition-colors"
+                            >
+                              <Linkedin size={18} className="text-festari-accent mr-3 mt-0.5" />
+                              <div>
+                                <p className="font-medium text-festari-900">LinkedIn</p>
+                                <p className="text-festari-700">Connect Professionally</p>
+                              </div>
+                              <ExternalLink size={14} className="ml-auto text-festari-400" />
+                            </a>
+                            
+                            <a 
+                              href="https://www.scopus.com/authid/detail.uri?authorId=58644424800"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-start p-4 rounded-lg border border-festari-100/30 hover:bg-festari-50 transition-colors"
+                            >
+                              <FileText size={18} className="text-festari-accent mr-3 mt-0.5" />
+                              <div>
+                                <p className="font-medium text-festari-900">Scopus</p>
+                                <p className="text-festari-700">Author ID: {founderData.contactInfo.scopusId}</p>
+                              </div>
+                              <ExternalLink size={14} className="ml-auto text-festari-400" />
+                            </a>
+                            
+                            <a 
+                              href={founderData.contactInfo.orcid}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-start p-4 rounded-lg border border-festari-100/30 hover:bg-festari-50 transition-colors"
+                            >
+                              <FileText size={18} className="text-festari-accent mr-3 mt-0.5" />
+                              <div>
+                                <p className="font-medium text-festari-900">ORCID</p>
+                                <p className="text-festari-700">View Academic Profile</p>
+                              </div>
+                              <ExternalLink size={14} className="ml-auto text-festari-400" />
+                            </a>
+                          </div>
+                          
+                          <div className="mt-8">
+                            <Button className="w-full bg-festari-accent hover:bg-festari-accent/90 text-white">
+                              Schedule a Meeting
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+              </Tabs>
+            </motion.div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
+export default Founder;
