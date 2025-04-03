@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, User, ShoppingCart, BookOpen, Home, MapPin, LogIn, Briefcase } from 'lucide-react';
@@ -63,7 +64,7 @@ const Header = () => {
       <div className="container-custom">
         <div className="flex items-center justify-between h-20">
           {/* Logo section */}
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2 shrink-0">
             <Logo 
               variant="icon" 
               theme={(isHomePage && !isScrolled) ? "light" : "dark"} 
@@ -78,14 +79,14 @@ const Header = () => {
             />
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
+          {/* Desktop Navigation - improved spacing and overflow handling */}
+          <nav className="hidden md:flex items-center space-x-4 lg:space-x-6 overflow-x-auto max-w-[50%] justify-end">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
                 className={cn(
-                  "text-sm transition-colors",
+                  "text-sm transition-colors whitespace-nowrap px-1",
                   (isHomePage && !isScrolled)
                     ? "text-white/90 hover:text-white"
                     : "text-festari-700 hover:text-accent",
@@ -97,28 +98,23 @@ const Header = () => {
             ))}
           </nav>
           
-          {/* Login/Register Buttons */}
-          <div className="hidden md:flex items-center space-x-3">
+          {/* Login/Register Buttons with improved responsive design */}
+          <div className="hidden md:flex items-center space-x-3 shrink-0">
             <Link to="/login">
               <Button 
-                variant={(isHomePage && !isScrolled) ? "ghost" : "highlight"}
-                className={cn(
-                  "flex items-center gap-2 px-5",
-                  (isHomePage && !isScrolled) && "text-white hover:bg-white/10"
-                )}
+                variant={(isHomePage && !isScrolled) ? "ghost-light" : "highlight"}
+                className="flex items-center gap-2 px-4"
+                size="sm"
               >
-                <LogIn size={18} />
+                <LogIn size={16} />
                 Login
               </Button>
             </Link>
             <Link to="/register">
               <Button 
-                className={cn(
-                  "transition-colors",
-                  (isHomePage && !isScrolled)
-                    ? "bg-white text-festari-900 hover:bg-white/90"
-                    : "bg-festari-accent hover:bg-festari-accent/90 text-white"
-                )}
+                variant={(isHomePage && !isScrolled) ? "white" : "accent"}
+                size="sm"
+                className="px-4"
               >
                 Register
               </Button>
@@ -158,7 +154,7 @@ const Header = () => {
             </DropdownMenu>
           </div>
           
-          {/* Mobile Menu */}
+          {/* Mobile Menu - improved spacing and button contrast */}
           <div className="md:hidden flex items-center space-x-2">
             {/* Mobile User Menu */}
             <DropdownMenu>
@@ -215,7 +211,7 @@ const Header = () => {
                       key={item.name}
                       to={item.path}
                       className={`flex items-center text-festari-900 text-lg ${
-                        location.pathname === item.path ? 'font-medium' : ''
+                        location.pathname === item.path ? 'font-medium text-accent' : ''
                       }`}
                     >
                       {item.icon && <span className="mr-2">{item.icon}</span>}

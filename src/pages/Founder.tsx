@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -18,9 +19,7 @@ import {
   Users,
   ChevronsRight,
   FileText,
-  Check,
-  MessageSquare,
-  Star
+  Check
 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from '@/components/ui/button';
@@ -177,6 +176,30 @@ const founderData = {
       volume: "9",
       issue: "1",
       pages: "1-8"
+    },
+    {
+      title: "Maintaining production levels in underground mining operations during pandemics - a case study",
+      publisher: "Journal of the Ghana Institution of Engineering",
+      year: "2024",
+      date: "Feb 2024",
+      authors: "Festus Kunkyin-Saadaari, et al.",
+      link: "http://dx.doi.org/10.56049/jghie.v24i1.138",
+      description: "A case study on maintaining mining operations during global health crises.",
+      volume: "24",
+      issue: "1",
+      pages: "45-58"
+    },
+    {
+      title: "Slope stability assessment of some waste rock dumps at a typical gold mine in Ghana",
+      publisher: "Nigerian Journal of Technology",
+      year: "2023",
+      date: "Nov 2023",
+      authors: "Festus Kunkyin-Saadaari, Samuel Frimpong",
+      link: "http://dx.doi.org/10.4314/njt.v42i1.10",
+      description: "Analysis of slope stability in mining waste management.",
+      volume: "42",
+      issue: "1",
+      pages: "120-130"
     }
   ] as Publication[],
   scholarProfiles: {
@@ -208,7 +231,17 @@ const founderData = {
       "Advanced Professional Certificate in Drilling, Blasting & Exploration Technologies",
       "Proficiency Certificate in Mine Occupational Health, Safety & Environment"
     ]
-  }
+  },
+  highlights: [
+    "Lecturer and Faculty Examinations Officer at UMaT's largest faculty",
+    "Over 70 students supervised across BSc, PgD, MSc, MPhil, and PhD programs",
+    "Taught across every level of the Ghanaian educational system",
+    "Trained 300+ professionals from 8 countries in industry-recognized short courses",
+    "Visiting Scholar at Missouri University of Science and Technology, USA",
+    "Founder of multiple subsidiaries under Festari Group Ltd",
+    "Published over 10 peer-reviewed journal publications",
+    "Member of 8+ international professional bodies"
+  ]
 };
 
 // Animation variants
@@ -379,11 +412,13 @@ const Founder = () => {
           initial="hidden"
           animate="visible"
           variants={fadeIn}
-          className="relative py-20 bg-gradient-to-r from-festari-900 to-festari-accent/90 text-white"
+          className="relative py-24 bg-gradient-to-r from-festari-900 to-festari-accent text-white overflow-hidden"
         >
-          <div className="container-custom flex flex-col md:flex-row gap-8 items-center">
+          <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1190&q=80')] bg-no-repeat bg-cover"></div>
+          
+          <div className="container-custom flex flex-col md:flex-row gap-10 items-center relative z-10">
             <motion.div 
-              className="w-40 h-40 md:w-64 md:h-64 overflow-hidden rounded-full border-4 border-white/30 shadow-xl"
+              className="w-48 h-48 md:w-64 md:h-64 overflow-hidden rounded-full border-4 border-white/30 shadow-xl"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
@@ -394,12 +429,13 @@ const Founder = () => {
               />
             </motion.div>
             <div className="max-w-2xl">
-              <h1 className="text-3xl md:text-5xl font-display font-bold mb-3 text-balance">{founderData.name}</h1>
-              <p className="text-xl text-festari-100 mb-4">{founderData.title}</p>
+              <Badge className="mb-4 bg-mikado/20 hover:bg-mikado/30 text-mikado border-mikado/20">Founder Profile</Badge>
+              <h1 className="text-4xl md:text-5xl font-display font-bold mb-3">{founderData.name}</h1>
+              <p className="text-xl text-white/80 mb-4">{founderData.title}</p>
               
               <div className="flex items-center mb-6">
-                <MapPin size={18} className="text-festari-200 mr-2" />
-                <span className="text-festari-100">{founderData.location}</span>
+                <MapPin size={18} className="text-white/70 mr-2" />
+                <span className="text-white/80">{founderData.location}</span>
               </div>
               
               <div className="flex flex-wrap gap-2 mb-6">
@@ -415,11 +451,11 @@ const Founder = () => {
                 )}
               </div>
               
-              <p className="text-festari-100 text-lg leading-relaxed">{founderData.bio}</p>
+              <p className="text-white/80 text-lg leading-relaxed">{founderData.bio}</p>
             </div>
           </div>
           
-          {/* Decorative shapes */}
+          {/* Decorative waves */}
           <div className="absolute bottom-0 left-0 w-full overflow-hidden">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-[60px]">
               <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" fill="currentColor" className="text-gray-50"></path>
@@ -435,25 +471,58 @@ const Founder = () => {
           className="py-10"
         >
           <div className="container-custom">
-            <div className="grid grid-cols-3 gap-4 bg-white rounded-xl p-4 shadow-md">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white rounded-xl p-4 shadow-lg border border-festari-100/30">
               <motion.div variants={itemVariant} className="text-center p-4">
                 <p className="text-4xl font-bold text-festari-accent">{founderData.stats.publications}</p>
                 <p className="text-sm text-festari-600">Publications</p>
               </motion.div>
-              <motion.div variants={itemVariant} className="text-center p-4 border-x border-festari-100/20">
-                <p className="text-4xl font-bold text-festari-accent">{founderData.stats.connections}</p>
-                <p className="text-sm text-festari-600">Professional Connections</p>
+              <motion.div variants={itemVariant} className="text-center p-4 border-l border-festari-100/20">
+                <p className="text-4xl font-bold text-festari-accent">{founderData.stats.studentsSupervised}+</p>
+                <p className="text-sm text-festari-600">Students Supervised</p>
               </motion.div>
-              <motion.div variants={itemVariant} className="text-center p-4">
-                <p className="text-4xl font-bold text-festari-accent">{founderData.stats.yearsExperience}+</p>
-                <p className="text-sm text-festari-600">Years Experience</p>
+              <motion.div variants={itemVariant} className="text-center p-4 border-l border-festari-100/20">
+                <p className="text-4xl font-bold text-festari-accent">{founderData.stats.professionalsTrained}+</p>
+                <p className="text-sm text-festari-600">Professionals Trained</p>
+              </motion.div>
+              <motion.div variants={itemVariant} className="text-center p-4 border-l border-festari-100/20">
+                <p className="text-4xl font-bold text-festari-accent">{founderData.stats.countriesImpacted}</p>
+                <p className="text-sm text-festari-600">Countries Impacted</p>
               </motion.div>
             </div>
           </div>
         </motion.section>
         
+        {/* Message from founder */}
+        <motion.section 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeIn}
+          className="py-12 bg-gradient-to-br from-festari-50 to-white"
+        >
+          <div className="container-custom">
+            <div className="max-w-4xl mx-auto relative p-8 rounded-xl">
+              <div className="absolute top-0 left-10 text-8xl text-festari-accent/20 font-serif">"</div>
+              <div className="relative z-10">
+                <p className="text-xl text-festari-700 leading-relaxed italic mb-6">
+                  At Festari Group Ltd., we don't just provide services — we build partnerships that transform industries and empower individuals. 
+                  Our mission is to offer premier solutions tailored to Africa's growth needs, driven by expertise, ethics, and innovation.
+                </p>
+                <div className="flex items-center">
+                  <div className="h-12 w-1 bg-festari-accent mr-4"></div>
+                  <div>
+                    <p className="font-bold text-festari-900">Dr. Festus Kunkyin-Saadaari</p>
+                    <p className="text-festari-600 text-sm">Founder & CEO, Festari Group Ltd</p>
+                  </div>
+                </div>
+              </div>
+              <div className="absolute bottom-0 right-10 text-8xl text-festari-accent/20 font-serif rotate-180">"</div>
+            </div>
+          </div>
+        </motion.section>
+        
         {/* Content tabs */}
-        <section className="py-12">
+        <section className="py-16 bg-white">
           <div className="container-custom">
             <motion.div 
               initial="hidden"
@@ -461,7 +530,7 @@ const Founder = () => {
               variants={fadeIn}
             >
               <Tabs defaultValue="about" className="w-full" onValueChange={setActiveTab}>
-                <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 mb-8 bg-festari-50">
+                <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 mb-10 bg-festari-50">
                   <TabsTrigger value="about">About</TabsTrigger>
                   <TabsTrigger value="experience">Experience</TabsTrigger>
                   <TabsTrigger value="education">Education</TabsTrigger>
@@ -470,14 +539,97 @@ const Founder = () => {
                 </TabsList>
                 
                 {/* About Tab */}
-                <AboutContent />
+                <TabsContent value="about" className="space-y-8">
+                  <Card className="border-none shadow-md">
+                    <CardContent className="pt-6">
+                      <h2 className="text-2xl font-bold text-festari-900 mb-4">Biography</h2>
+                      <p className="text-festari-700 mb-6 text-lg leading-relaxed">{founderData.longBio}</p>
+                      
+                      <div className="grid md:grid-cols-2 gap-8 mt-8">
+                        <div>
+                          <h2 className="text-xl font-bold text-festari-900 mb-4 flex items-center gap-2">
+                            <Award size={20} className="text-festari-accent" />
+                            Professional Organizations
+                          </h2>
+                          <div className="space-y-4">
+                            {founderData.organizations.map((org, index) => (
+                              <motion.div 
+                                key={index} 
+                                className="flex items-start p-3 rounded-lg border border-festari-100/30 hover:bg-festari-50 transition-colors"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: index * 0.1 }}
+                              >
+                                <div>
+                                  <h3 className="font-semibold text-festari-900">{org.name}</h3>
+                                  <p className="text-festari-600 text-sm">{org.role} • {org.period}</p>
+                                </div>
+                              </motion.div>
+                            ))}
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <h2 className="text-xl font-bold text-festari-900 mb-4 flex items-center gap-2">
+                            <FileText size={20} className="text-festari-accent" />
+                            Certifications
+                          </h2>
+                          <div className="space-y-4">
+                            {founderData.certifications.map((cert, index) => (
+                              <motion.div 
+                                key={index} 
+                                className="flex items-start p-3 rounded-lg border border-festari-100/30 hover:bg-festari-50 transition-colors"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: index * 0.1 }}
+                              >
+                                <div>
+                                  <h3 className="font-semibold text-festari-900">{cert.name}</h3>
+                                  <p className="text-festari-600 text-sm">{cert.issuer} • {cert.date}</p>
+                                  <p className="text-festari-500 text-xs">ID: {cert.id}</p>
+                                </div>
+                              </motion.div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <Separator className="my-8" />
+                      
+                      <h2 className="text-xl font-bold text-festari-900 mb-4 flex items-center gap-2">
+                        <Check size={20} className="text-festari-accent" />
+                        Fields of Expertise
+                      </h2>
+                      <div className="flex flex-wrap gap-2 mb-6">
+                        {founderData.expertise.map((skill, index) => (
+                          <Badge key={index} variant="outline" className="bg-festari-50 px-3 py-1 text-sm">
+                            {skill}
+                          </Badge>
+                        ))}
+                      </div>
+                      
+                      <h2 className="text-xl font-bold text-festari-900 mt-8 mb-4 flex items-center gap-2">
+                        <Globe size={20} className="text-festari-accent" />
+                        Languages
+                      </h2>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        {founderData.languages.map((language, index) => (
+                          <div key={index} className="p-3 rounded-lg border border-festari-100/30 bg-festari-50/50">
+                            <h3 className="font-semibold text-festari-900">{language.name}</h3>
+                            <p className="text-festari-600 text-sm">{language.level}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
                 
                 {/* Experience Tab */}
                 <TabsContent value="experience" className="space-y-6">
-                  <Card className="border-none shadow-md">
+                  <Card className="border-none shadow-lg">
                     <CardContent className="pt-6">
                       <h2 className="text-2xl font-bold text-festari-900 mb-6 flex items-center gap-2">
-                        <Briefcase size={22} className="text-festari-accent" />
+                        <Briefcase size={24} className="text-festari-accent" />
                         Professional Experience
                       </h2>
                       <div className="space-y-8">
@@ -490,8 +642,8 @@ const Founder = () => {
                             transition={{ delay: index * 0.1 }}
                           >
                             <div className="absolute -left-2.5 top-0 w-5 h-5 rounded-full bg-festari-accent"></div>
-                            <div className="p-4 rounded-lg border border-festari-100/30 hover:bg-festari-50/50 transition-colors ml-4">
-                              <h3 className="font-bold text-festari-900 text-lg">{exp.position}</h3>
+                            <div className="p-6 rounded-lg border border-festari-100/30 hover:bg-festari-50/50 transition-colors ml-4 shadow-sm">
+                              <h3 className="font-bold text-festari-900 text-xl mb-2">{exp.position}</h3>
                               <div className="flex items-center text-festari-600 mb-1">
                                 <Building size={16} className="mr-1" />
                                 <span className="font-medium">{exp.company}</span>
@@ -522,12 +674,12 @@ const Founder = () => {
                             {founderData.volunteerExperience.map((exp, index) => (
                               <motion.div 
                                 key={index} 
-                                className="p-4 rounded-lg border border-festari-100/30 hover:bg-festari-50/50 transition-colors"
+                                className="p-6 rounded-lg shadow-sm border border-festari-100/30 hover:bg-festari-50/50 transition-colors"
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.1 }}
                               >
-                                <h3 className="font-bold text-festari-900">{exp.position}</h3>
+                                <h3 className="font-bold text-festari-900 text-lg">{exp.position}</h3>
                                 <p className="text-festari-600">{exp.organization}</p>
                                 <p className="text-festari-500 text-sm">{exp.period}</p>
                                 <p className="text-festari-700 mt-2">{exp.description}</p>
@@ -542,13 +694,13 @@ const Founder = () => {
                 
                 {/* Education Tab */}
                 <TabsContent value="education">
-                  <Card className="border-none shadow-md">
+                  <Card className="border-none shadow-lg">
                     <CardContent className="pt-6">
                       <h2 className="text-2xl font-bold text-festari-900 mb-6 flex items-center gap-2">
-                        <GraduationCap size={22} className="text-festari-accent" />
+                        <GraduationCap size={24} className="text-festari-accent" />
                         Education
                       </h2>
-                      <div className="space-y-8">
+                      <div className="space-y-8 mb-12">
                         {founderData.education.map((edu, index) => (
                           <motion.div 
                             key={index} 
@@ -558,8 +710,8 @@ const Founder = () => {
                             transition={{ delay: index * 0.1 }}
                           >
                             <div className="absolute -left-2.5 top-0 w-5 h-5 rounded-full bg-festari-accent"></div>
-                            <div className="p-4 rounded-lg border border-festari-100/30 hover:bg-festari-50/50 transition-colors ml-4">
-                              <h3 className="font-bold text-festari-900 text-lg">{edu.degree}</h3>
+                            <div className="p-6 rounded-lg border border-festari-100/30 hover:bg-festari-50/50 transition-colors ml-4 shadow-sm">
+                              <h3 className="font-bold text-festari-900 text-xl mb-2">{edu.degree}</h3>
                               <div className="flex items-center text-festari-600 mb-1">
                                 <BookOpen size={16} className="mr-1" />
                                 <span className="font-medium">{edu.institution}</span>
@@ -578,72 +730,125 @@ const Founder = () => {
                           </motion.div>
                         ))}
                       </div>
+                      
+                      <h2 className="text-xl font-bold text-festari-900 mb-6 mt-10 flex items-center gap-2">
+                        <BookOpen size={20} className="text-festari-accent" />
+                        Courses Taught
+                      </h2>
+                      
+                      <div className="grid md:grid-cols-2 gap-8">
+                        <div>
+                          <h3 className="text-lg font-semibold text-festari-900 mb-4 flex items-center">
+                            <Badge className="mr-2 bg-festari-accent">Postgraduate</Badge>
+                          </h3>
+                          <ul className="space-y-2">
+                            {founderData.courses.postgraduate.map((course, index) => (
+                              <li key={index} className="flex items-start">
+                                <ChevronsRight size={16} className="text-festari-accent mt-1 mr-2 flex-shrink-0" />
+                                <span className="text-festari-700">{course}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        
+                        <div>
+                          <h3 className="text-lg font-semibold text-festari-900 mb-4 flex items-center">
+                            <Badge className="mr-2 bg-indigo">Undergraduate</Badge>
+                          </h3>
+                          <ul className="space-y-2">
+                            {founderData.courses.undergraduate.map((course, index) => (
+                              <li key={index} className="flex items-start">
+                                <ChevronsRight size={16} className="text-festari-accent mt-1 mr-2 flex-shrink-0" />
+                                <span className="text-festari-700">{course}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-10">
+                        <h3 className="text-lg font-semibold text-festari-900 mb-4 flex items-center">
+                          <Badge className="mr-2 bg-mikado text-festari-900">Certificate Courses</Badge>
+                        </h3>
+                        <ul className="space-y-2">
+                          {founderData.courses.certificate.map((course, index) => (
+                            <li key={index} className="flex items-start p-3 bg-festari-50/50 rounded-lg">
+                              <Check size={16} className="text-festari-accent mt-1 mr-2 flex-shrink-0" />
+                              <span className="text-festari-700">{course}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </CardContent>
                   </Card>
                 </TabsContent>
                 
                 {/* Publications Tab */}
-                <TabsContent value="publications" className="space-y-6">
-                  <Card className="border-none shadow-md">
+                <TabsContent value="publications">
+                  <Card className="border-none shadow-lg">
                     <CardContent className="pt-6">
-                      <h2 className="text-2xl font-bold text-festari-900 mb-6 flex items-center gap-2">
-                        <Book size={22} className="text-festari-accent" />
-                        Research Publications
-                      </h2>
+                      <div className="flex items-center justify-between mb-6">
+                        <h2 className="text-2xl font-bold text-festari-900 flex items-center gap-2">
+                          <Book size={24} className="text-festari-accent" />
+                          Publications
+                        </h2>
+                        <a 
+                          href="https://scholar.google.com/citations?user=YOUR_ID" 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-festari-accent hover:text-festari-accent/80 flex items-center gap-2 font-semibold"
+                        >
+                          <span>View on Google Scholar</span>
+                          <ExternalLink size={16} />
+                        </a>
+                      </div>
+                      
                       <div className="space-y-6">
                         {founderData.publications.map((pub, index) => (
                           <motion.div 
                             key={index} 
-                            className="p-5 border rounded-lg hover:bg-festari-50/50 transition-colors"
+                            className="p-5 rounded-lg border border-festari-100/30 hover:bg-festari-50/10 transition-colors"
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.1 }}
                           >
-                            <div className="flex items-start">
-                              <div className="min-w-8 mt-1 mr-4">
-                                <div className="w-8 h-8 bg-festari-accent/10 rounded-full flex items-center justify-center text-festari-accent">
-                                  <Book size={18} />
-                                </div>
+                            <h3 className="font-bold text-festari-900 text-lg mb-2">{pub.title}</h3>
+                            
+                            <p className="text-festari-700 text-sm italic mb-3">
+                              {pub.authors}
+                            </p>
+                            
+                            <div className="flex flex-wrap gap-y-2 text-sm text-festari-600 mb-3">
+                              <div className="flex items-center mr-4">
+                                <FileText size={14} className="mr-1 text-festari-accent" />
+                                <span>{pub.publisher}</span>
                               </div>
-                              <div className="flex-1">
-                                <h3 className="font-semibold text-festari-900 text-lg mb-2">{pub.title}</h3>
-                                <div className="flex flex-wrap gap-y-2 text-sm text-festari-600 mb-3">
-                                  <div className="flex items-center mr-4">
-                                    <CalendarDays size={14} className="mr-1" />
-                                    <span>{pub.date || pub.year}</span>
-                                  </div>
-                                  {pub.publisher && (
-                                    <div className="flex items-center mr-4">
-                                      <BookOpen size={14} className="mr-1" />
-                                      <span>{pub.publisher}</span>
-                                    </div>
-                                  )}
-                                  {(pub.volume || pub.issue) && (
-                                    <div className="mr-4">
-                                      <span>
-                                        {pub.volume && `Vol. ${pub.volume}`}
-                                        {pub.issue && `, Issue ${pub.issue}`}
-                                      </span>
-                                    </div>
-                                  )}
-                                  {pub.pages && (
-                                    <div className="mr-4">
-                                      <span>Pages {pub.pages}</span>
-                                    </div>
-                                  )}
-                                </div>
-                                <p className="text-festari-700 text-sm mb-3"><strong>Authors:</strong> {pub.authors}</p>
-                                {pub.description && (
-                                  <p className="text-festari-600 text-sm mt-2 mb-4">{pub.description}</p>
-                                )}
-                                <div className="mt-2">
-                                  <a href={pub.link} target="_blank" rel="noopener noreferrer" className="text-festari-accent hover:underline flex items-center text-sm">
-                                    <span className="mr-1">View Publication</span>
-                                    <ExternalLink size={14} />
-                                  </a>
-                                </div>
+                              <div className="flex items-center mr-4">
+                                <CalendarDays size={14} className="mr-1 text-festari-accent" />
+                                <span>{pub.date}</span>
                               </div>
+                              
+                              {pub.volume && pub.issue && pub.pages && (
+                                <div className="flex items-center">
+                                  <Book size={14} className="mr-1 text-festari-accent" />
+                                  <span>Vol. {pub.volume}, Issue {pub.issue}, pp. {pub.pages}</span>
+                                </div>
+                              )}
                             </div>
+                            
+                            {pub.description && (
+                              <p className="text-festari-700 mb-4">{pub.description}</p>
+                            )}
+                            
+                            <a 
+                              href={pub.link} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="inline-flex items-center text-sm text-festari-accent hover:text-festari-accent/80 font-medium"
+                            >
+                              <span>Access Publication</span>
+                              <ExternalLink size={14} className="ml-1" />
+                            </a>
                           </motion.div>
                         ))}
                       </div>
@@ -653,131 +858,116 @@ const Founder = () => {
                 
                 {/* Contact Tab */}
                 <TabsContent value="contact">
-                  <Card className="border-none shadow-md">
+                  <Card className="border-none shadow-lg">
                     <CardContent className="pt-6">
                       <h2 className="text-2xl font-bold text-festari-900 mb-6 flex items-center gap-2">
-                        <Mail size={22} className="text-festari-accent" />
+                        <Mail size={24} className="text-festari-accent" />
                         Contact Information
                       </h2>
                       
                       <div className="grid md:grid-cols-2 gap-8">
-                        <div className="bg-white p-6 rounded-xl border border-festari-100/30">
-                          <div className="space-y-6">
-                            <motion.div 
-                              className="flex items-center space-x-4"
-                              whileHover={{ x: 5 }}
-                              transition={{ type: "spring", stiffness: 400 }}
+                        <div>
+                          <h3 className="text-xl font-semibold text-festari-900 mb-4">Get in Touch</h3>
+                          
+                          <div className="space-y-5">
+                            <a 
+                              href={`mailto:${founderData.contactInfo.email}`}
+                              className="flex items-start p-4 rounded-lg border border-festari-100/30 hover:bg-festari-50 transition-colors"
                             >
-                              <div className="w-10 h-10 bg-festari-accent/10 rounded-full flex items-center justify-center text-festari-accent flex-shrink-0">
-                                <Mail size={20} />
-                              </div>
+                              <Mail size={18} className="text-festari-accent mr-3 mt-0.5" />
                               <div>
-                                <p className="text-sm text-festari-500">Email</p>
-                                <a href={`mailto:${founderData.contactInfo.email}`} className="text-festari-900 hover:text-festari-accent font-medium">
-                                  {founderData.contactInfo.email}
-                                </a>
+                                <p className="font-medium text-festari-900">Email (Professional)</p>
+                                <p className="text-festari-700">{founderData.contactInfo.email}</p>
                               </div>
-                            </motion.div>
+                            </a>
                             
-                            <motion.div 
-                              className="flex items-center space-x-4"
-                              whileHover={{ x: 5 }}
-                              transition={{ type: "spring", stiffness: 400 }}
+                            <a 
+                              href={`mailto:${founderData.contactInfo.academicEmail}`}
+                              className="flex items-start p-4 rounded-lg border border-festari-100/30 hover:bg-festari-50 transition-colors"
                             >
-                              <div className="w-10 h-10 bg-festari-accent/10 rounded-full flex items-center justify-center text-festari-accent flex-shrink-0">
-                                <Phone size={20} />
-                              </div>
+                              <Mail size={18} className="text-festari-accent mr-3 mt-0.5" />
                               <div>
-                                <p className="text-sm text-festari-500">Phone</p>
-                                <a href={`tel:${founderData.contactInfo.phone}`} className="text-festari-900 hover:text-festari-accent font-medium">
-                                  {founderData.contactInfo.phone}
-                                </a>
+                                <p className="font-medium text-festari-900">Email (Academic)</p>
+                                <p className="text-festari-700">{founderData.contactInfo.academicEmail}</p>
                               </div>
-                            </motion.div>
+                            </a>
                             
-                            <motion.div 
-                              className="flex items-center space-x-4"
-                              whileHover={{ x: 5 }}
-                              transition={{ type: "spring", stiffness: 400 }}
+                            <a 
+                              href={`tel:${founderData.contactInfo.phone}`}
+                              className="flex items-start p-4 rounded-lg border border-festari-100/30 hover:bg-festari-50 transition-colors"
                             >
-                              <div className="w-10 h-10 bg-festari-accent/10 rounded-full flex items-center justify-center text-festari-accent flex-shrink-0">
-                                <Phone size={20} />
-                              </div>
+                              <Phone size={18} className="text-festari-accent mr-3 mt-0.5" />
                               <div>
-                                <p className="text-sm text-festari-500">Mobile Phone (International)</p>
-                                <a href={`tel:${founderData.contactInfo.mobilePhone}`} className="text-festari-900 hover:text-festari-accent font-medium">
-                                  {founderData.contactInfo.mobilePhone}
-                                </a>
+                                <p className="font-medium text-festari-900">Phone (Ghana)</p>
+                                <p className="text-festari-700">{founderData.contactInfo.phone}</p>
                               </div>
-                            </motion.div>
+                            </a>
                             
-                            <motion.div 
-                              className="flex items-center space-x-4"
-                              whileHover={{ x: 5 }}
-                              transition={{ type: "spring", stiffness: 400 }}
+                            <a 
+                              href={`tel:${founderData.contactInfo.mobilePhone}`}
+                              className="flex items-start p-4 rounded-lg border border-festari-100/30 hover:bg-festari-50 transition-colors"
                             >
-                              <div className="w-10 h-10 bg-festari-accent/10 rounded-full flex items-center justify-center text-festari-accent flex-shrink-0">
-                                <MapPin size={20} />
-                              </div>
+                              <Phone size={18} className="text-festari-accent mr-3 mt-0.5" />
                               <div>
-                                <p className="text-sm text-festari-500">Location</p>
-                                <p className="text-festari-900 font-medium">{founderData.location}</p>
+                                <p className="font-medium text-festari-900">Phone (International)</p>
+                                <p className="text-festari-700">{founderData.contactInfo.mobilePhone}</p>
                               </div>
-                            </motion.div>
-                            
-                            <motion.div 
-                              className="flex items-center space-x-4"
-                              whileHover={{ x: 5 }}
-                              transition={{ type: "spring", stiffness: 400 }}
-                            >
-                              <div className="w-10 h-10 bg-festari-accent/10 rounded-full flex items-center justify-center text-festari-accent flex-shrink-0">
-                                <Linkedin size={20} />
-                              </div>
-                              <div>
-                                <p className="text-sm text-festari-500">LinkedIn</p>
-                                <a href="https://www.linkedin.com/in/dr-festus-kunkyin-saadaari/" target="_blank" rel="noopener noreferrer" className="text-festari-900 hover:text-festari-accent font-medium">
-                                  Connect on LinkedIn
-                                </a>
-                              </div>
-                            </motion.div>
+                            </a>
                           </div>
                         </div>
                         
-                        <div className="bg-festari-50/50 p-6 rounded-xl border border-festari-100/30">
-                          <h3 className="text-xl font-bold text-festari-900 mb-4">Send a Message</h3>
-                          <form className="space-y-4">
-                            <div>
-                              <label htmlFor="name" className="block text-sm font-medium text-festari-700 mb-1">Name</label>
-                              <input 
-                                type="text" 
-                                id="name" 
-                                className="w-full px-4 py-2 rounded-md border border-festari-200 focus:outline-none focus:ring-2 focus:ring-festari-accent/50"
-                                placeholder="Your name"
-                              />
-                            </div>
-                            <div>
-                              <label htmlFor="email" className="block text-sm font-medium text-festari-700 mb-1">Email</label>
-                              <input 
-                                type="email" 
-                                id="email" 
-                                className="w-full px-4 py-2 rounded-md border border-festari-200 focus:outline-none focus:ring-2 focus:ring-festari-accent/50"
-                                placeholder="Your email address"
-                              />
-                            </div>
-                            <div>
-                              <label htmlFor="message" className="block text-sm font-medium text-festari-700 mb-1">Message</label>
-                              <textarea 
-                                id="message" 
-                                rows={4} 
-                                className="w-full px-4 py-2 rounded-md border border-festari-200 focus:outline-none focus:ring-2 focus:ring-festari-accent/50"
-                                placeholder="Your message"
-                              ></textarea>
-                            </div>
-                            <Button className="w-full bg-festari-accent hover:bg-festari-accent/90">
-                              <Mail size={16} className="mr-2" />
-                              Send Message
+                        <div>
+                          <h3 className="text-xl font-semibold text-festari-900 mb-4">Academic & Professional Profiles</h3>
+                          
+                          <div className="space-y-5">
+                            <a 
+                              href={founderData.contactInfo.linkedin}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-start p-4 rounded-lg border border-festari-100/30 hover:bg-festari-50 transition-colors"
+                            >
+                              <Linkedin size={18} className="text-festari-accent mr-3 mt-0.5" />
+                              <div>
+                                <p className="font-medium text-festari-900">LinkedIn</p>
+                                <p className="text-festari-700">Connect Professionally</p>
+                              </div>
+                              <ExternalLink size={14} className="ml-auto text-festari-400" />
+                            </a>
+                            
+                            <a 
+                              href="https://www.scopus.com/authid/detail.uri?authorId=58644424800"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-start p-4 rounded-lg border border-festari-100/30 hover:bg-festari-50 transition-colors"
+                            >
+                              <FileText size={18} className="text-festari-accent mr-3 mt-0.5" />
+                              <div>
+                                <p className="font-medium text-festari-900">Scopus</p>
+                                <p className="text-festari-700">Author ID: {founderData.contactInfo.scopusId}</p>
+                              </div>
+                              <ExternalLink size={14} className="ml-auto text-festari-400" />
+                            </a>
+                            
+                            <a 
+                              href={founderData.contactInfo.orcid}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-start p-4 rounded-lg border border-festari-100/30 hover:bg-festari-50 transition-colors"
+                            >
+                              <FileText size={18} className="text-festari-accent mr-3 mt-0.5" />
+                              <div>
+                                <p className="font-medium text-festari-900">ORCID</p>
+                                <p className="text-festari-700">View Academic Profile</p>
+                              </div>
+                              <ExternalLink size={14} className="ml-auto text-festari-400" />
+                            </a>
+                          </div>
+                          
+                          <div className="mt-8">
+                            <Button className="w-full bg-festari-accent hover:bg-festari-accent/90 text-white">
+                              Schedule a Meeting
                             </Button>
-                          </form>
+                          </div>
                         </div>
                       </div>
                     </CardContent>
@@ -787,28 +977,7 @@ const Founder = () => {
             </motion.div>
           </div>
         </section>
-        
-        {/* Call to action */}
-        <section className="py-16 bg-festari-900 text-white">
-          <div className="container-custom text-center">
-            <h2 className="text-3xl font-display font-bold mb-4">Interested in collaborating?</h2>
-            <p className="text-festari-100 max-w-2xl mx-auto mb-8">
-              Dr. Kunkyin-Saadaari is open to research collaborations, consulting opportunities, and speaking engagements related to mining engineering, rock mechanics, and artificial intelligence applications.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button variant="outline" className="border-white text-white hover:bg-white hover:text-festari-900">
-                <Mail size={18} className="mr-2" />
-                Contact for Consulting
-              </Button>
-              <Button className="bg-festari-accent hover:bg-festari-accent/90">
-                <Users size={18} className="mr-2" />
-                Research Collaboration
-              </Button>
-            </div>
-          </div>
-        </section>
       </main>
-      {/* Footer component */}
       <Footer />
     </div>
   );

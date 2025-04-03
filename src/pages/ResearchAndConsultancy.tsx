@@ -1,13 +1,105 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { GraduationCap, BookOpen, FileText, User, Clock, Calendar, ExternalLink, CheckCircle, HardHat, Search, Leaf, Link } from 'lucide-react';
+import { 
+  GraduationCap, 
+  BookOpen, 
+  FileText, 
+  User, 
+  Clock, 
+  Calendar, 
+  ExternalLink, 
+  CheckCircle, 
+  HardHat, 
+  Search, 
+  Leaf, 
+  Database, 
+  Shield, 
+  WrenchIcon, 
+  FileCheck, 
+  Wrench, 
+  Microscope,
+  BookMarked,
+  PenTool,
+  Printer,
+  FileSpreadsheet,
+  School,
+  Briefcase,
+  Presentation,
+  Filter
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import ConsultationForm from '@/components/consultation/ConsultationForm';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import ServiceGrid from '@/components/common/ServiceGrid';
+import ServiceCard from '@/components/common/ServiceCard';
+import ServiceCategory from '@/components/common/ServiceCategory';
+import ConsultationRequestForm from '@/components/common/ConsultationRequestForm';
 
-// Sample courses data
+const researchServices = [
+  {
+    title: "Mining & Engineering",
+    icon: HardHat,
+    description: "Expert services for mining operations and engineering projects",
+    items: [
+      { title: "Mining and Geotechnical Consulting", icon: Briefcase, description: "Expert consulting services for mining operations" },
+      { title: "Geotechnical Engineering", icon: WrenchIcon, description: "Specialized engineering solutions for ground stability" },
+      { title: "Mineral Exploration", icon: Search, description: "Comprehensive mineral exploration services" },
+      { title: "Geotechnical Instrumentation", icon: Wrench, description: "Advanced monitoring solutions for geological stability" },
+      { title: "Mining Equipment Sales and Rental", icon: Wrench, description: "Quality equipment solutions for mining operations" }
+    ]
+  },
+  {
+    title: "Research & Analysis",
+    icon: Microscope,
+    description: "Comprehensive research and analytical services",
+    items: [
+      { title: "Research and Development", icon: Microscope, description: "Innovative research programs for industry advancement" },
+      { title: "Geological and Geotechnical Data Analysis", icon: Database, description: "In-depth geological assessments and data processing" },
+      { title: "Market Analysis", icon: FileSpreadsheet, description: "Comprehensive market research for strategic planning" },
+      { title: "Safety Audits", icon: Shield, description: "Thorough safety evaluations and recommendations" },
+      { title: "Feasibility Studies", icon: Search, description: "Detailed project assessment and viability analysis" },
+      { title: "Data Analysis, Modeling and Interpretation", icon: Database, description: "Advanced data processing and predictive modeling" }
+    ]
+  },
+  {
+    title: "Education & Training",
+    icon: GraduationCap,
+    description: "Professional development and educational services",
+    items: [
+      { title: "Mining Education and Training", icon: School, description: "Professional development programs for mining" },
+      { title: "Training, Short Courses, and Capacity Building", icon: Presentation, description: "Targeted skills development programs" },
+      { title: "Professional and Proficiency Certification Programs", icon: FileCheck, description: "Industry-recognized certification programs" },
+      { title: "Academic Research Support Services", icon: BookMarked, description: "Assistance with academic research projects" }
+    ]
+  },
+  {
+    title: "Environmental & Safety",
+    icon: Leaf,
+    description: "Services focused on environmental protection and safety",
+    items: [
+      { title: "Environmental Impact Assessments", icon: Leaf, description: "Thorough environmental evaluations" },
+      { title: "Resource Management", icon: Briefcase, description: "Efficient resource allocation and management strategies" },
+      { title: "Geotechnical Remediation", icon: Wrench, description: "Site improvement and stabilization solutions" },
+      { title: "Mining, Geotechnical and Environmental Advisory Services", icon: Briefcase, description: "Expert consultation on environmental compliance" }
+    ]
+  },
+  {
+    title: "Documentation & Writing",
+    icon: FileText,
+    description: "Professional document preparation and management services",
+    items: [
+      { title: "Professional and Technical Writing Services", icon: PenTool, description: "Expert documentation services for technical content" },
+      { title: "Editing, Proofreading and Document Formatting", icon: FileText, description: "Quality assurance for written materials" },
+      { title: "Printing, Binding and Document Production", icon: Printer, description: "Professional document production services" },
+      { title: "Regulatory Compliance Documentation", icon: FileCheck, description: "Documentation preparation for regulatory requirements" }
+    ]
+  }
+];
+
 const courses = [
   {
     id: 'course1',
@@ -63,7 +155,6 @@ const courses = [
   },
 ];
 
-// Sample publications data
 const publications = [
   {
     id: 'pub1',
@@ -122,69 +213,35 @@ const publications = [
   },
 ];
 
-const serviceCategories = [
-  {
-    title: "Mining & Engineering",
-    icon: <HardHat size={24} />,
-    items: [
-      "Mining and Geotechnical Consulting",
-      "Geotechnical Engineering",
-      "Mineral Exploration",
-      "Geotechnical Instrumentation",
-      "Mining Equipment Sales and Rental"
-    ]
-  },
-  {
-    title: "Research & Analysis",
-    icon: <Search size={24} />,
-    items: [
-      "Research and Development",
-      "Geological and Geotechnical Data Analysis",
-      "Market Analysis",
-      "Data Analysis, Modeling and Interpretation",
-      "Safety Audits",
-      "Feasibility Studies"
-    ]
-  },
-  {
-    title: "Education & Training",
-    icon: <GraduationCap size={24} />,
-    items: [
-      "Mining Education and Training",
-      "Training, Short Courses, and Capacity Building",
-      "Professional and Proficiency Certification Programs",
-      "Academic Research Support Services"
-    ]
-  },
-  {
-    title: "Environmental & Safety",
-    icon: <Leaf size={24} />,
-    items: [
-      "Environmental Impact Assessments",
-      "Resource Management",
-      "Geotechnical Remediation",
-      "Mining, Geotechnical and Environmental Advisory Services"
-    ]
-  },
-  {
-    title: "Documentation & Writing",
-    icon: <FileText size={24} />,
-    items: [
-      "Professional and Technical Writing Services",
-      "Editing, Proofreading and Document Formatting",
-      "Printing, Binding and Document Production",
-      "Regulatory Compliance Documentation"
-    ]
-  }
-];
-
-// Import necessary components and libraries
 const Research = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [courseLevel, setCourseLevel] = useState('All');
   const [publicationTag, setPublicationTag] = useState('All');
+  const [filteredServices, setFilteredServices] = useState<any[]>([]);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   
-  // Filter courses
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    
+    if (!query.trim()) {
+      setFilteredServices([]);
+      setActiveCategory(null);
+      return;
+    }
+    
+    const results = researchServices.flatMap(category => 
+      category.items.filter(item => 
+        item.title.toLowerCase().includes(query.toLowerCase()) ||
+        (item.description && item.description.toLowerCase().includes(query.toLowerCase()))
+      ).map(item => ({
+        ...item,
+        category: category.title
+      }))
+    );
+    
+    setFilteredServices(results);
+  };
+  
   const filteredCourses = courses.filter(course => {
     const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          course.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -195,7 +252,6 @@ const Research = () => {
     return matchesSearch && matchesLevel;
   });
   
-  // Filter publications
   const filteredPublications = publications.filter(pub => {
     const matchesSearch = pub.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          pub.abstract.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -206,51 +262,146 @@ const Research = () => {
     return matchesSearch && matchesTag;
   });
   
-  // Get all unique tags for filter options
-  const allTags = Array.from(new Set(publications.flatMap(pub => pub.tags)));
+  const allTags = Array.from(new Set(publications.flatMap(pub => pub.tags || [])));
 
-  // Main component rendering the Research and Consultancy page
   return (
-    <div>
-      {/* Header component */}
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="pt-20">
-        {/* Hero section */}
-        <section className="relative py-20 bg-festari-900 text-white">
+      <main className="flex-grow">
+        <section className="relative py-20 bg-gradient-to-r from-indigo to-indigo/80 text-white">
           <div className="container-custom">
-            <div className="max-w-2xl">
-              <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">Research & Consultancy Hub</h1>
-              <p className="text-festari-100 mb-6">Access cutting-edge research papers and educational courses in real estate and related fields.</p>
+            <div className="max-w-2xl mx-auto text-center">
+              <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">
+                Research & Consultancy Hub
+              </h1>
+              <p className="text-festari-100 mb-6">
+                Comprehensive solutions for mining engineering, research, and professional services
+              </p>
               
-              {/* Search bar */}
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search courses and publications..."
-                  className="w-full pl-4 pr-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-accent"
+              <div className="relative max-w-xl mx-auto">
+                <Input
+                  type="search"
+                  placeholder="Search services, courses, and publications..."
+                  className="bg-white/10 border-white/20 text-white placeholder:text-white/60 pl-10"
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) => handleSearch(e.target.value)}
                 />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60" size={18} />
+              </div>
+              
+              {filteredServices.length > 0 && (
+                <div className="mt-4 bg-white text-festari-900 rounded-lg shadow-lg p-4 max-h-60 overflow-y-auto absolute z-10 left-0 right-0 mx-auto max-w-xl">
+                  <p className="text-sm font-medium text-festari-600 mb-2">
+                    {filteredServices.length} service{filteredServices.length !== 1 ? 's' : ''} found
+                  </p>
+                  <div className="space-y-2">
+                    {filteredServices.map((service, idx) => (
+                      <Link 
+                        key={idx} 
+                        to={`/consultation?service=${encodeURIComponent(service.title)}&category=${encodeURIComponent(service.category)}`}
+                        className="flex items-start p-2 hover:bg-festari-50 rounded group"
+                      >
+                        <div className="bg-indigo/10 text-indigo p-1 rounded mr-3 flex-shrink-0">
+                          {service.icon && <service.icon size={18} />}
+                        </div>
+                        <div>
+                          <p className="font-medium group-hover:text-indigo transition-colors">{service.title}</p>
+                          <p className="text-xs text-festari-600">{service.category}</p>
+                          {service.description && <p className="text-xs text-festari-500 mt-1">{service.description}</p>}
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              <div className="mt-8 flex flex-wrap justify-center gap-4">
+                <Button asChild variant="default" className="bg-white text-indigo hover:bg-white/90">
+                  <Link to="/consultation">Request Consultation</Link>
+                </Button>
+                <Button asChild variant="outline" className="border-white/30 text-white hover:bg-white/10">
+                  <a href="#services">Explore Services</a>
+                </Button>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Main content area */}
-        <section className="section-padding bg-festari-50" id="research-content">
+        <section className="py-16 bg-festari-50" id="services">
           <div className="container-custom">
-            {/* Tabs for switching between different research content */}
-            <Tabs defaultValue="courses" className="w-full">
-              <TabsList className="grid w-full grid-cols-4 mb-8">
+            <Tabs defaultValue="services" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-8">
+                <TabsTrigger value="services">Services</TabsTrigger>
                 <TabsTrigger value="courses">Courses</TabsTrigger>
                 <TabsTrigger value="publications">Publications</TabsTrigger>
                 <TabsTrigger value="consultation">Consultation</TabsTrigger>
-                <TabsTrigger value="services">Services</TabsTrigger>
               </TabsList>
               
-              <TabsContent value="courses" className="space-y-8" id="courses">
-                {/* Course level filter */}
-                <div className="flex items-center justify-between flex-wrap gap-4">
+              <TabsContent value="services" className="space-y-10">
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl font-display font-bold mb-3">Our Professional Services</h2>
+                  <p className="text-festari-600 max-w-2xl mx-auto">
+                    Comprehensive services for mining engineering, research, and professional documentation
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+                  {researchServices.map((category, idx) => (
+                    <Button 
+                      key={idx}
+                      variant={activeCategory === category.title ? "default" : "outline"}
+                      className="flex items-center gap-2 justify-start"
+                      onClick={() => setActiveCategory(activeCategory === category.title ? null : category.title)}
+                    >
+                      <category.icon size={18} />
+                      <span>{category.title}</span>
+                    </Button>
+                  ))}
+                  {activeCategory && (
+                    <Button 
+                      variant="ghost" 
+                      className="text-festari-500"
+                      onClick={() => setActiveCategory(null)}
+                    >
+                      Clear Filter
+                    </Button>
+                  )}
+                </div>
+                
+                <div className="space-y-10">
+                  {researchServices
+                    .filter(category => !activeCategory || category.title === activeCategory)
+                    .map((category, idx) => (
+                      <div key={idx} className="space-y-6">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-lg bg-indigo/10 text-indigo">
+                            <category.icon size={24} />
+                          </div>
+                          <div>
+                            <h3 className="text-xl font-semibold">{category.title}</h3>
+                            <p className="text-festari-600 text-sm">{category.description}</p>
+                          </div>
+                        </div>
+                        
+                        <ServiceGrid columns={3}>
+                          {category.items.map((service, serviceIdx) => (
+                            <ServiceCard
+                              key={serviceIdx}
+                              title={service.title}
+                              description={service.description}
+                              icon={service.icon || category.icon}
+                              color="bg-indigo/5 text-indigo"
+                              link={`/consultation?service=${encodeURIComponent(service.title)}&category=${encodeURIComponent(category.title)}`}
+                            />
+                          ))}
+                        </ServiceGrid>
+                      </div>
+                    ))}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="courses" className="space-y-8">
+                <div className="flex items-center justify-between flex-wrap gap-4 mb-8">
                   <h2 className="text-2xl font-display font-bold text-festari-900">Educational Courses</h2>
                   <div className="flex items-center gap-2">
                     <span className="text-sm text-festari-600">Level:</span>
@@ -267,26 +418,22 @@ const Research = () => {
                   </div>
                 </div>
                 
-                {/* Grid layout for displaying filtered courses */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {filteredCourses.map((course) => (
                     <div 
-                      key={course.id} // Unique key for each course
+                      key={course.id}
                       className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col"
                     >
-                      {/* Course image */}
                       <div className="h-48 relative overflow-hidden">
                         <img 
                           src={course.image} 
                           alt={course.title} 
                           className="w-full h-full object-cover"
                         />
-                        {/* Badge for course level */}
                         <div className="absolute top-4 right-4 bg-accent text-white text-xs font-bold py-1 px-2 rounded">
                           {course.level}
                         </div>
                       </div>
-                      {/* Course details */}
                       <div className="p-6 flex-1 flex flex-col">
                         <h3 className="text-lg font-semibold text-festari-900 mb-2">
                           {course.title}
@@ -294,7 +441,6 @@ const Research = () => {
                         <p className="text-sm text-festari-600 mb-4">
                           {course.description}
                         </p>
-                        {/* Additional course information */}
                         <div className="grid grid-cols-2 gap-3 mb-4">
                           <div className="flex items-center gap-2">
                             <User size={14} className="text-festari-500" />
@@ -313,7 +459,6 @@ const Research = () => {
                             <span className="text-sm text-festari-700">{course.enrolled} enrolled</span>
                           </div>
                         </div>
-                        {/* Course price and action button */}
                         <div className="flex items-center justify-between mt-auto pt-4 border-t border-festari-100">
                           <span className="text-lg font-bold text-accent">{course.price}</span>
                           <button className="text-sm text-white bg-accent hover:bg-accent/90 px-4 py-2 rounded transition-colors">
@@ -325,7 +470,6 @@ const Research = () => {
                   ))}
                 </div>
                 
-                {/* Empty state for courses */}
                 {filteredCourses.length === 0 && (
                   <div className="bg-white rounded-lg p-8 text-center">
                     <div className="flex justify-center mb-4">
@@ -346,9 +490,8 @@ const Research = () => {
                 )}
               </TabsContent>
               
-              <TabsContent value="publications" className="space-y-8" id="publications">
-                {/* Publication tag filter */}
-                <div className="flex items-center justify-between flex-wrap gap-4">
+              <TabsContent value="publications" className="space-y-8">
+                <div className="flex items-center justify-between flex-wrap gap-4 mb-8">
                   <h2 className="text-2xl font-display font-bold text-festari-900">Research Publications</h2>
                   <div className="flex items-center gap-2">
                     <span className="text-sm text-festari-600">Topic:</span>
@@ -365,7 +508,6 @@ const Research = () => {
                   </div>
                 </div>
                 
-                {/* Publications list */}
                 <div className="space-y-6">
                   {filteredPublications.map((publication) => (
                     <div 
@@ -419,7 +561,6 @@ const Research = () => {
                   ))}
                 </div>
                 
-                {/* Empty state for publications */}
                 {filteredPublications.length === 0 && (
                   <div className="bg-white rounded-lg p-8 text-center">
                     <div className="flex justify-center mb-4">
@@ -440,57 +581,50 @@ const Research = () => {
                 )}
               </TabsContent>
 
-              <TabsContent value="services" className="space-y-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {serviceCategories.map((category, idx) => (
-                    <Card key={idx} className="hover:shadow-md transition-shadow">
-                      <CardHeader>
-                        <div className="flex items-center gap-3">
-                          <div className="p-2 rounded-lg bg-accent/10 text-accent">
-                            {category.icon}
-                          </div>
-                          <CardTitle>{category.title}</CardTitle>
-                        </div>
-                      </CardHeader>
-                      <CardContent>
-                        <ul className="space-y-3">
-                          {category.items.map((item, i) => (
-                            <li key={i} className="flex items-start gap-2 group">
-                              <CheckCircle className="h-5 w-5 text-accent mt-0.5 group-hover:text-accent/80" />
-                              <Link 
-                                to="/consultation"
-                                className="text-sm text-festari-700 hover:text-accent transition-colors"
-                              >
-                                {item}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </TabsContent>
-
               <TabsContent value="consultation" className="space-y-8">
                 <div className="max-w-3xl mx-auto">
-                  <div className="bg-white rounded-lg p-8 shadow-md">
-                    <h2 className="text-2xl font-display font-bold text-festari-900 mb-2">
-                      Request a Consultation
-                    </h2>
-                    <p className="text-festari-600 mb-6">
-                      Fill out the form below to request a consultation with our experts.
-                      We'll get back to you within 24-48 hours to discuss your needs.
-                    </p>
-                    <ConsultationForm serviceCategories={serviceCategories} />
-                  </div>
+                  <ConsultationRequestForm 
+                    serviceCategories={[
+                      {
+                        title: "Research & Consultancy",
+                        path: "/research",
+                        description: "Professional research and consulting services",
+                        activities: researchServices.flatMap(category => 
+                          category.items.map(item => ({ 
+                            title: item.title,
+                            description: item.description
+                          }))
+                        )
+                      }
+                    ]}
+                    title="Request a Research Consultation"
+                    description="Our team of experts is ready to assist you with specialized solutions tailored to your research and consulting needs."
+                  />
                 </div>
               </TabsContent>
             </Tabs>
           </div>
         </section>
+        
+        <section className="py-16 bg-gradient-to-r from-festari-800 to-indigo text-white">
+          <div className="container-custom text-center">
+            <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
+              Ready to Work With Industry Experts?
+            </h2>
+            <p className="text-festari-100 mb-8 max-w-2xl mx-auto">
+              Our team of qualified professionals is ready to help you with your research, consulting, and educational needs.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button asChild size="lg" className="bg-white text-indigo hover:bg-white/90">
+                <Link to="/consultation">Request a Consultation</Link>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10">
+                <Link to="/contact">Contact Us</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
       </main>
-      {/* Footer component */}
       <Footer />
     </div>
   );
