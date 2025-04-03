@@ -21,11 +21,21 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         accent: "bg-festari-accent text-white hover:bg-festari-accent/90 shadow-md",
         highlight: "bg-orange-500 text-white hover:bg-orange-600 shadow-md font-semibold",
+        // Modified white button to ensure text contrast
+        white: "bg-white text-festari-900 hover:bg-white/90 shadow-sm border border-festari-100/30",
+        // Added ghost-light for transparent buttons on dark backgrounds with proper hover state
+        "ghost-light": "text-white hover:bg-white/10 hover:text-white",
+        // Added transparent variant for buttons on hero sections
+        transparent: "bg-transparent border border-white/30 text-white hover:bg-white/10",
+        mikado: "bg-mikado text-festari-900 hover:bg-mikado/90 shadow-md font-semibold",
+        chili: "bg-chili text-white hover:bg-chili/90 shadow-md font-semibold",
+        indigo: "bg-indigo text-white hover:bg-indigo/90 shadow-md font-semibold",
       },
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
+        xl: "h-12 rounded-md px-10 text-base",
         icon: "h-10 w-10",
       },
     },

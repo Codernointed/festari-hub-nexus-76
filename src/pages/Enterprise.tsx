@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
@@ -37,9 +36,9 @@ import {
   Hammer, 
   Heart, 
   BadgePercent,
-  Search, // Added Search icon
-  CheckCircle, // Added CheckCircle icon
-  User // Added User icon
+  Search, 
+  CheckCircle, 
+  User 
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -49,7 +48,6 @@ import ServiceCard from '@/components/common/ServiceCard';
 import ServiceCategory from '@/components/common/ServiceCategory';
 import ConsultationRequestForm from '@/components/common/ConsultationRequestForm';
 
-// Enterprise service categories
 const tradingServices = [
   {
     title: "Retail & Distribution",
@@ -148,7 +146,6 @@ const Enterprise = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('trading');
   
-  // Handle service search
   const handleSearch = (query: string) => {
     setSearchTerm(query);
     
@@ -176,14 +173,12 @@ const Enterprise = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
-        {/* Hero section */}
         <section className="relative py-20 bg-gradient-to-r from-orange-500 to-orange-600 text-white">
           <div className="container-custom">
             <div className="max-w-2xl">
               <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">Festari Enterprise</h1>
               <p className="text-white/90 mb-8">Comprehensive trading and service solutions for businesses and individuals.</p>
               
-              {/* Search bar */}
               <div className="relative">
                 <input
                   type="text"
@@ -222,10 +217,10 @@ const Enterprise = () => {
               )}
               
               <div className="mt-8 flex flex-wrap gap-4">
-                <Button asChild className="bg-white text-orange-700 hover:bg-white/90">
+                <Button asChild variant="white" className="font-medium">
                   <a href="#services">Our Services</a>
                 </Button>
-                <Button asChild variant="outline" className="border-white/30 text-white hover:bg-white/10">
+                <Button asChild variant="transparent" className="border-white/30 text-white hover:bg-white/10">
                   <Link to="/consultation">Request Consultation</Link>
                 </Button>
               </div>
@@ -233,7 +228,6 @@ const Enterprise = () => {
           </div>
         </section>
 
-        {/* Main content */}
         <section className="py-16 bg-festari-50" id="services">
           <div className="container-custom">
             <Tabs defaultValue="services" className="w-full">
@@ -256,10 +250,10 @@ const Enterprise = () => {
                   </p>
                 </div>
                 
-                <div className="flex border-b border-festari-200 mb-8">
+                <div className="flex overflow-x-auto md:overflow-visible border-b border-festari-200 mb-8 pb-1">
                   <button
                     className={cn(
-                      "py-3 px-6 font-medium text-sm border-b-2 transition-colors",
+                      "py-3 px-6 font-medium text-sm border-b-2 transition-colors whitespace-nowrap",
                       activeTab === 'trading' 
                         ? "border-orange-500 text-orange-700" 
                         : "border-transparent text-festari-600 hover:text-festari-900"
@@ -273,7 +267,7 @@ const Enterprise = () => {
                   </button>
                   <button
                     className={cn(
-                      "py-3 px-6 font-medium text-sm border-b-2 transition-colors",
+                      "py-3 px-6 font-medium text-sm border-b-2 transition-colors whitespace-nowrap",
                       activeTab === 'services' 
                         ? "border-orange-500 text-orange-700" 
                         : "border-transparent text-festari-600 hover:text-festari-900"
@@ -291,7 +285,7 @@ const Enterprise = () => {
                   {(activeTab === 'trading' ? tradingServices : serviceActivities).map((category, idx) => (
                     <Button 
                       key={idx}
-                      variant={activeCategory === category.title ? "default" : "outline"}
+                      variant={activeCategory === category.title ? "accent" : "outline"}
                       className="flex items-center gap-2 justify-start"
                       onClick={() => setActiveCategory(activeCategory === category.title ? null : category.title)}
                     >
@@ -367,7 +361,6 @@ const Enterprise = () => {
           </div>
         </section>
         
-        {/* Benefits section */}
         <section className="py-16 bg-orange-50">
           <div className="container-custom">
             <div className="text-center mb-12">
@@ -411,7 +404,6 @@ const Enterprise = () => {
           </div>
         </section>
         
-        {/* CTA Section */}
         <section className="py-16 bg-orange-700 text-white">
           <div className="container-custom text-center">
             <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
@@ -421,10 +413,10 @@ const Enterprise = () => {
               Whether you're looking to start a new venture, improve your current operations, or expand your business, our team is here to help.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button asChild size="lg" className="bg-white text-orange-700 hover:bg-white/90">
+              <Button asChild size="lg" variant="white" className="font-medium">
                 <Link to="/consultation">Request Enterprise Consultation</Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10">
+              <Button asChild variant="transparent" size="lg" className="border-white/30 text-white hover:bg-white/10">
                 <Link to="/contact">Contact Our Team</Link>
               </Button>
             </div>
