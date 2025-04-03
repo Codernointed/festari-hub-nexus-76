@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
@@ -5,7 +6,7 @@ import Footer from '@/components/layout/Footer';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   ShoppingCart, 
-  TruckIcon, 
+  Truck as TruckIcon, 
   Package, 
   Store, 
   BarChart3, 
@@ -35,7 +36,10 @@ import {
   Smartphone, 
   Hammer, 
   Heart, 
-  BadgePercent
+  BadgePercent,
+  Search, // Added Search icon
+  CheckCircle, // Added CheckCircle icon
+  User // Added User icon
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
