@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
@@ -173,13 +174,18 @@ const Enterprise = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
-        <section className="relative py-20 bg-gradient-to-r from-orange-500 to-orange-600 text-white">
+        <section 
+          className="relative py-20 text-white bg-cover bg-center"
+          style={{
+            backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&q=80')"
+          }}
+        >
           <div className="container-custom">
-            <div className="max-w-2xl">
+            <div className="max-w-2xl mx-auto text-center">
               <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">Festari Enterprise</h1>
               <p className="text-white/90 mb-8">Comprehensive trading and service solutions for businesses and individuals.</p>
               
-              <div className="relative">
+              <div className="relative max-w-xl mx-auto">
                 <input
                   type="text"
                   placeholder="Search enterprise services..."
@@ -191,7 +197,7 @@ const Enterprise = () => {
               </div>
               
               {filteredServices.length > 0 && (
-                <div className="mt-4 bg-white text-festari-900 rounded-lg shadow-lg p-4 max-h-60 overflow-y-auto absolute z-10 w-full">
+                <div className="mt-4 bg-white text-festari-900 rounded-lg shadow-lg p-4 max-h-60 overflow-y-auto absolute z-10 left-0 right-0 mx-auto max-w-xl">
                   <p className="text-sm font-medium text-festari-600 mb-2">
                     {filteredServices.length} service{filteredServices.length !== 1 ? 's' : ''} found
                   </p>
@@ -216,7 +222,7 @@ const Enterprise = () => {
                 </div>
               )}
               
-              <div className="mt-8 flex flex-wrap gap-4">
+              <div className="mt-8 flex flex-wrap justify-center gap-4">
                 <Button asChild variant="white" className="font-medium">
                   <a href="#services">Our Services</a>
                 </Button>

@@ -8,8 +8,8 @@ import {
   Leaf, 
   Tractor, 
   Briefcase, 
-  Wrench, // Changed from Tool
-  Beaker, // Changed from Flask
+  Wrench, 
+  Beaker, 
   Users, 
   Factory, 
   Sprout, 
@@ -122,15 +122,20 @@ const AgriBusiness = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
-        {/* Hero section */}
-        <section className="relative py-20 bg-gradient-to-r from-green-500 to-green-700 text-white">
+        {/* Hero section with background image */}
+        <section 
+          className="relative py-20 text-white bg-cover bg-center"
+          style={{
+            backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&q=80')"
+          }}
+        >
           <div className="container-custom">
-            <div className="max-w-2xl">
+            <div className="max-w-2xl mx-auto text-center">
               <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">Festari Agribusiness</h1>
               <p className="text-white/90 mb-8">Sustainable farming solutions, agricultural expertise, and modern farming technologies for optimal yield and growth.</p>
               
               {/* Search bar */}
-              <div className="relative">
+              <div className="relative max-w-xl mx-auto">
                 <input
                   type="text"
                   placeholder="Search agricultural services..."
@@ -142,7 +147,7 @@ const AgriBusiness = () => {
               </div>
               
               {filteredServices.length > 0 && (
-                <div className="mt-4 bg-white text-festari-900 rounded-lg shadow-lg p-4 max-h-60 overflow-y-auto absolute z-10 w-full">
+                <div className="mt-4 bg-white text-festari-900 rounded-lg shadow-lg p-4 max-h-60 overflow-y-auto absolute z-10 left-0 right-0 mx-auto max-w-xl">
                   <p className="text-sm font-medium text-festari-600 mb-2">
                     {filteredServices.length} service{filteredServices.length !== 1 ? 's' : ''} found
                   </p>
@@ -167,7 +172,7 @@ const AgriBusiness = () => {
                 </div>
               )}
               
-              <div className="mt-8 flex flex-wrap gap-4">
+              <div className="mt-8 flex flex-wrap justify-center gap-4">
                 <Button asChild className="bg-white text-green-700 hover:bg-white/90">
                   <a href="#services">Our Services</a>
                 </Button>

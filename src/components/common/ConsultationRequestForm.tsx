@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
@@ -9,6 +10,7 @@ type ConsultationRequestFormProps = {
   variant?: 'default' | 'white' | 'transparent';
   title?: string;
   subtitle?: string;
+  description?: string;
   serviceCategories?: Array<{
     title: string;
     path?: string;
@@ -25,6 +27,7 @@ const ConsultationRequestForm = ({
   variant = 'default',
   title = 'Request a Consultation',
   subtitle = 'Our experts will get back to you within 48 hours.',
+  description,
   serviceCategories = []
 }: ConsultationRequestFormProps) => {
   const { toast } = useToast();
@@ -96,7 +99,7 @@ const ConsultationRequestForm = ({
     )}>
       <div className="mb-6">
         <h3 className="text-xl font-bold mb-2 text-festari-900">{title}</h3>
-        <p className="text-festari-600">{subtitle}</p>
+        <p className="text-festari-600">{description || subtitle}</p>
       </div>
       
       <form onSubmit={handleSubmit} className="space-y-4">

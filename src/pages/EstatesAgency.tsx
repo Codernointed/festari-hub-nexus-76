@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Building, Home, Key, Banknote, FileCheck, Search, CheckCircle, ChevronDown, Filter, MapPin, Briefcase, LineChart, MessageSquare, Scale, ClipboardList, User, Paintbrush, DollarSign, Flag } from 'lucide-react';
@@ -179,25 +180,30 @@ const EstatesAgency = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
-        <section className="relative py-20 bg-gradient-to-r from-mikado/90 to-mikado/70 text-festari-900">
+        <section 
+          className="relative py-20 bg-cover bg-center text-white"
+          style={{
+            backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&q=80')"
+          }}
+        >
           <div className="container-custom">
-            <div className="max-w-2xl">
+            <div className="max-w-2xl mx-auto text-center">
               <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">Find Your Ideal Property</h1>
-              <p className="text-festari-800 mb-8">Browse our exclusive collection of premium properties available for sale and rent, and explore our comprehensive real estate services.</p>
+              <p className="text-white/90 mb-8">Browse our exclusive collection of premium properties available for sale and rent, and explore our comprehensive real estate services.</p>
               
-              <div className="relative">
+              <div className="relative max-w-xl mx-auto">
                 <input
                   type="text"
                   placeholder="Search properties, services, or locations..."
-                  className="w-full pl-12 pr-4 py-3 rounded-lg bg-white/90 border border-white/20 text-festari-900 placeholder:text-festari-600 focus:outline-none focus:ring-2 focus:ring-accent"
+                  className="w-full pl-12 pr-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/30"
                   value={searchTerm}
                   onChange={(e) => handleSearch(e.target.value)}
                 />
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-festari-600" size={18} />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/60" size={18} />
               </div>
               
               {filteredServices.length > 0 && (
-                <div className="mt-4 bg-white text-festari-900 rounded-lg shadow-lg p-4 max-h-60 overflow-y-auto absolute z-10 w-full">
+                <div className="mt-4 bg-white text-festari-900 rounded-lg shadow-lg p-4 max-h-60 overflow-y-auto absolute z-10 left-0 right-0 mx-auto max-w-xl">
                   <p className="text-sm font-medium text-festari-600 mb-2">
                     {filteredServices.length} service{filteredServices.length !== 1 ? 's' : ''} found
                   </p>
@@ -222,11 +228,11 @@ const EstatesAgency = () => {
                 </div>
               )}
               
-              <div className="mt-8 flex flex-wrap gap-4">
-                <Button asChild className="bg-festari-900 text-white hover:bg-festari-800">
+              <div className="mt-8 flex flex-wrap justify-center gap-4">
+                <Button asChild className="bg-white text-festari-900 hover:bg-white/90">
                   <a href="#properties">View Properties</a>
                 </Button>
-                <Button asChild variant="outline" className="border-festari-800 text-festari-900 hover:bg-festari-800/10">
+                <Button asChild variant="outline" className="border-white/30 text-white hover:bg-white/10">
                   <a href="#services">Our Services</a>
                 </Button>
               </div>
