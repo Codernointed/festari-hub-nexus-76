@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
@@ -18,8 +17,6 @@ type CarouselProps = {
   plugins?: CarouselPlugin
   orientation?: "horizontal" | "vertical"
   setApi?: (api: CarouselApi) => void
-  autoplay?: boolean
-  autoplayInterval?: number
 }
 
 type CarouselContextProps = {
@@ -29,8 +26,6 @@ type CarouselContextProps = {
   scrollNext: () => void
   canScrollPrev: boolean
   canScrollNext: boolean
-  autoplay: boolean
-  autoplayInterval: number
 } & CarouselProps
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null)
@@ -57,8 +52,6 @@ const Carousel = React.forwardRef<
       plugins,
       className,
       children,
-      autoplay = false,
-      autoplayInterval = 5000,
       ...props
     },
     ref
@@ -81,21 +74,6 @@ const Carousel = React.forwardRef<
       setCanScrollPrev(api.canScrollPrev())
       setCanScrollNext(api.canScrollNext())
     }, [])
-
-    // Autoplay functionality
-    React.useEffect(() => {
-      if (!api || !autoplay) return
-
-      const intervalId = setInterval(() => {
-        if (api.canScrollNext()) {
-          api.scrollNext()
-        } else {
-          api.scrollTo(0) // Loop back to the beginning if at the end
-        }
-      }, autoplayInterval)
-
-      return () => clearInterval(intervalId)
-    }, [api, autoplay, autoplayInterval])
 
     const scrollPrev = React.useCallback(() => {
       api?.scrollPrev()
@@ -152,8 +130,6 @@ const Carousel = React.forwardRef<
           scrollNext,
           canScrollPrev,
           canScrollNext,
-          autoplay,
-          autoplayInterval
         }}
       >
         <div
@@ -228,7 +204,7 @@ const CarouselPrevious = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "absolute h-8 w-8 rounded-full",
+        "absolute  h-8 w-8 rounded-full",
         orientation === "horizontal"
           ? "-left-12 top-1/2 -translate-y-1/2"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",

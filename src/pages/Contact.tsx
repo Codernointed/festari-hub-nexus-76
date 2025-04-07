@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -18,7 +17,6 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '', // Optional phone number
     subject: '',
     message: '',
   });
@@ -55,7 +53,6 @@ const Contact = () => {
         setFormData({
           name: '',
           email: '',
-          phone: '',
           subject: '',
           message: '',
         });
@@ -69,16 +66,16 @@ const Contact = () => {
     {
       icon: MapPin,
       title: 'Our Location',
-      details: ['Festari Group Limited', 'Estate Hills, Tamso - Tarkwa', 'P. O. Box 657', 'Tarkwa, Ghana'],
+      details: ['123 Festari Way, Suite 100', 'Tarkwa, Ghana'],
     },
     {
       icon: Phone,
       title: 'Phone Numbers',
-      details: ['+233 (0)54 160 3237', '+233 240699535'],
+      details: ['+233 240699535', '+1 5732026443'],
     },
     {
       icon: Mail,
-      title: 'Email Address',
+      title: 'Email Addresses',
       details: ['fksaadaari@festarigroup.com', 'info@festarigroup.com'],
     },
     {
@@ -107,16 +104,16 @@ const Contact = () => {
       {/* Header component */}
       <Header />
       <main className="flex-grow pt-20">
-        {/* Hero section with background image and consistent alignment */}
+        {/* Hero section */}
         <section className="relative py-20 bg-gradient-to-br from-festari-900 to-festari-accent text-white overflow-hidden">
-          <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1523966211575-eb4a01e7dd51?ixlib=rb-4.0.3&auto=format&fit=crop&w=1153&q=80')] bg-no-repeat bg-cover"></div>
+          <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1523966211575-eb4a01e7dd51?ixlib=rb-4.0.3&auto=format&fit=crop&w=1153&q=80')] bg-no-repeat bg-cover"></div>
           
           <div className="container-custom relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="max-w-2xl mx-auto text-center"
+              className="max-w-2xl"
             >
               <Badge className="mb-6 bg-mikado/20 hover:bg-mikado/30 text-mikado border-mikado/20">Get In Touch</Badge>
               <h1 className="text-4xl md:text-5xl font-display font-bold mb-4 leading-tight">Let's Connect</h1>
@@ -125,7 +122,7 @@ const Contact = () => {
                 We're here to help you find the perfect solution for your needs.
               </p>
               
-              <div className="flex flex-wrap gap-4 justify-center">
+              <div className="flex flex-wrap gap-4">
                 <a href="#contact-form" className="inline-flex items-center gap-2 bg-mikado text-festari-900 px-5 py-2.5 rounded-lg font-medium hover:bg-mikado/90 transition-colors">
                   Send us a message <ArrowRight size={16} />
                 </a>
@@ -195,21 +192,6 @@ const Contact = () => {
                           required
                         />
                       </div>
-                    </div>
-                    
-                    <div>
-                      <label htmlFor="phone" className="block text-sm font-medium text-festari-800 mb-1 flex items-center">
-                        Phone Number <span className="text-xs text-festari-500 ml-2">(Optional)</span>
-                      </label>
-                      <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className="w-full p-3 border border-festari-200 rounded-md focus:outline-none focus:ring-2 focus:ring-festari-accent/50"
-                        placeholder="+233 XX XXX XXXX"
-                      />
                     </div>
                     
                     <div>

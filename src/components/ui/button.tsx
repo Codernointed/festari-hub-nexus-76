@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
@@ -18,14 +17,13 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         accent: "bg-festari-accent text-white hover:bg-festari-accent/90 shadow-md",
         highlight: "bg-orange-500 text-white hover:bg-orange-600 shadow-md font-semibold",
-        // Improved white button to ensure text contrast
-        white: "bg-white text-festari-900 hover:bg-white/90 shadow-md border border-festari-100/30",
-        // Improved ghost-light for transparent buttons on dark backgrounds with proper hover state
-        "ghost-light": "text-white hover:bg-white/20 hover:text-white border border-white/20",
-        // Improved transparent variant for better contrast
-        transparent: "bg-transparent border-2 border-white/50 text-white hover:bg-white/20",
-        // Color variants with improved contrast
-        mikado: "bg-mikado text-festari-900 hover:bg-mikado/90 shadow-md font-semibold border border-mikado/20",
+        // Modified white button to ensure text contrast
+        white: "bg-white text-festari-900 hover:bg-white/90 shadow-sm border border-festari-100/30",
+        // Added ghost-light for transparent buttons on dark backgrounds with proper hover state
+        "ghost-light": "text-white hover:bg-white/10 hover:text-white",
+        // Added transparent variant for buttons on hero sections
+        transparent: "bg-transparent border border-white/30 text-white hover:bg-white/10",
+        mikado: "bg-mikado text-festari-900 hover:bg-mikado/90 shadow-md font-semibold",
         chili: "bg-chili text-white hover:bg-chili/90 shadow-md font-semibold",
         indigo: "bg-indigo text-white hover:bg-indigo/90 shadow-md font-semibold",
       },
