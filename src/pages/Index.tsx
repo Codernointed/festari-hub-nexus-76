@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import Hero from '@/components/home/Hero';
+import HeroCarousel from '@/components/home/HeroCarousel';
 import FeaturedSection from '@/components/home/FeaturedSection';
 import NavigationCards from '@/components/home/NavigationCards';
 import NewsletterSignup from '@/components/home/NewsletterSignup';
@@ -35,7 +35,7 @@ const Index = () => {
       {/* Header component */}
       <Header />
       <main>
-        <Hero />
+        <HeroCarousel />
         <BusinessDivisions />
         <AnimatedStats />
         <Features />
@@ -55,7 +55,7 @@ const Index = () => {
               Our team of professionals is ready to provide specialized consultation services 
               across all our business divisions. Request a consultation today!
             </p>
-            <Button asChild size="lg" className="bg-white text-festari-900 hover:bg-white/90">
+            <Button asChild size="lg" variant="white" className="text-festari-900 hover:bg-white/90">
               <Link to="/consultation" className="flex items-center gap-2">
                 Request Consultation <ArrowRight size={16} />
               </Link>

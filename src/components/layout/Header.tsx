@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, User, ShoppingCart, BookOpen, Home, MapPin, LogIn, Briefcase } from 'lucide-react';
@@ -19,6 +20,7 @@ import {
 import Logo from '@/components/common/Logo';
 import { cn } from '@/lib/utils';
 
+// Define navigation items consistently
 const navigation = [
   { name: "Estate Agency", href: "/estates", icon: <Home size={18} /> },
   { name: "Research & Consultation", href: "/research", icon: <BookOpen size={18} /> },
@@ -26,36 +28,24 @@ const navigation = [
   { name: "Enterprise", href: "/enterprise", icon: <Briefcase size={18} /> },
   { name: "About", href: "/about", icon: <User size={18} /> },
   { name: "Founder", href: "/founder", icon: <User size={18} /> },
-  { name: "Contact", href: "/contact", icon: <MapPin size={18} /> }
+  { name: "Contact", href: "/contact", icon: <MapPin size={18} /> },
 ];
 
 const Header = () => {
-  const location = useLocation(); // Get the current route location
-  const [isScrolled, setIsScrolled] = useState(false); // State to track if the page is scrolled
-  const isMobile = useIsMobile(); // Hook to detect if the device is mobile
+  const location = useLocation();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const isMobile = useIsMobile();
   
-  const isHomePage = location.pathname === '/'; // Check if the current page is the homepage
-
-  // Define navigation items
-  const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Estate Agency', path: '/estates', icon: <Home size={18} /> },
-    { name: 'Research & Consultation', path: '/research', icon: <BookOpen size={18} /> },
-    { name: 'Agribusiness', path: '/agriculture', icon: <ShoppingCart size={18} /> },
-    { name: 'Enterprise', path: '/enterprise', icon: <Briefcase size={18} /> },
-    { name: 'About', path: '/about', icon: <User size={18} /> },
-    { name: 'Founder', path: '/founder', icon: <User size={18} /> },
-    { name: 'Contact', path: '/contact', icon: <MapPin size={18} /> },
-  ];
+  const isHomePage = location.pathname === '/';
 
   // Watch for scroll position to add background to the header
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20); // Set `isScrolled` to true if the page is scrolled down
+      setIsScrolled(window.scrollY > 20);
     };
     
-    window.addEventListener('scroll', handleScroll); // Add scroll event listener
-    return () => window.removeEventListener('scroll', handleScroll); // Cleanup on unmount
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
@@ -63,10 +53,10 @@ const Header = () => {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         {
-          // Transparent only on the homepage when not scrolled
-          "bg-transparent": isHomePage && !isScrolled,
+          // Always add a dark semi-transparent background to ensure text is visible
+          "bg-festari-900/90 backdrop-blur-md border-b border-white/10": isHomePage && !isScrolled,
           // White with blur on scroll or other pages
-          "bg-white/80 backdrop-blur-md border-b border-festari-100": isScrolled || !isHomePage,
+          "bg-white/95 backdrop-blur-md border-b border-festari-100": isScrolled || !isHomePage,
         }
       )}
     >
@@ -78,24 +68,24 @@ const Header = () => {
               variant="icon" 
               theme={(isHomePage && !isScrolled) ? "light" : "dark"} 
               size="sm"
-              showOnLight={false} // Hide icon in light/transparent mode
+              showOnLight={false}
             />
             <Logo 
               variant="text" 
               theme={(isHomePage && !isScrolled) ? "light" : "dark"}
               className="hidden md:block" 
-              showOnLight={true} // Always show text
+              showOnLight={true}
             />
           </Link>
 
-          {/* Desktop Navigation - improved spacing and overflow handling */}
-          <nav className="hidden md:flex items-center space-x-6 justify-end">
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-6 justify-end overflow-x-auto">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
                 className={cn(
-                  "text-sm transition-colors whitespace-nowrap",
+                  "text-sm transition-colors whitespace-nowrap px-1",
                   (isHomePage && !isScrolled)
                     ? "text-white/90 hover:text-white"
                     : "text-festari-700 hover:text-accent",
@@ -107,12 +97,12 @@ const Header = () => {
             ))}
           </nav>
           
-          {/* Login/Register Buttons with improved responsive design */}
+          {/* Login/Register Buttons */}
           <div className="hidden md:flex items-center space-x-3 shrink-0">
             <Link to="/login">
               <Button 
                 variant={(isHomePage && !isScrolled) ? "ghost-light" : "highlight"}
-                className="flex items-center gap-2 px-4"
+                className="flex items-center gap-2 px-4 border-2 border-transparent"
                 size="sm"
               >
                 <LogIn size={16} />
@@ -121,9 +111,9 @@ const Header = () => {
             </Link>
             <Link to="/register">
               <Button 
-                variant={(isHomePage && !isScrolled) ? "white" : "accent"}
+                variant={(isHomePage && !isScrolled) ? "mikado" : "accent"}
                 size="sm"
-                className="px-4"
+                className="text-festari-900 px-4 border-2 border-transparent shadow"
               >
                 Register
               </Button>
@@ -143,7 +133,7 @@ const Header = () => {
                   <User size={18} />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-white/95 backdrop-blur-md">
+              <DropdownMenuContent align="end" className="bg-white shadow-lg border border-festari-100">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
@@ -163,7 +153,7 @@ const Header = () => {
             </DropdownMenu>
           </div>
           
-          {/* Mobile Menu - improved spacing and button contrast */}
+          {/* Mobile Menu */}
           <div className="md:hidden flex items-center space-x-2">
             {/* Mobile User Menu */}
             <DropdownMenu>
@@ -179,7 +169,7 @@ const Header = () => {
                   <User size={18} />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-white/95 backdrop-blur-md z-50">
+              <DropdownMenuContent align="end" className="bg-white shadow-lg border border-festari-100 w-56">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
@@ -213,7 +203,7 @@ const Header = () => {
                   <Menu size={24} />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="bg-white/95 backdrop-blur-md pt-16 w-[300px]">
+              <SheetContent side="right" className="bg-white pt-16 w-[300px]">
                 <nav className="flex flex-col space-y-4">
                   {navigation.map((item) => (
                     <Link
@@ -237,7 +227,7 @@ const Header = () => {
                     </Button>
                   </Link>
                   <Link to="/register" className="w-full">
-                    <Button className="w-full bg-festari-accent hover:bg-festari-accent/90 text-white">
+                    <Button className="w-full" variant="accent">
                       Register
                     </Button>
                   </Link>
