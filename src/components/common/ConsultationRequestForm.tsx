@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
@@ -10,6 +9,15 @@ type ConsultationRequestFormProps = {
   variant?: 'default' | 'white' | 'transparent';
   title?: string;
   subtitle?: string;
+  serviceCategories?: Array<{
+    title: string;
+    path?: string;
+    description?: string;
+    activities?: Array<{
+      title: string;
+      description?: string;
+    }>;
+  }>;
 };
 
 const ConsultationRequestForm = ({
@@ -17,6 +25,7 @@ const ConsultationRequestForm = ({
   variant = 'default',
   title = 'Request a Consultation',
   subtitle = 'Our experts will get back to you within 48 hours.',
+  serviceCategories = []
 }: ConsultationRequestFormProps) => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
@@ -152,12 +161,25 @@ const ConsultationRequestForm = ({
             className="w-full px-3 py-2 border border-festari-200 rounded-md focus:outline-none focus:ring-2 focus:ring-festari-accent/50"
           >
             <option value="">Select a service</option>
-            <option value="Research Consultation">Research Consultation</option>
-            <option value="Property Inquiry">Property Inquiry</option>
-            <option value="Agricultural Services">Agricultural Services</option>
-            <option value="Enterprise Solutions">Enterprise Solutions</option>
-            <option value="Academic Support">Academic Support</option>
-            <option value="General Inquiry">General Inquiry</option>
+            {serviceCategories.flatMap((category, categoryIndex) => 
+              category.activities ? 
+                category.activities.map((activity, activityIndex) => (
+                  <option key={`${categoryIndex}-${activityIndex}`} value={activity.title}>
+                    {activity.title}
+                  </option>
+                ))
+              : []
+            )}
+            {serviceCategories.length === 0 && (
+              <>
+                <option value="Research Consultation">Research Consultation</option>
+                <option value="Property Inquiry">Property Inquiry</option>
+                <option value="Agricultural Services">Agricultural Services</option>
+                <option value="Enterprise Solutions">Enterprise Solutions</option>
+                <option value="Academic Support">Academic Support</option>
+                <option value="General Inquiry">General Inquiry</option>
+              </>
+            )}
           </select>
         </div>
         

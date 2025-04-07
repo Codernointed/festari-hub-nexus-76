@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -43,10 +44,16 @@ const ConsultationForm = ({ serviceCategories, onSubmit }: ConsultationFormProps
     setTimeout(() => {
       toast({
         title: "Consultation Request Sent",
-        description: "We'll get back to you soon to discuss your needs.",
+        description: "We'll get back to you soon to discuss your needs. For urgent matters, call: 0207702157",
       });
       setIsSubmitting(false);
-      if (onSubmit) onSubmit(FormData);
+      if (onSubmit) onSubmit({
+        name,
+        email,
+        phone,
+        selectedService,
+        message
+      });
 
       // Reset form fields
       setName('');
@@ -86,19 +93,22 @@ const ConsultationForm = ({ serviceCategories, onSubmit }: ConsultationFormProps
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <Label htmlFor="phone">Phone Number</Label>
+          <Label htmlFor="phone">Phone Number (Optional)</Label>
           <Input 
             id="phone" 
             type="tel" 
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            placeholder="+1 (555) 000-0000" 
+            placeholder="+233 XX XXX XXXX" 
           />
         </div>
         
         <div className="space-y-2">
           <Label htmlFor="service">Service Category</Label>
-          <Select>
+          <Select
+            value={selectedService}
+            onValueChange={setSelectedService}
+          >
             <SelectTrigger>
               <SelectValue placeholder="Select a service" />
             </SelectTrigger>
