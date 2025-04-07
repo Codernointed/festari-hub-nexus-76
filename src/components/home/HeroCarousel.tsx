@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, ExternalLink, ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +11,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { motion } from 'framer-motion';
 
 interface CarouselSlide {
   image: string;
@@ -18,6 +19,7 @@ interface CarouselSlide {
   subtitle: string;
   buttonText: string;
   buttonLink: string;
+  animation?: string; // URL to animation file (gif/video)
 }
 
 const HeroCarousel = () => {
@@ -36,7 +38,8 @@ const HeroCarousel = () => {
       title: "Premiere Business Solutions Under One Umbrella",
       subtitle: "Discover a world of opportunities through our diverse business divisions.",
       buttonText: "Explore Properties",
-      buttonLink: "/estates"
+      buttonLink: "/estates",
+      animation: "https://assets.website-files.com/5e1c60372c08a9762030430e/5e3eaa18f938d8481a6a5307_home-slide-01.gif"
     },
     {
       image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&q=80",
@@ -50,13 +53,28 @@ const HeroCarousel = () => {
       title: "Agribusiness Solutions",
       subtitle: "Innovative agricultural products and services for sustainable farming.",
       buttonText: "Explore Agriculture",
-      buttonLink: "/agriculture"
+      buttonLink: "/agriculture",
+      animation: "https://cdn.dribbble.com/users/1162077/screenshots/5427805/farmer.gif"
+    },
+    {
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&q=80",
+      title: "Enterprise Development",
+      subtitle: "Building scalable business frameworks for success and growth.",
+      buttonText: "Enterprise Solutions",
+      buttonLink: "/enterprise"
+    },
+    {
+      image: "https://images.unsplash.com/photo-1578574577315-3fbeb0cecdc2?auto=format&q=80",
+      title: "Consultation & Advisory",
+      subtitle: "Expert guidance for your business needs and strategic growth.",
+      buttonText: "Contact Us",
+      buttonLink: "/contact"
     }
   ];
   
   return (
     <section className="relative min-h-screen flex items-center pt-20">
-      <Carousel className="w-full" autoplay>
+      <Carousel className="w-full" autoplay autoplayInterval={7000}>
         <CarouselContent>
           {slides.map((slide, index) => (
             <CarouselItem key={index} className="min-h-screen relative">
@@ -72,52 +90,80 @@ const HeroCarousel = () => {
 
               {/* Content */}
               <div className="container-custom relative z-20 text-center flex items-center justify-center min-h-screen">
-                <div className="max-w-3xl mx-auto">
-                  <span className={cn(
-                    "inline-block py-1 px-3 rounded-full bg-mikado/20 text-mikado text-sm font-medium mb-6 transform transition-all duration-500 ease-out",
-                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                  )}>
-                    Welcome to Festari Group Limited
-                  </span>
-                  
-                  <h1 className={cn(
-                    "text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 transform transition-all duration-700 delay-100 ease-out",
-                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                  )}>
-                    {slide.title}
-                  </h1>
-                  
-                  <p className={cn(
-                    "text-lg md:text-xl text-festari-100 mb-8 transform transition-all duration-700 delay-200 ease-out",
-                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                  )}>
-                    {slide.subtitle}
-                  </p>
-                  
-                  <div className={cn(
-                    "flex flex-col sm:flex-row gap-4 justify-center transform transition-all duration-700 delay-300 ease-out",
-                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                  )}>
-                    <Button 
-                      asChild 
-                      variant="chili"
-                      size="lg"
+                <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
+                  <div className="md:col-span-3 text-left">
+                    <motion.span 
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.7, delay: 0.2 }}
+                      className="inline-block py-1 px-3 rounded-full bg-mikado/20 text-mikado text-sm font-medium mb-6"
                     >
-                      <Link to={slide.buttonLink}>
-                        {slide.buttonText}
-                      </Link>
-                    </Button>
-                    <Button 
-                      asChild 
-                      variant="outline" 
-                      className="bg-transparent text-white border-2 border-white hover:bg-white/10 px-6 py-6 text-base flex items-center" 
-                      size="lg"
+                      Welcome to Festari Group Limited
+                    </motion.span>
+                    
+                    <motion.h1
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.7, delay: 0.3 }}
+                      className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6"
                     >
-                      <Link to="/contact">
-                        Contact Us <ChevronRight size={16} className="ml-1" />
-                      </Link>
-                    </Button>
+                      {slide.title}
+                    </motion.h1>
+                    
+                    <motion.p
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.7, delay: 0.4 }}
+                      className="text-lg md:text-xl text-festari-100 mb-8"
+                    >
+                      {slide.subtitle}
+                    </motion.p>
+                    
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.7, delay: 0.5 }}
+                      className="flex flex-col sm:flex-row gap-4 sm:items-center"
+                    >
+                      <Button 
+                        asChild 
+                        variant="chili"
+                        size="lg"
+                      >
+                        <Link to={slide.buttonLink}>
+                          {slide.buttonText}
+                        </Link>
+                      </Button>
+                      <Button 
+                        asChild 
+                        variant="outline" 
+                        className="bg-transparent text-white border-2 border-white hover:bg-white/10 px-6 py-6 text-base flex items-center" 
+                        size="lg"
+                      >
+                        <Link to="/contact">
+                          Contact Us <ChevronRight size={16} className="ml-1" />
+                        </Link>
+                      </Button>
+                    </motion.div>
                   </div>
+
+                  {/* Animation/GIF column */}
+                  {slide.animation && (
+                    <motion.div 
+                      className="md:col-span-2 hidden md:block"
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.7, delay: 0.6 }}
+                    >
+                      <div className="rounded-lg overflow-hidden border-4 border-white/10 shadow-xl bg-white/10 backdrop-blur-sm">
+                        <img 
+                          src={slide.animation} 
+                          alt="Animation" 
+                          className="w-full h-auto"
+                        />
+                      </div>
+                    </motion.div>
+                  )}
                 </div>
               </div>
             </CarouselItem>

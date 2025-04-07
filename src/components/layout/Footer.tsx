@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Linkedin, Instagram, Mail } from 'lucide-react';
+import { Facebook, Twitter, Linkedin, Instagram, Mail, Phone, MapPin } from 'lucide-react';
 import Logo from '@/components/common/Logo';
 
 const Footer = () => {
@@ -12,7 +12,6 @@ const Footer = () => {
           <div className="space-y-1">
             <Link to="/" className="inline-block">
               <Logo variant="white-text" theme="light" size="lg" className="mb-6" />
-              {/* <span className="text-2xl font-display font-bold">Festari</span> */}
             </Link>
             <p className="text-festari-100 max-w-xs">
               A premier platform connecting real estate, education, and professional excellence.
@@ -75,8 +74,15 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
             <div className="space-y-3 text-festari-300">
-              <p>University of Mines and Technology</p>
-              <p>Tarkwa, Ghana</p>
+              <p className="flex items-start gap-2">
+                <MapPin size={16} className="mt-1 flex-shrink-0" />
+                <span>
+                  Festari Group Limited<br />
+                  Estate Hills, Tamso - Tarkwa<br />
+                  P. O. Box 657<br />
+                  Tarkwa, Ghana
+                </span>
+              </p>
               <p>
                 <a href="mailto:fksaadaari@festarigroup.com" className="hover:text-white transition-colors flex items-center gap-2">
                   <Mail size={16} />
@@ -84,8 +90,9 @@ const Footer = () => {
                 </a>
               </p>
               <p>
-                <a href="tel:+233240699535" className="hover:text-white transition-colors">
-                  +233 240699535
+                <a href="tel:+233541603237" className="hover:text-white transition-colors flex items-center gap-2">
+                  <Phone size={16} />
+                  +233 (0)54 160 3237
                 </a>
               </p>
               <p>

@@ -53,8 +53,8 @@ const Header = () => {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         {
-          // Always add a dark semi-transparent background to ensure text is visible
-          "bg-festari-900/90 backdrop-blur-md border-b border-white/10": isHomePage && !isScrolled,
+          // Fully transparent on home page when not scrolled
+          "bg-transparent border-b border-white/10": isHomePage && !isScrolled,
           // White with blur on scroll or other pages
           "bg-white/95 backdrop-blur-md border-b border-festari-100": isScrolled || !isHomePage,
         }

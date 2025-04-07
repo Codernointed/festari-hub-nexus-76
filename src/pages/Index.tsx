@@ -45,7 +45,7 @@ const Index = () => {
         <NavigationCards />
         <Testimonials />
         
-        {/* Added consultation CTA section */}
+        {/* Updated consultation CTA section with centered alignment */}
         <section className="py-16 bg-gradient-to-r from-festari-900 via-festari-900 to-indigo text-white">
           <div className="container-custom text-center">
             <h2 className="text-3xl font-display font-bold mb-4">
