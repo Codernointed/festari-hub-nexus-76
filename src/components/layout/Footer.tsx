@@ -1,5 +1,6 @@
+
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Linkedin, Instagram, Mail } from 'lucide-react';
+import { Facebook, Twitter, Linkedin, Instagram, Mail, Phone, MapPin } from 'lucide-react';
 import Logo from '@/components/common/Logo';
 
 const Footer = () => {
@@ -9,13 +10,12 @@ const Footer = () => {
     <footer className="bg-festari-900 text-white py-16">
       <div className="container-custom">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          <div className="space-y-1">
+          <div className="space-y-6">
             <Link to="/" className="inline-block">
-              <Logo variant="white-text" theme="light" size="lg" className="mb-6" />
-              {/* <span className="text-2xl font-display font-bold">Festari</span> */}
+              <Logo variant="white-text" theme="light" size="lg" className="mb-3" />
             </Link>
             <p className="text-festari-100 max-w-xs">
-              A premier platform connecting real estate, education, and professional excellence.
+              A premier platform connecting real estate, education, research, and professional excellence across Ghana and beyond.
             </p>
             <div className="flex space-x-4 pt-2">
               <a href="#" className="text-festari-300 hover:text-white transition-colors" aria-label="Facebook">
@@ -67,6 +67,9 @@ const Footer = () => {
                 <Link to="/research#publications" className="text-festari-300 hover:text-white transition-colors">Academic Publications</Link>
               </li>
               <li>
+                <Link to="/agriculture" className="text-festari-300 hover:text-white transition-colors">Agribusiness</Link>
+              </li>
+              <li>
                 <Link to="/contact" className="text-festari-300 hover:text-white transition-colors">Consultations</Link>
               </li>
             </ul>
@@ -75,40 +78,58 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
             <div className="space-y-3 text-festari-300">
-              <p>University of Mines and Technology</p>
-              <p>Tarkwa, Ghana</p>
-              <p>
-                <a href="mailto:fksaadaari@festarigroup.com" className="hover:text-white transition-colors flex items-center gap-2">
-                  <Mail size={16} />
+              <div className="flex items-start gap-2">
+                <MapPin size={18} className="mt-0.5 shrink-0 text-mikado" />
+                <div>
+                  <p className="text-white">Festari Group Limited</p>
+                  <p>Estate Hills, Tamso - Tarkwa</p>
+                  <p>P. O. Box 657, Tarkwa</p>
+                  <p>Ghana</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <Phone size={16} className="shrink-0 text-mikado" />
+                <a href="tel:+233541603237" className="hover:text-white transition-colors">
+                  +233 (0)54 160 3237
+                </a>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <Phone size={16} className="shrink-0 text-mikado" />
+                <a href="tel:+233207702157" className="hover:text-white transition-colors">
+                  +233 (0)20 770 2157
+                </a>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <Mail size={16} className="shrink-0 text-mikado" />
+                <a href="mailto:fksaadaari@festarigroup.com" className="hover:text-white transition-colors">
                   fksaadaari@festarigroup.com
                 </a>
-              </p>
-              <p>
-                <a href="tel:+233240699535" className="hover:text-white transition-colors">
-                  +233 240699535
-                </a>
-              </p>
-              <p>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <Linkedin size={16} className="shrink-0 text-mikado" />
                 <a href="https://www.linkedin.com/in/festus-kunkyin-saadaari-98462267/" 
                    target="_blank" 
                    rel="noopener noreferrer" 
-                   className="hover:text-white transition-colors flex items-center gap-2">
-                  <Linkedin size={16} />
+                   className="hover:text-white transition-colors">
                   Connect on LinkedIn
                 </a>
-              </p>
+              </div>
             </div>
           </div>
         </div>
         
-        <div className="mt-12 pt-8 border-t border-white/10 flex items-center justify-between">
+        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <Logo variant="icon" theme="light" size="sm" />
-          <div className="text-festari-300 text-sm">
-            &copy; {currentYear} Festari. All rights reserved.
+          <div className="text-festari-300 text-sm text-center md:text-left">
+            &copy; {currentYear} Festari Group Limited. All rights reserved.
           </div>
           <div className="flex gap-6">
-            <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link to="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>
+            <Link to="/privacy-policy" className="text-festari-300 hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="/terms-of-service" className="text-festari-300 hover:text-white transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

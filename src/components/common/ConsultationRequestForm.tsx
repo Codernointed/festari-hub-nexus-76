@@ -1,178 +1,214 @@
 
 import { useState } from 'react';
-import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ServiceCategory } from '@/types/navigation';
+import { useToast } from '@/components/ui/use-toast';
+import { cn } from '@/lib/utils';
+import { CheckCircle, SendIcon } from 'lucide-react';
 
-interface ConsultationRequestFormProps {
-  serviceCategories: ServiceCategory[];
+type ConsultationRequestFormProps = {
+  className?: string;
+  variant?: 'default' | 'white' | 'transparent';
   title?: string;
-  description?: string;
-}
+  subtitle?: string;
+};
 
-const ConsultationRequestForm = ({ 
-  serviceCategories,
-  title = "Request a Consultation",
-  description = "Fill out the form below to request a consultation with our experts."
+const ConsultationRequestForm = ({
+  className,
+  variant = 'default',
+  title = 'Request a Consultation',
+  subtitle = 'Our experts will get back to you within 48 hours.',
 }: ConsultationRequestFormProps) => {
   const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
-    category: '',
-    service: '',
-    message: ''
+    phone: '', // Optional phone field
+    subject: '',
+    message: '',
   });
-  const [selectedCategory, setSelectedCategory] = useState<ServiceCategory | null>(null);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
-
-  const handleCategoryChange = (value: string) => {
-    const category = serviceCategories.find(cat => cat.title.toLowerCase() === value.toLowerCase());
-    setSelectedCategory(category || null);
-    setFormData(prev => ({ ...prev, category: value, service: '' }));
-  };
-
-  const handleServiceChange = (value: string) => {
-    setFormData(prev => ({ ...prev, service: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
+    // Simulate form submission with delay
     setTimeout(() => {
       toast({
-        title: "Consultation Request Sent",
-        description: "We'll get back to you soon to discuss your needs.",
+        title: "Consultation Request Submitted",
+        description: "Thank you for your request. We will contact you within 48 hours. For urgent matters, call: 0207702157",
       });
-      setIsSubmitting(false);
       
-      // Reset form fields
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        category: '',
-        service: '',
-        message: ''
-      });
-      setSelectedCategory(null);
+      // Email would be sent here in a real implementation
+      console.log('Form submitted:', formData);
+      
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+      
+      // Reset form after submission
+      setTimeout(() => {
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: '',
+        });
+        setIsSubmitted(false);
+      }, 5000);
     }, 1500);
+  };
+  
+  const getVariantClasses = () => {
+    switch (variant) {
+      case 'white':
+        return 'bg-white border border-gray-100 shadow-lg';
+      case 'transparent':
+        return 'bg-white/80 backdrop-blur-md border border-white/20 shadow-lg';
+      default:
+        return 'bg-white border border-festari-100/30 shadow-md';
+    }
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
-              <Input 
-                id="name" 
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                required 
-                placeholder="John Doe" 
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
-              <Input 
-                id="email" 
-                name="email"
-                type="email" 
-                value={formData.email}
-                onChange={handleInputChange}
-                required 
-                placeholder="john@example.com" 
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number</Label>
-              <Input 
-                id="phone" 
-                name="phone"
-                type="tel" 
-                value={formData.phone}
-                onChange={handleInputChange}
-                placeholder="+1 (555) 000-0000" 
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="category">Service Category</Label>
-              <Select value={formData.category} onValueChange={handleCategoryChange}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a category" />
-                </SelectTrigger>
-                <SelectContent>
-                  {serviceCategories.map(category => (
-                    <SelectItem key={category.title} value={category.title.toLowerCase()}>
-                      {category.title}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          {selectedCategory && (
-            <div className="space-y-2">
-              <Label htmlFor="service">Specific Service</Label>
-              <Select value={formData.service} onValueChange={handleServiceChange}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a service" />
-                </SelectTrigger>
-                <SelectContent>
-                  {selectedCategory.activities.map(activity => (
-                    <SelectItem key={activity.title} value={activity.title}>
-                      {activity.title}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          )}
-
-          <div className="space-y-2">
-            <Label htmlFor="message">Project Details</Label>
-            <Textarea 
-              id="message" 
-              name="message"
-              value={formData.message}
+    <div className={cn(
+      'rounded-xl p-6 md:p-8',
+      getVariantClasses(),
+      className
+    )}>
+      <div className="mb-6">
+        <h3 className="text-xl font-bold mb-2 text-festari-900">{title}</h3>
+        <p className="text-festari-600">{subtitle}</p>
+      </div>
+      
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium text-festari-700 mb-1">
+              Full Name *
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
               onChange={handleInputChange}
-              placeholder="Please describe your project or requirements..."
-              className="min-h-[150px]"
+              required
+              className="w-full px-3 py-2 border border-festari-200 rounded-md focus:outline-none focus:ring-2 focus:ring-festari-accent/50"
+              placeholder="John Doe"
             />
           </div>
-
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Sending..." : "Submit Consultation Request"}
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-festari-700 mb-1">
+              Email Address *
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+              className="w-full px-3 py-2 border border-festari-200 rounded-md focus:outline-none focus:ring-2 focus:ring-festari-accent/50"
+              placeholder="john@example.com"
+            />
+          </div>
+        </div>
+        
+        <div>
+          <label htmlFor="phone" className="block text-sm font-medium text-festari-700 mb-1">
+            Phone Number (Optional)
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleInputChange}
+            className="w-full px-3 py-2 border border-festari-200 rounded-md focus:outline-none focus:ring-2 focus:ring-festari-accent/50"
+            placeholder="+233 XX XXX XXXX"
+          />
+        </div>
+        
+        <div>
+          <label htmlFor="subject" className="block text-sm font-medium text-festari-700 mb-1">
+            Subject *
+          </label>
+          <select
+            id="subject"
+            name="subject"
+            value={formData.subject}
+            onChange={handleInputChange}
+            required
+            className="w-full px-3 py-2 border border-festari-200 rounded-md focus:outline-none focus:ring-2 focus:ring-festari-accent/50"
+          >
+            <option value="">Select a service</option>
+            <option value="Research Consultation">Research Consultation</option>
+            <option value="Property Inquiry">Property Inquiry</option>
+            <option value="Agricultural Services">Agricultural Services</option>
+            <option value="Enterprise Solutions">Enterprise Solutions</option>
+            <option value="Academic Support">Academic Support</option>
+            <option value="General Inquiry">General Inquiry</option>
+          </select>
+        </div>
+        
+        <div>
+          <label htmlFor="message" className="block text-sm font-medium text-festari-700 mb-1">
+            Message *
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            value={formData.message}
+            onChange={handleInputChange}
+            required
+            rows={4}
+            className="w-full px-3 py-2 border border-festari-200 rounded-md focus:outline-none focus:ring-2 focus:ring-festari-accent/50"
+            placeholder="How can we help you?"
+          ></textarea>
+        </div>
+        
+        <div className="pt-2">
+          <Button
+            type="submit"
+            disabled={isSubmitting || isSubmitted}
+            className={cn(
+              "w-full flex items-center justify-center gap-2 transition-colors",
+              isSubmitted ? "bg-green-600 hover:bg-green-700" : "bg-festari-accent hover:bg-festari-accent/90"
+            )}
+          >
+            {isSubmitting ? (
+              "Submitting..."
+            ) : isSubmitted ? (
+              <>
+                <CheckCircle size={18} />
+                Request Sent
+              </>
+            ) : (
+              <>
+                <SendIcon size={18} />
+                Submit Request
+              </>
+            )}
           </Button>
-        </form>
-      </CardContent>
-    </Card>
+          
+          <p className="text-xs text-festari-500 mt-3 text-center">
+            By submitting, you agree to our <a href="/privacy-policy" className="text-festari-accent hover:underline">Privacy Policy</a>.
+            <br />
+            For urgent matters, please call: <a href="tel:+233207702157" className="text-festari-accent hover:underline">+233 (0)20 770 2157</a>
+          </p>
+        </div>
+      </form>
+    </div>
   );
 };
 

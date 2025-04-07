@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, User, ShoppingCart, BookOpen, Home, MapPin, LogIn, Briefcase } from 'lucide-react';
@@ -55,6 +56,7 @@ const Header = () => {
     };
     
     window.addEventListener('scroll', handleScroll); // Add scroll event listener
+    handleScroll(); // Check initial scroll position
     return () => window.removeEventListener('scroll', handleScroll); // Cleanup on unmount
   }, []);
 
@@ -66,7 +68,7 @@ const Header = () => {
           // Transparent only on the homepage when not scrolled
           "bg-transparent": isHomePage && !isScrolled,
           // White with blur on scroll or other pages
-          "bg-white/80 backdrop-blur-md border-b border-festari-100": isScrolled || !isHomePage,
+          "bg-white/80 backdrop-blur-md shadow-sm": isScrolled || !isHomePage,
         }
       )}
     >
@@ -78,7 +80,7 @@ const Header = () => {
               variant="icon" 
               theme={(isHomePage && !isScrolled) ? "light" : "dark"} 
               size="sm"
-              showOnLight={false} // Hide icon in light/transparent mode
+              showOnLight={isHomePage && !isScrolled} // Show icon in transparent mode
             />
             <Logo 
               variant="text" 
@@ -97,7 +99,7 @@ const Header = () => {
                 className={cn(
                   "text-sm transition-colors whitespace-nowrap",
                   (isHomePage && !isScrolled)
-                    ? "text-white/90 hover:text-white"
+                    ? "text-white hover:text-mikado"
                     : "text-festari-700 hover:text-accent",
                   location.pathname === item.href && "font-medium" // Highlight active link
                 )}
@@ -111,7 +113,7 @@ const Header = () => {
           <div className="hidden md:flex items-center space-x-3 shrink-0">
             <Link to="/login">
               <Button 
-                variant={(isHomePage && !isScrolled) ? "ghost-light" : "highlight"}
+                variant={(isHomePage && !isScrolled) ? "ghost-light" : "outline"}
                 className="flex items-center gap-2 px-4"
                 size="sm"
               >
@@ -137,13 +139,13 @@ const Header = () => {
                   size="icon"
                   className={cn(
                     "rounded-full",
-                    (isHomePage && !isScrolled) ? "text-white" : "text-festari-900"
+                    (isHomePage && !isScrolled) ? "text-white hover:bg-white/10" : "text-festari-900 hover:bg-festari-100/10"
                   )}
                 >
                   <User size={18} />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-white/95 backdrop-blur-md">
+              <DropdownMenuContent align="end" className="bg-white/95 backdrop-blur-md border border-festari-100">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
@@ -173,13 +175,13 @@ const Header = () => {
                   size="icon"
                   className={cn(
                     "rounded-full",
-                    (isHomePage && !isScrolled) ? "text-white" : "text-festari-900"
+                    (isHomePage && !isScrolled) ? "text-white hover:bg-white/10" : "text-festari-900 hover:bg-festari-100/10"
                   )}
                 >
                   <User size={18} />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-white/95 backdrop-blur-md z-50">
+              <DropdownMenuContent align="end" className="bg-white/95 backdrop-blur-md border border-festari-100 z-50">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
@@ -206,7 +208,7 @@ const Header = () => {
                   size="icon"
                   className={cn(
                     "rounded-full",
-                    (isHomePage && !isScrolled) ? "text-white" : "text-festari-900"
+                    (isHomePage && !isScrolled) ? "text-white hover:bg-white/10" : "text-festari-900 hover:bg-festari-100/10"
                   )}
                   aria-label="Toggle menu"
                 >
@@ -231,7 +233,7 @@ const Header = () => {
                 
                 <div className="flex flex-col space-y-3 pt-6 mt-6 border-t border-festari-100">
                   <Link to="/login" className="w-full">
-                    <Button variant="highlight" className="w-full flex items-center justify-center">
+                    <Button variant="outline" className="w-full flex items-center justify-center">
                       <LogIn className="mr-2" size={18} />
                       Login
                     </Button>
