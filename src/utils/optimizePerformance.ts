@@ -15,9 +15,9 @@ const criticalImages = [
 
 // Video URLs to preload
 const criticalVideos = [
-  "https://player.vimeo.com/external/459786579.sd.mp4?s=f657763306dfda2277e4e9079990e15fad6a387c&profile_id=164&oauth2_token_id=57447761",
-  "https://player.vimeo.com/external/517090081.sd.mp4?s=ec9e7fa812f3652a76c42adde73be7df1e440239&profile_id=164&oauth2_token_id=57447761",
-  "https://player.vimeo.com/external/370467553.sd.mp4?s=90e8aeacc23552520da6c873110ebd19ccf981c9&profile_id=164&oauth2_token_id=57447761"
+  "https://videos.pexels.com/video-files/2818546/2818546-uhd_2560_1440_24fps.mp4",
+  "https://videos.pexels.com/video-files/7579340/7579340-uhd_2732_1440_25fps.mp4",
+  "https://videos.pexels.com/video-files/7989709/7989709-hd_1920_1080_25fps.mp4"
 ];
 
 /**
