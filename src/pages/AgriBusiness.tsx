@@ -122,14 +122,15 @@ const AgriBusiness = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
-        {/* Hero section with background image */}
+        {/* Updated hero section with consistent styling and green overlay */}
         <section 
           className="relative py-20 text-white bg-cover bg-center"
           style={{
-            backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&q=80')"
+            backgroundImage: "url('https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&q=80')"
           }}
         >
-          <div className="container-custom">
+          <div className="absolute inset-0 bg-gradient-to-r from-green-800/85 to-green-700/75"></div>
+          <div className="container-custom relative z-10">
             <div className="max-w-2xl mx-auto text-center">
               <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">Festari Agribusiness</h1>
               <p className="text-white/90 mb-8">Sustainable farming solutions, agricultural expertise, and modern farming technologies for optimal yield and growth.</p>

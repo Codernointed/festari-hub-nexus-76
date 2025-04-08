@@ -21,14 +21,15 @@ const ConsultationPage = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
-        {/* Background image with overlay */}
+        {/* Background image with overlay - updated with better image and consistent overlay */}
         <section 
           className="relative py-16 bg-cover bg-center text-white"
           style={{
-            backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&q=80')"
+            backgroundImage: "url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&q=80')"
           }}
         >
-          <div className="container-custom max-w-4xl text-center">
+          <div className="absolute inset-0 bg-gradient-to-r from-festari-900/80 to-festari-900/60"></div>
+          <div className="container-custom max-w-4xl text-center relative z-10">
             <h1 className="text-3xl font-display font-bold text-white mb-4">
               Professional Consultation Services
             </h1>

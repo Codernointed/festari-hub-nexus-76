@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
@@ -268,8 +269,15 @@ const Research = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
-        <section className="relative py-20 bg-gradient-to-r from-indigo to-indigo/80 text-white">
-          <div className="container-custom">
+        {/* Updated hero section with background image and indigo overlay */}
+        <section 
+          className="relative py-20 text-white bg-cover bg-center"
+          style={{
+            backgroundImage: "url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=3000&auto=format&fit=crop')"
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-indigo/90 to-indigo/70"></div>
+          <div className="container-custom relative z-10">
             <div className="max-w-2xl mx-auto text-center">
               <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">
                 Research & Consultancy Hub

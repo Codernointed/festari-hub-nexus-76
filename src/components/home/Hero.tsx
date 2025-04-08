@@ -4,19 +4,14 @@ import { Link } from 'react-router-dom';
 import { ChevronRight, ArrowRight, ChevronLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from "@/components/ui/button";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import { motion, AnimatePresence } from "framer-motion";
 
 const carouselItems = [
   {
     id: 1,
     image: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=2073&auto=format&fit=cover",
+    video: "https://player.vimeo.com/external/459786579.sd.mp4?s=f657763306dfda2277e4e9079990e15fad6a387c&profile_id=164&oauth2_token_id=57447761",
+    isVideo: true,
     title: "Premier Business Solutions",
     subtitle: "Under One Umbrella",
     description: "Discover a world of opportunities through our diverse business divisions",
@@ -25,10 +20,13 @@ const carouselItems = [
     buttonVariant: "chili" as const,
     secondaryButtonText: "Research Hub",
     secondaryButtonLink: "/research",
+    overlayColor: "from-festari-900/90 to-festari-800/80"
   },
   {
     id: 2,
     image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?q=80&w=2600&auto=format&fit=crop",
+    video: "https://player.vimeo.com/external/517090081.sd.mp4?s=ec9e7fa812f3652a76c42adde73be7df1e440239&profile_id=164&oauth2_token_id=57447761",
+    isVideo: true,
     title: "Research & Consultancy",
     subtitle: "Expert Knowledge",
     description: "Access cutting-edge research and professional consultancy services",
@@ -37,6 +35,7 @@ const carouselItems = [
     buttonVariant: "mikado" as const,
     secondaryButtonText: "Our Expertise",
     secondaryButtonLink: "/about",
+    overlayColor: "from-indigo/90 to-indigo/70"
   },
   {
     id: 3,
@@ -49,6 +48,7 @@ const carouselItems = [
     buttonVariant: "indigo" as const,
     secondaryButtonText: "Our Products",
     secondaryButtonLink: "/agriculture#products",
+    overlayColor: "from-green-800/80 to-green-700/70"
   },
   {
     id: 4,
@@ -61,10 +61,13 @@ const carouselItems = [
     buttonVariant: "accent" as const,
     secondaryButtonText: "Request Tour",
     secondaryButtonLink: "/contact",
+    overlayColor: "from-chili/80 to-chili/70"
   },
   {
     id: 5,
     image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=3000&auto=format&fit=crop",
+    video: "https://player.vimeo.com/external/370467553.sd.mp4?s=90e8aeacc23552520da6c873110ebd19ccf981c9&profile_id=164&oauth2_token_id=57447761",
+    isVideo: true,
     title: "Enterprise Solutions",
     subtitle: "Business Growth",
     description: "Comprehensive enterprise solutions to support your business objectives",
@@ -73,6 +76,7 @@ const carouselItems = [
     buttonVariant: "mikado" as const,
     secondaryButtonText: "Get Started",
     secondaryButtonLink: "/consultation",
+    overlayColor: "from-orange-800/80 to-mikado/70"
   }
 ];
 
@@ -119,7 +123,7 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Carousel background images with animated transitions */}
+      {/* Carousel background images/videos with animated transitions */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="wait">
           {carouselItems.map((item, index) => (
@@ -132,12 +136,26 @@ const Hero = () => {
                 transition={{ duration: 1 }}
                 className="absolute inset-0"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-festari-900/90 to-festari-800/80 z-10"></div>
-                <img 
-                  src={item.image} 
-                  alt={item.title} 
-                  className="w-full h-full object-cover object-center"
-                />
+                <div className={`absolute inset-0 bg-gradient-to-r ${item.overlayColor} z-10`}></div>
+                {item.isVideo ? (
+                  <video 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline
+                    className="w-full h-full object-cover object-center"
+                  >
+                    <source src={item.video} type="video/mp4" />
+                    {/* Fallback to image if video fails to load */}
+                    <img src={item.image} alt={item.title} className="w-full h-full object-cover object-center" />
+                  </video>
+                ) : (
+                  <img 
+                    src={item.image} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover object-center"
+                  />
+                )}
               </motion.div>
             )
           ))}
