@@ -1,17 +1,13 @@
-
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Building, Home, Key, Banknote, FileCheck, Search, CheckCircle, ChevronDown, Filter, MapPin, Briefcase, LineChart, MessageSquare, Scale, ClipboardList, User, Paintbrush, DollarSign, Flag } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import ServiceGrid from '@/components/common/ServiceGrid';
 import ServiceCard from '@/components/common/ServiceCard';
-import ServiceCategory from '@/components/common/ServiceCategory';
 import ConsultationRequestForm from '@/components/common/ConsultationRequestForm';
 
 const estateServices = [
@@ -183,10 +179,11 @@ const EstatesAgency = () => {
         <section 
           className="relative py-20 bg-cover bg-center text-white"
           style={{
-            backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&q=80')"
+            backgroundImage: "url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&q=80')"
           }}
         >
-          <div className="container-custom">
+          <div className="absolute inset-0 bg-gradient-to-r from-chili/80 to-chili/70"></div>
+          <div className="container-custom relative z-10">
             <div className="max-w-2xl mx-auto text-center">
               <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">Find Your Ideal Property</h1>
               <p className="text-white/90 mb-8">Browse our exclusive collection of premium properties available for sale and rent, and explore our comprehensive real estate services.</p>

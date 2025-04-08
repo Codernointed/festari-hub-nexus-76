@@ -135,7 +135,6 @@ const Hero = () => {
                 transition={{ duration: 1 }}
                 className="absolute inset-0"
               >
-                <div className={`absolute inset-0 bg-gradient-to-r ${item.overlayColor} z-10`}></div>
                 {item.isVideo ? (
                   <video 
                     autoPlay 
@@ -155,6 +154,7 @@ const Hero = () => {
                     className="w-full h-full object-cover object-center"
                   />
                 )}
+                <div className="absolute inset-0 bg-gradient-to-r from-festari-900/80 to-festari-800/70 z-10"></div>
               </motion.div>
             )
           ))}
