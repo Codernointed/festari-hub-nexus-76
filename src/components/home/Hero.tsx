@@ -49,7 +49,7 @@ const carouselItems = [
   },
   {
     id: 4,
-    image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?q=80&w=3052&auto=format&fit=crop",
+    image: "https://media.istockphoto.com/id/998992048/photo/men-who-are-trying-to-contract-the-new-house.webp?a=1&b=1&s=612x612&w=0&k=20&c=Ieq3jUthkM9kaNa3ybGWPM5Ou5vzU_YPcXTs7AbeIAw=",
     title: "Estate Agency Services",
     subtitle: "Premier Properties",
     description: "Find your dream property with our exclusive real estate listings",
