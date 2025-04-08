@@ -6,14 +6,13 @@ import './index.css'
 import { optimizePerformance } from './utils/optimizePerformance.ts'
 import { removeBrandingTag } from './utils/removeBranding.ts'
 
-// Remove any branding tags as early as possible
-removeBrandingTag();
-// Run performance optimizations
+// Run performance optimizations as early as possible
 optimizePerformance();
+// Remove any branding tags if needed
+removeBrandingTag();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
 )
-
