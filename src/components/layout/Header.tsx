@@ -76,14 +76,16 @@ const Header = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo section */}
           <Link to="/" className="flex items-center gap-2 shrink-0">
+            {/* Only show icon when scrolled or not on homepage */}
+            {(!isHomePage || isScrolled) && (
+              <Logo 
+                variant="icon" 
+                theme={(isHomePage && !isScrolled) ? "light" : "dark"} 
+                size="sm"
+              />
+            )}
             <Logo 
-              variant="icon" 
-              theme={(isHomePage && !isScrolled) ? "light" : "dark"} 
-              size="sm"
-              showOnLight={isHomePage && !isScrolled} // Show icon in transparent mode
-            />
-            <Logo 
-              variant="text" 
+              variant={(isHomePage && !isScrolled) ? "white-text" : "text"}
               theme={(isHomePage && !isScrolled) ? "light" : "dark"}
               className="hidden md:block" 
               showOnLight={true} // Always show text

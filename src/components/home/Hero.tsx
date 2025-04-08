@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, ArrowRight, ChevronLeft } from 'lucide-react';
@@ -19,7 +20,6 @@ const carouselItems = [
     buttonVariant: "chili" as const,
     secondaryButtonText: "Research Hub",
     secondaryButtonLink: "/research",
-    overlayColor: "from-festari-900/90 to-festari-800/80"
   },
   {
     id: 2,
@@ -34,7 +34,6 @@ const carouselItems = [
     buttonVariant: "mikado" as const,
     secondaryButtonText: "Our Expertise",
     secondaryButtonLink: "/about",
-    overlayColor: "from-indigo/90 to-indigo/70"
   },
   {
     id: 3,
@@ -47,7 +46,6 @@ const carouselItems = [
     buttonVariant: "indigo" as const,
     secondaryButtonText: "Our Products",
     secondaryButtonLink: "/agriculture#products",
-    overlayColor: "from-green-800/80 to-green-700/70"
   },
   {
     id: 4,
@@ -60,7 +58,6 @@ const carouselItems = [
     buttonVariant: "accent" as const,
     secondaryButtonText: "Request Tour",
     secondaryButtonLink: "/contact",
-    overlayColor: "from-chili/80 to-chili/70"
   },
   {
     id: 5,
@@ -75,7 +72,6 @@ const carouselItems = [
     buttonVariant: "mikado" as const,
     secondaryButtonText: "Get Started",
     secondaryButtonLink: "/consultation",
-    overlayColor: "from-orange-800/80 to-mikado/70"
   }
 ];
 
