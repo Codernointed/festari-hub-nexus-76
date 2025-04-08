@@ -84,8 +84,9 @@ const Header = () => {
                 size="sm"
               />
             )}
+            
             <Logo 
-              variant={(isHomePage && !isScrolled) ? "white-text" : "text"}
+              variant="text"
               theme={(isHomePage && !isScrolled) ? "light" : "dark"}
               className="hidden md:block" 
               showOnLight={true} // Always show text
