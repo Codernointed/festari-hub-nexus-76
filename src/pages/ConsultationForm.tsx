@@ -28,7 +28,7 @@ const ConsultationPage = () => {
             backgroundImage: "url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&q=80')"
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-festari-900/80 to-festari-900/60"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-800/80 to-purple-700/70"></div>
           <div className="container-custom max-w-4xl text-center relative z-10">
             <h1 className="text-3xl font-display font-bold text-white mb-4">
               Professional Consultation Services

@@ -177,10 +177,12 @@ const Enterprise = () => {
         <section 
           className="relative py-20 text-white bg-cover bg-center"
           style={{
-            backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&q=80')"
+            backgroundImage: "url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&q=80')"
           }}
         >
-          <div className="container-custom">
+          {/* Added orange overlay to maintain enterprise color scheme */}
+          <div className="absolute inset-0 bg-gradient-to-r from-orange-800/80 to-orange-700/70"></div>
+          <div className="container-custom relative z-10">
             <div className="max-w-2xl mx-auto text-center">
               <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">Festari Enterprise</h1>
               <p className="text-white/90 mb-8">Comprehensive trading and service solutions for businesses and individuals.</p>
