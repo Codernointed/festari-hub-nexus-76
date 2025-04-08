@@ -36,7 +36,7 @@ const PageLoading = () => (
   </div>
 );
 
-// Create a client
+// Create a client with updated React Query v5 configuration
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
