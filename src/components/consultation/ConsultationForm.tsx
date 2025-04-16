@@ -13,9 +13,11 @@ interface ConsultationFormProps {
     items: string[];
   }>;
   onSubmit?: (data: any) => void;
+  title?: string;
+  description?: string;
 }
 
-const ConsultationForm = ({ serviceCategories, onSubmit }: ConsultationFormProps) => {
+const ConsultationForm = ({ serviceCategories, onSubmit, title, description }: ConsultationFormProps) => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -66,6 +68,13 @@ const ConsultationForm = ({ serviceCategories, onSubmit }: ConsultationFormProps
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {(title || description) && (
+        <div className="mb-2">
+          {title && <h3 className="text-xl font-semibold mb-1">{title}</h3>}
+          {description && <p className="text-festari-600 text-sm">{description}</p>}
+        </div>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <Label htmlFor="name">Full Name</Label>
