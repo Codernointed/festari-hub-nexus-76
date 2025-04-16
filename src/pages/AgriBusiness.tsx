@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
@@ -33,7 +32,6 @@ import ServiceCard from '@/components/common/ServiceCard';
 import ServiceCategory from '@/components/common/ServiceCategory';
 import ConsultationRequestForm from '@/components/common/ConsultationRequestForm';
 
-// Agriculture service categories
 const agriServices = [
   {
     title: "Farming Operations",
@@ -52,7 +50,7 @@ const agriServices = [
     description: "Agricultural business development and support",
     items: [
       { title: "Agribusiness Consulting", icon: Briefcase, description: "Expert agricultural business advice" },
-      { title: "Agricultural Equipment Sales and Rental", icon: Wrench, description: "Quality farming equipment solutions" }, // Changed Tool to Wrench
+      { title: "Agricultural Equipment Sales and Rental", icon: Wrench, description: "Quality farming equipment solutions" },
       { title: "Farm Management Services", icon: Users, description: "Comprehensive farm operations management" },
       { title: "Agribusiness Investment", icon: DollarSign, description: "Agricultural investment opportunities" },
       { title: "Agricultural Marketing", icon: LineChart, description: "Strategic marketing for farm products" }
@@ -60,10 +58,10 @@ const agriServices = [
   },
   {
     title: "Technical Services",
-    icon: Beaker, // Changed Flask to Beaker
+    icon: Beaker,
     description: "Specialized agricultural technical support",
     items: [
-      { title: "Crop and Soil Analysis", icon: Beaker, description: "Scientific testing of crops and soil" }, // Changed Flask to Beaker
+      { title: "Crop and Soil Analysis", icon: Beaker, description: "Scientific testing of crops and soil" },
       { title: "Pest and Disease Control", icon: Bug, description: "Integrated pest management solutions" },
       { title: "Agricultural Research", icon: Search, description: "Innovative farming research and development" },
       { title: "Sale of Agrochemicals", icon: PackageOpen, description: "Quality agricultural supplies and chemicals" }
@@ -96,7 +94,6 @@ const AgriBusiness = () => {
   const [filteredServices, setFilteredServices] = useState<any[]>([]);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   
-  // Handle service search
   const handleSearch = (query: string) => {
     setSearchTerm(query);
     
@@ -122,11 +119,10 @@ const AgriBusiness = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
-        {/* Updated hero section with consistent styling and green overlay */}
         <section 
           className="relative py-20 text-white bg-cover bg-center"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&q=80')"
+            backgroundImage: "url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&q=80')"
           }}
         >
           <div className="absolute inset-0 bg-gradient-to-r from-green-800/85 to-green-700/75"></div>
@@ -135,7 +131,6 @@ const AgriBusiness = () => {
               <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">Festari Agribusiness</h1>
               <p className="text-white/90 mb-8">Sustainable farming solutions, agricultural expertise, and modern farming technologies for optimal yield and growth.</p>
               
-              {/* Search bar */}
               <div className="relative max-w-xl mx-auto">
                 <input
                   type="text"
@@ -185,7 +180,6 @@ const AgriBusiness = () => {
           </div>
         </section>
 
-        {/* Main content */}
         <section className="py-16 bg-festari-50" id="services">
           <div className="container-custom">
             <Tabs defaultValue="services" className="w-full">
@@ -288,7 +282,6 @@ const AgriBusiness = () => {
           </div>
         </section>
         
-        {/* Benefits section */}
         <section className="py-16 bg-green-50">
           <div className="container-custom">
             <div className="text-center mb-12">
@@ -332,7 +325,6 @@ const AgriBusiness = () => {
           </div>
         </section>
         
-        {/* CTA Section */}
         <section className="py-16 bg-green-700 text-white">
           <div className="container-custom text-center">
             <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">

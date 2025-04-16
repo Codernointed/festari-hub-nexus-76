@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, ArrowRight, ChevronLeft } from 'lucide-react';
@@ -23,7 +22,7 @@ const carouselItems = [
   },
   {
     id: 2,
-    image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?q=80&w=2600&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&q=80",
     video: "https://videos.pexels.com/video-files/7579340/7579340-uhd_2732_1440_25fps.mp4",
     isVideo: true,
     title: "Research & Consultancy",
@@ -37,7 +36,7 @@ const carouselItems = [
   },
   {
     id: 3,
-    image: "https://images.unsplash.com/photo-1615729947596-a598e5de0ab3?q=80&w=3456&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&q=80",
     title: "Agricultural Excellence",
     subtitle: "Farm to Future",
     description: "Sustainable farming practices and agricultural initiatives for community growth",
