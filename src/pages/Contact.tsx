@@ -17,6 +17,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     subject: '',
     message: '',
   });
@@ -53,6 +54,7 @@ const Contact = () => {
         setFormData({
           name: '',
           email: '',
+          phone: '',
           subject: '',
           message: '',
         });
@@ -70,8 +72,8 @@ const Contact = () => {
     },
     {
       icon: Phone,
-      title: 'Phone Numbers',
-      details: ['+233 240699535', '+1 5732026443'],
+      title: 'Phone Number',
+      details: ['+233 (0)54 160 3237'],
     },
     {
       icon: Mail,
@@ -192,6 +194,21 @@ const Contact = () => {
                           required
                         />
                       </div>
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="phone" className="block text-sm font-medium text-festari-800 mb-1">
+                        Phone Number
+                      </label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className="w-full p-3 border border-festari-200 rounded-md focus:outline-none focus:ring-2 focus:ring-festari-accent/50"
+                        placeholder="+233 XX XXX XXXX"
+                      />
                     </div>
                     
                     <div>

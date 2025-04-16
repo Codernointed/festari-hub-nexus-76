@@ -21,7 +21,7 @@ import Logo from '@/components/common/Logo';
 import { cn } from '@/lib/utils';
 
 const navigation = [
-  { name: "Estate Agency", href: "/estates", icon: <Home size={18} /> },
+  { name: "Estates Agencies", href: "/estates", icon: <Home size={18} /> },
   { name: "Research & Consultation", href: "/research", icon: <BookOpen size={18} /> },
   { name: "Agribusiness", href: "/agriculture", icon: <ShoppingCart size={18} /> },
   { name: "Enterprise", href: "/enterprise", icon: <Briefcase size={18} /> },

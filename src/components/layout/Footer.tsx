@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Linkedin, Instagram, Mail, Phone, MapPin } from 'lucide-react';
 import Logo from '@/components/common/Logo';
@@ -92,13 +91,6 @@ const Footer = () => {
                 <Phone size={16} className="shrink-0 text-mikado" />
                 <a href="tel:+233541603237" className="hover:text-white transition-colors">
                   +233 (0)54 160 3237
-                </a>
-              </div>
-              
-              <div className="flex items-center gap-2">
-                <Phone size={16} className="shrink-0 text-mikado" />
-                <a href="tel:+233207702157" className="hover:text-white transition-colors">
-                  +233 (0)20 770 2157
                 </a>
               </div>
               
