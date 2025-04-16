@@ -1,3 +1,5 @@
+
+// Import regular (non-lazy) components
 import { useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -11,7 +13,7 @@ import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
 
 const Contact = () => {
-  const { toast } = useToast(); // Toast notifications for form submission feedback
+  const { toast } = useToast();
   
   // Form state
   const [formData, setFormData] = useState({
@@ -103,7 +105,6 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header component */}
       <Header />
       <main className="flex-grow pt-20">
         {/* Hero section */}
@@ -459,7 +460,6 @@ const Contact = () => {
           </div>
         </section>
       </main>
-      {/* Footer component */}
       <Footer />
     </div>
   );

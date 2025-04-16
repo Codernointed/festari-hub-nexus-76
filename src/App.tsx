@@ -10,12 +10,12 @@ import { ScrollToTop } from '@/components/common/ScrollToTop';
 // Import main pages
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import Contact from "./pages/Contact"; // Import directly, no lazy loading
 
 // Lazy load other pages for better performance
 const EstatesAgency = lazy(() => import("./pages/EstatesAgency"));
 const Research = lazy(() => import("./pages/ResearchAndConsultancy"));
 const About = lazy(() => import("./pages/About"));
-const Contact = lazy(() => import("./pages/Contact"));
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
@@ -59,6 +59,9 @@ const App = () => (
             {/* Core routes in navigation order - Index is not lazy loaded for faster initial render */}
             <Route path="/" element={<Index />} />
             
+            {/* Contact is now directly imported, not lazy loaded */}
+            <Route path="/contact" element={<Contact />} />
+            
             {/* Lazy loaded routes */}
             <Route path="/estates/*" element={
               <Suspense fallback={<PageLoading />}>
@@ -88,11 +91,6 @@ const App = () => (
             <Route path="/founder" element={
               <Suspense fallback={<PageLoading />}>
                 <Founder />
-              </Suspense>
-            } />
-            <Route path="/contact" element={
-              <Suspense fallback={<PageLoading />}>
-                <Contact />
               </Suspense>
             } />
             

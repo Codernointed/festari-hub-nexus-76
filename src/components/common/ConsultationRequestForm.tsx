@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
@@ -34,7 +33,7 @@ const ConsultationRequestForm = ({
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '', // Optional phone field
+    phone: '',
     subject: '',
     message: '',
   });
@@ -229,7 +228,7 @@ const ConsultationRequestForm = ({
           <p className="text-xs text-festari-500 mt-3 text-center">
             By submitting, you agree to our <a href="/privacy-policy" className="text-festari-accent hover:underline">Privacy Policy</a>.
             <br />
-            For urgent matters, please call: <a href="tel:+233207702157" className="text-festari-accent hover:underline">+233 (0)20 770 2157</a>
+            For urgent matters, please call: <a href="tel:+233541603237" className="text-festari-accent hover:underline">+233 (0)54 160 3237</a>
           </p>
         </div>
       </form>
