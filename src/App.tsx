@@ -115,6 +115,14 @@ const App = () => (
                 <Dashboard />
               </Suspense>
             } />
+
+            <Route 
+              path="/properties" element={
+                <Suspense fallback={<PageLoading />}>
+                <Properties />
+                </Suspense>
+              }
+            />
             
             {/* Catch-all route */}
             <Route path="*" element={<NotFound />} />

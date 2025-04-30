@@ -1,400 +1,237 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Search, Filter, MapPin, Bed, Bath, Home, Square, Star, Heart, ArrowUpRight } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Slider } from '@/components/ui/slider';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { useToast } from '@/hooks/use-toast';
+import { Search, Home, Building, Map, Filter, ChevronDown } from 'lucide-react';
+import axios from 'axios';
+import { BACKEND_URL } from '@/configs/constants';
 
-const MOCK_PROPERTIES = [
-  {
-    id: 1,
-    title: "Luxury Downtown Apartment",
-    description: "Modern luxury apartment in the heart of downtown with stunning city views",
-    price: 2500,
-    type: "Apartment",
-    bedrooms: 2,
-    bathrooms: 2,
-    area: 1200,
-    location: "123 Main St, Downtown",
-    image: "https://source.unsplash.com/random/600x400/?apartment",
-    featured: true
-  },
-  {
-    id: 2,
-    title: "Cozy Studio near University",
-    description: "Perfect for students or young professionals, walking distance to campus",
-    price: 1200,
-    type: "Studio",
-    bedrooms: 1,
-    bathrooms: 1,
-    area: 550,
-    location: "456 College Ave, University District",
-    image: "https://source.unsplash.com/random/600x400/?studio"
-  },
-  {
-    id: 3,
-    title: "Spacious Family Home",
-    description: "Beautiful family home with a large backyard in a quiet neighborhood",
-    price: 3800,
-    type: "House",
-    bedrooms: 4,
-    bathrooms: 3,
-    area: 2500,
-    location: "789 Oak St, Suburb",
-    image: "https://source.unsplash.com/random/600x400/?house"
-  },
-  {
-    id: 4,
-    title: "Modern Loft in Arts District",
-    description: "Industrial-style loft with high ceilings and an open floor plan",
-    price: 2800,
-    type: "Loft",
-    bedrooms: 1,
-    bathrooms: 1,
-    area: 950,
-    location: "101 Gallery Way, Arts District",
-    image: "https://source.unsplash.com/random/600x400/?loft"
-  },
-  {
-    id: 5,
-    title: "Penthouse with Rooftop Terrace",
-    description: "Luxury penthouse with a private rooftop terrace and panoramic views",
-    price: 5500,
-    type: "Penthouse",
-    bedrooms: 3,
-    bathrooms: 3,
-    area: 2200,
-    location: "202 Skyline Ave, Downtown",
-    image: "https://source.unsplash.com/random/600x400/?penthouse",
-    featured: true
-  },
-  {
-    id: 6,
-    title: "Townhouse with Garage",
-    description: "Three-story townhouse with a private garage and modern amenities",
-    price: 3200,
-    type: "Townhouse",
-    bedrooms: 3,
-    bathrooms: 2.5,
-    area: 1800,
-    location: "303 Urban Lane, Midtown",
-    image: "https://source.unsplash.com/random/600x400/?townhouse"
-  }
-];
-
-const Properties = () => {
+const RealEstate = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [propertyType, setPropertyType] = useState('all');
-  const [bedrooms, setBedrooms] = useState('any');
-  const [priceRange, setPriceRange] = useState<number[]>([500, 6000]);
-  const [areaRange, setAreaRange] = useState<number[]>([500, 3000]);
-  const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
-  const { toast } = useToast();
-  
-  const filteredProperties = MOCK_PROPERTIES.filter(property => {
-    const matchesSearch = 
-      property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  const [selectedType, setSelectedType] = useState('All');
+  const [priceRange, setPriceRange] = useState('All');
+  const [properties, setProperties] = useState([])
+
+  useEffect(() => {
+    console.log("checking");
+    
+    const fetchProperties = async () => {
+      try {
+        const res = await axios.get(`${BACKEND_URL}/v1/real-estates/`);
+        console.log(res.data);
+        setProperties(res.data);
+        console.log(res.data)
+      } catch (error) {
+        console.error('Failed to fetch properties:', error);
+      } finally {
+        //setLoading(false);
+      }
+    };
+
+    fetchProperties();
+  }, []);
+
+  // Filter properties based on search term and filters
+  const filteredProperties = properties.filter(property => {
+    const matchesSearch = property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       property.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
       property.description.toLowerCase().includes(searchTerm.toLowerCase());
-      
-    const matchesType = propertyType === 'all' || property.type === propertyType;
-    const matchesBedrooms = bedrooms === 'any' || 
-      (bedrooms === '4+' ? property.bedrooms >= 4 : property.bedrooms === parseInt(bedrooms));
-    const matchesPrice = property.price >= priceRange[0] && property.price <= priceRange[1];
-    const matchesArea = property.area >= areaRange[0] && property.area <= areaRange[1];
-    
-    return matchesSearch && matchesType && matchesBedrooms && matchesPrice && matchesArea;
+
+    const matchesType = selectedType === 'All' || property.type === selectedType;
+
+    // Simple price range filtering (in a real app, would use numeric values and proper ranges)
+    const matchesPrice = priceRange === 'All' ||
+      (priceRange === 'Under $500K' && property.price.includes('$') && !property.price.includes('M')) ||
+      (priceRange === '$500K-$1M' && property.price.includes('$') && !property.price.includes('M')) ||
+      (priceRange === 'Over $1M' && property.price.includes('M'));
+
+    return matchesSearch && matchesType && matchesPrice;
   });
-  
-  const saveProperty = (id: number) => {
-    toast({
-      title: "Property Saved",
-      description: "This property has been added to your favorites.",
-    });
-  };
-  
-  const scheduleViewing = (id: number) => {
-    toast({
-      title: "Request Sent",
-      description: "Your viewing request has been submitted. We'll contact you shortly.",
-    });
-  };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div>
       <Header />
-      <main className="flex-grow">
-        <section className="bg-gradient-to-r from-festari-900 to-purple-900 text-white py-16">
-          <div className="container-custom text-center">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">
-              Find Your Perfect Space
-            </h1>
-            <p className="text-xl opacity-90 max-w-2xl mx-auto mb-8">
-              Explore our curated selection of premium properties available for rent and purchase
-            </p>
-            
-            <div className="max-w-3xl mx-auto relative">
-              <div className="flex">
-                <div className="relative flex-grow">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                  <Input
-                    type="text"
-                    placeholder="Search by location, property name, or features..."
-                    className="w-full pl-10 pr-4 py-6 text-black rounded-l-lg border-0"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                </div>
-                <Button 
-                  className="rounded-l-none bg-festari-accent hover:bg-festari-accent/90 px-6"
-                >
-                  Search
-                </Button>
+      <main className="pt-20">
+        {/* Hero section */}
+        <section className="relative py-20 bg-festari-900 text-white">
+          <div className="container-custom">
+            <div className="max-w-2xl">
+              <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">Find Your Ideal Property</h1>
+              <p className="text-festari-100 mb-8">Browse our exclusive collection of premium properties available for sale and rent.</p>
+
+              {/* Search bar */}
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search by location, property type, or features..."
+                  className="w-full pl-12 pr-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-accent"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/60" size={18} />
               </div>
             </div>
           </div>
         </section>
-        
-        <section className="py-12 bg-gray-50">
+
+        {/* Property listings */}
+        <section className="section-padding bg-festari-50">
           <div className="container-custom">
-            <div className="flex flex-col lg:flex-row gap-8">
-              <div className="lg:w-1/4">
-                <Card>
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between mb-6">
-                      <h2 className="text-xl font-semibold flex items-center">
-                        <Filter size={20} className="mr-2" /> Filters
-                      </h2>
-                      <Button variant="ghost" size="sm" className="text-sm">
-                        Reset
-                      </Button>
-                    </div>
-                    
-                    <div className="space-y-6">
-                      <div>
-                        <label className="text-sm font-medium mb-2 block">Property Type</label>
-                        <Select value={propertyType} onValueChange={setPropertyType}>
-                          <SelectTrigger>
-                            <SelectValue placeholder="All Types" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="all">All Types</SelectItem>
-                            <SelectItem value="Apartment">Apartment</SelectItem>
-                            <SelectItem value="House">House</SelectItem>
-                            <SelectItem value="Studio">Studio</SelectItem>
-                            <SelectItem value="Loft">Loft</SelectItem>
-                            <SelectItem value="Penthouse">Penthouse</SelectItem>
-                            <SelectItem value="Townhouse">Townhouse</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      
-                      <div>
-                        <label className="text-sm font-medium mb-2 block">Bedrooms</label>
-                        <Select value={bedrooms} onValueChange={setBedrooms}>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Any" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="any">Any</SelectItem>
-                            <SelectItem value="1">1</SelectItem>
-                            <SelectItem value="2">2</SelectItem>
-                            <SelectItem value="3">3</SelectItem>
-                            <SelectItem value="4+">4+</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      
-                      <div>
-                        <div className="flex justify-between mb-2">
-                          <label className="text-sm font-medium">Price Range</label>
-                          <span className="text-sm text-gray-500">
-                            ${priceRange[0]} - ${priceRange[1]}
-                          </span>
-                        </div>
-                        <Slider
-                          defaultValue={[500, 6000]}
-                          max={10000}
-                          min={0}
-                          step={100}
-                          value={priceRange}
-                          onValueChange={setPriceRange}
-                          className="my-6"
-                        />
-                      </div>
-                      
-                      <div>
-                        <div className="flex justify-between mb-2">
-                          <label className="text-sm font-medium">Area (sq ft)</label>
-                          <span className="text-sm text-gray-500">
-                            {areaRange[0]} - {areaRange[1]}
-                          </span>
-                        </div>
-                        <Slider
-                          defaultValue={[500, 3000]}
-                          max={5000}
-                          min={0}
-                          step={100}
-                          value={areaRange}
-                          onValueChange={setAreaRange}
-                          className="my-6"
-                        />
-                      </div>
-                      
-                      <Separator className="my-4" />
-                      
-                      <Button className="w-full">Apply Filters</Button>
-                    </div>
-                  </CardContent>
-                </Card>
+            {/* Filters */}
+            <div className="flex flex-col md:flex-row gap-4 mb-10 p-6 bg-white rounded-lg shadow-sm">
+              <div className="flex flex-col md:flex-row gap-4 w-full">
+                <div className="w-full md:w-1/3">
+                  <label className="text-sm text-festari-600 mb-1 block">Property Type</label>
+                  <div className="relative">
+                    <select
+                      className="w-full p-2 border border-festari-200 rounded-md appearance-none bg-white pr-10 focus:outline-none focus:ring-1 focus:ring-accent"
+                      value={selectedType}
+                      onChange={(e) => setSelectedType(e.target.value)}
+                    >
+                      <option value="All">All Types</option>
+                      <option value="Sale">For Sale</option>
+                      <option value="Rent">For Rent</option>
+                    </select>
+                    <ChevronDown size={16} className="absolute right-3 top-1/2 transform -translate-y-1/2 text-festari-500" />
+                  </div>
+                </div>
+
+                <div className="w-full md:w-1/3">
+                  <label className="text-sm text-festari-600 mb-1 block">Price Range</label>
+                  <div className="relative">
+                    <select
+                      className="w-full p-2 border border-festari-200 rounded-md appearance-none bg-white pr-10 focus:outline-none focus:ring-1 focus:ring-accent"
+                      value={priceRange}
+                      onChange={(e) => setPriceRange(e.target.value)}
+                    >
+                      <option value="All">All Prices</option>
+                      <option value="Under $500K">Under $500,000</option>
+                      <option value="$500K-$1M">$500,000 - $1,000,000</option>
+                      <option value="Over $1M">Over $1,000,000</option>
+                    </select>
+                    <ChevronDown size={16} className="absolute right-3 top-1/2 transform -translate-y-1/2 text-festari-500" />
+                  </div>
+                </div>
+
+                <div className="w-full md:w-1/3">
+                  <label className="text-sm text-festari-600 mb-1 block">Sort By</label>
+                  <div className="relative">
+                    <select
+                      className="w-full p-2 border border-festari-200 rounded-md appearance-none bg-white pr-10 focus:outline-none focus:ring-1 focus:ring-accent"
+                    >
+                      <option value="newest">Newest First</option>
+                      <option value="price-asc">Price (Low to High)</option>
+                      <option value="price-desc">Price (High to Low)</option>
+                    </select>
+                    <ChevronDown size={16} className="absolute right-3 top-1/2 transform -translate-y-1/2 text-festari-500" />
+                  </div>
+                </div>
               </div>
-              
-              <div className="lg:w-3/4">
-                <div className="flex justify-between items-center mb-6">
-                  <p className="text-gray-600">
-                    Showing <span className="font-medium">{filteredProperties.length}</span> properties
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <Select defaultValue="featured">
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Sort by" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="featured">Featured</SelectItem>
-                        <SelectItem value="price-low">Price: Low to High</SelectItem>
-                        <SelectItem value="price-high">Price: High to Low</SelectItem>
-                        <SelectItem value="newest">Newest</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    
-                    <div className="flex border rounded-md">
-                      <button 
-                        className={`px-3 py-2 ${viewMode === 'grid' ? 'bg-gray-100' : ''}`}
-                        onClick={() => setViewMode('grid')}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                      </button>
-                      <button 
-                        className={`px-3 py-2 ${viewMode === 'list' ? 'bg-gray-100' : ''}`}
-                        onClick={() => setViewMode('list')}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            </div>
+
+            {/* Results count */}
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="text-xl font-display font-bold text-festari-900">
+                {filteredProperties.length} Properties Found
+              </h2>
+              <div className="flex gap-2">
+                <button className="p-2 rounded bg-white text-festari-800 hover:bg-festari-100">
+                  <Map size={20} />
+                </button>
+                <button className="p-2 rounded bg-accent text-white">
+                  <Building size={20} />
+                </button>
+              </div>
+            </div>
+
+            {/* Property grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredProperties.map((property, index) => (
+                <div
+                  key={property.property_id}
+                  className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group"
+                >
+                  <div className="relative h-60 overflow-hidden">
+                    <img
+                      src={property.image}
+                      alt={property.title}
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-4 right-4 bg-accent text-white text-xs font-bold uppercase py-1 px-2 rounded">
+                      {property.type}
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="text-lg font-semibold text-festari-900 group-hover:text-accent transition-colors">
+                        {property.title}
+                      </h3>
+                    </div>
+                    <p className="text-festari-600 mb-2">
+                      <span className="flex items-center gap-1">
+                        <Home size={14} className="text-festari-400" />
+                        {property.location.toUpperCase()}
+                      </span>
+                    </p>
+                    <p className="text-sm text-festari-500 mb-3">
+                      {property.features.toUpperCase()}
+                    </p>
+                    <p className="text-sm text-festari-600 mb-4 line-clamp-2">
+                      {property.description}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-lg font-bold text-accent">{property.price}</span>
+                      <button className="text-sm text-white bg-accent hover:bg-accent/90 px-3 py-1 rounded transition-colors">
+                        View Details
                       </button>
                     </div>
                   </div>
                 </div>
-                
-                {filteredProperties.length === 0 ? (
-                  <div className="bg-white rounded-lg p-8 text-center">
-                    <Home size={48} className="mx-auto mb-4 text-gray-400" />
-                    <h3 className="text-xl font-semibold mb-2">No properties found</h3>
-                    <p className="text-gray-500 mb-4">
-                      Try adjusting your search criteria to find more options.
-                    </p>
-                    <Button 
-                      variant="outline" 
-                      onClick={() => {
-                        setSearchTerm('');
-                        setPropertyType('');
-                        setBedrooms('');
-                        setPriceRange([500, 6000]);
-                        setAreaRange([500, 3000]);
-                      }}
-                    >
-                      Reset Filters
-                    </Button>
-                  </div>
-                ) : (
-                  <div className={viewMode === 'grid' 
-                    ? "grid grid-cols-1 md:grid-cols-2 gap-6" 
-                    : "space-y-6"
-                  }>
-                    {filteredProperties.map(property => (
-                      <div 
-                        key={property.id} 
-                        className={`bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow ${
-                          viewMode === 'list' ? 'flex flex-col md:flex-row' : ''
-                        }`}
-                      >
-                        <div className={viewMode === 'list' ? 'md:w-2/5 relative' : 'relative'}>
-                          <Link to={`/property/${property.id}`}>
-                            <img 
-                              src={property.image} 
-                              alt={property.title}
-                              className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
-                            />
-                          </Link>
-                          {property.featured && (
-                            <Badge className="absolute top-2 left-2 bg-festari-accent">
-                              Featured
-                            </Badge>
-                          )}
-                          <button 
-                            className="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow-sm hover:bg-gray-100"
-                            onClick={() => saveProperty(property.id)}
-                          >
-                            <Heart size={18} className="text-gray-500 hover:text-red-500" />
-                          </button>
-                        </div>
-                        
-                        <div className={`p-5 ${viewMode === 'list' ? 'md:w-3/5' : ''}`}>
-                          <div className="flex justify-between items-start">
-                            <Link to={`/property/${property.id}`} className="hover:text-festari-accent transition-colors">
-                              <h3 className="text-lg font-semibold mb-1">{property.title}</h3>
-                            </Link>
-                            <p className="text-festari-accent font-bold">${property.price}/mo</p>
-                          </div>
-                          <div className="flex items-center text-gray-500 mb-3">
-                            <MapPin size={16} className="mr-1" />
-                            <span className="text-sm">{property.location}</span>
-                          </div>
-                          
-                          <p className="text-gray-600 text-sm mb-4">{property.description}</p>
-                          
-                          <div className="flex flex-wrap gap-4 mb-4">
-                            <div className="flex items-center text-gray-700">
-                              <Bed size={16} className="mr-1" />
-                              <span className="text-sm">{property.bedrooms} Beds</span>
-                            </div>
-                            <div className="flex items-center text-gray-700">
-                              <Bath size={16} className="mr-1" />
-                              <span className="text-sm">{property.bathrooms} Baths</span>
-                            </div>
-                            <div className="flex items-center text-gray-700">
-                              <Square size={16} className="mr-1" />
-                              <span className="text-sm">{property.area} sq ft</span>
-                            </div>
-                          </div>
-                          
-                          <div className="flex justify-between">
-                            <Button 
-                              variant="outline" 
-                              size="sm"
-                              onClick={() => scheduleViewing(property.id)}
-                            >
-                              Schedule Viewing
-                            </Button>
-                            <Link to={`/property/${property.id}`}>
-                              <Button size="sm">
-                                View Details
-                                <ArrowUpRight size={16} className="ml-1" />
-                              </Button>
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+              ))}
             </div>
+
+            {/* Empty state */}
+            {filteredProperties.length === 0 && (
+              <div className="bg-white rounded-lg p-8 text-center">
+                <div className="flex justify-center mb-4">
+                  <Home size={48} className="text-festari-300" />
+                </div>
+                <h3 className="text-xl font-semibold text-festari-800 mb-2">No properties found</h3>
+                <p className="text-festari-600 mb-4">Try adjusting your search criteria or filters</p>
+                <button
+                  className="btn-primary"
+                  onClick={() => {
+                    setSearchTerm('');
+                    setSelectedType('All');
+                    setPriceRange('All');
+                  }}
+                >
+                  Reset Filters
+                </button>
+              </div>
+            )}
+
+            {/* Pagination (simplified) */}
+            {filteredProperties.length > 0 && (
+              <div className="mt-12 flex justify-center">
+                <div className="flex space-x-1">
+                  <button className="px-4 py-2 border border-festari-300 rounded-md text-festari-800 bg-white hover:bg-festari-50">
+                    Previous
+                  </button>
+                  <button className="px-4 py-2 bg-accent text-white rounded-md hover:bg-accent/90">
+                    1
+                  </button>
+                  <button className="px-4 py-2 border border-festari-300 rounded-md text-festari-800 bg-white hover:bg-festari-50">
+                    2
+                  </button>
+                  <button className="px-4 py-2 border border-festari-300 rounded-md text-festari-800 bg-white hover:bg-festari-50">
+                    3
+                  </button>
+                  <button className="px-4 py-2 border border-festari-300 rounded-md text-festari-800 bg-white hover:bg-festari-50">
+                    Next
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </section>
       </main>
@@ -403,4 +240,4 @@ const Properties = () => {
   );
 };
 
-export default Properties;
+export default RealEstate;
