@@ -5,7 +5,7 @@ import { Search, Home, Building, Map, Filter, ChevronDown } from 'lucide-react';
 import axios from 'axios';
 import { BACKEND_URL } from '@/configs/constants';
 
-const RealEstate = () => {
+const Properties = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('All');
   const [priceRange, setPriceRange] = useState('All');
@@ -13,7 +13,7 @@ const RealEstate = () => {
 
   useEffect(() => {
     console.log("checking");
-    
+
     const fetchProperties = async () => {
       try {
         const res = await axios.get(`${BACKEND_URL}/v1/real-estates/`);
@@ -52,7 +52,12 @@ const RealEstate = () => {
       <Header />
       <main className="pt-20">
         {/* Hero section */}
-        <section className="relative py-20 bg-festari-900 text-white">
+        <section
+          className="relative py-20 bg-cover bg-center text-white"
+          style={{
+            backgroundImage: "url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&q=80')"
+          }}
+        >
           <div className="container-custom">
             <div className="max-w-2xl">
               <h1 className="text-3xl md:text-4xl font-display font-bold mb-4">Find Your Ideal Property</h1>
@@ -240,4 +245,4 @@ const RealEstate = () => {
   );
 };
 
-export default RealEstate;
+export default Properties;

@@ -21,7 +21,7 @@ import Logo from '@/components/common/Logo';
 import { cn } from '@/lib/utils';
 
 const navigation = [
-  { name: "Estates Agencies", href: "/estates", icon: <Home size={18} /> },
+  { name: "Real Estates", href:"/properties", icon: <Home size={18} /> },
   { name: "Research & Consultation", href: "/research", icon: <BookOpen size={18} /> },
   { name: "Agribusiness", href: "/agriculture", icon: <ShoppingCart size={18} /> },
   { name: "Enterprise", href: "/enterprise", icon: <Briefcase size={18} /> },
@@ -36,18 +36,6 @@ const Header = () => {
   const isMobile = useIsMobile(); // Hook to detect if the device is mobile
   
   const isHomePage = location.pathname === '/'; // Check if the current page is the homepage
-
-  // Define navigation items
-  const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Estate Agency', path: '/estates', icon: <Home size={18} /> },
-    { name: 'Research & Consultation', path: '/research', icon: <BookOpen size={18} /> },
-    { name: 'Agribusiness', path: '/agriculture', icon: <ShoppingCart size={18} /> },
-    { name: 'Enterprise', path: '/enterprise', icon: <Briefcase size={18} /> },
-    { name: 'About', path: '/about', icon: <User size={18} /> },
-    { name: 'Founder', path: '/founder', icon: <User size={18} /> },
-    { name: 'Contact', path: '/contact', icon: <MapPin size={18} /> },
-  ];
 
   // Watch for scroll position to add background to the header
   useEffect(() => {

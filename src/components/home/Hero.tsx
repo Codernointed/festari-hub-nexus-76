@@ -15,7 +15,7 @@ const carouselItems = [
     subtitle: "Under One Umbrella",
     description: "Discover a world of opportunities through our diverse business divisions",
     buttonText: "Explore Properties",
-    buttonLink: "/real-estate",
+    buttonLink: "/properties",
     buttonVariant: "chili" as const,
     secondaryButtonText: "Research Hub",
     secondaryButtonLink: "/research",
@@ -78,38 +78,38 @@ const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [autoplay, setAutoplay] = useState(true);
-  
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(true);
     }, 100);
     return () => clearTimeout(timer);
   }, []);
-  
+
   useEffect(() => {
     let interval: NodeJS.Timeout;
-    
+
     if (autoplay) {
       interval = setInterval(() => {
         setActiveIndex((prevIndex) => (prevIndex + 1) % carouselItems.length);
       }, 6000); // Change slide every 6 seconds
     }
-    
+
     return () => {
       if (interval) clearInterval(interval);
     };
   }, [autoplay]);
-  
+
   const handleNext = () => {
     setAutoplay(false); // Pause autoplay when manually navigating
     setActiveIndex((prevIndex) => (prevIndex + 1) % carouselItems.length);
   };
-  
+
   const handlePrevious = () => {
     setAutoplay(false); // Pause autoplay when manually navigating
     setActiveIndex((prevIndex) => (prevIndex - 1 + carouselItems.length) % carouselItems.length);
   };
-  
+
   const handleDotClick = (index: number) => {
     setAutoplay(false); // Pause autoplay when manually navigating
     setActiveIndex(index);
@@ -122,7 +122,7 @@ const Hero = () => {
         <AnimatePresence mode="wait">
           {carouselItems.map((item, index) => (
             activeIndex === index && (
-              <motion.div 
+              <motion.div
                 key={item.id}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -131,10 +131,10 @@ const Hero = () => {
                 className="absolute inset-0"
               >
                 {item.isVideo ? (
-                  <video 
-                    autoPlay 
-                    muted 
-                    loop 
+                  <video
+                    autoPlay
+                    muted
+                    loop
                     playsInline
                     className="w-full h-full object-cover object-center"
                   >
@@ -143,9 +143,9 @@ const Hero = () => {
                     <img src={item.image} alt={item.title} className="w-full h-full object-cover object-center" />
                   </video>
                 ) : (
-                  <img 
-                    src={item.image} 
-                    alt={item.title} 
+                  <img
+                    src={item.image}
+                    alt={item.title}
                     className="w-full h-full object-cover object-center"
                   />
                 )}
@@ -157,15 +157,15 @@ const Hero = () => {
       </div>
 
       {/* Navigation Arrows */}
-      <button 
+      <button
         className="absolute left-4 z-30 bg-white/10 hover:bg-white/20 p-2 rounded-full text-white transition-all"
         onClick={handlePrevious}
         aria-label="Previous slide"
       >
         <ChevronLeft size={24} />
       </button>
-      
-      <button 
+
+      <button
         className="absolute right-4 z-30 bg-white/10 hover:bg-white/20 p-2 rounded-full text-white transition-all"
         onClick={handleNext}
         aria-label="Next slide"
@@ -176,7 +176,7 @@ const Hero = () => {
       {/* Content */}
       <div className="container-custom relative z-20 text-center">
         <AnimatePresence mode="wait">
-          <motion.div 
+          <motion.div
             key={activeIndex}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -190,27 +190,27 @@ const Hero = () => {
             )}>
               Welcome to Festari Group Limited
             </span>
-            
+
             <h1 className={cn(
               "text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6",
               isVisible ? "opacity-100" : "opacity-0"
             )}>
               {carouselItems[activeIndex].title} <span className="text-mikado">{carouselItems[activeIndex].subtitle}</span>
             </h1>
-            
+
             <p className={cn(
               "text-lg md:text-xl text-festari-100 mb-8",
               isVisible ? "opacity-100" : "opacity-0"
             )}>
               {carouselItems[activeIndex].description}
             </p>
-            
+
             <div className={cn(
               "flex flex-col sm:flex-row gap-4 justify-center",
               isVisible ? "opacity-100" : "opacity-0"
             )}>
-              <Button 
-                asChild 
+              <Button
+                asChild
                 className={`hover:bg-${carouselItems[activeIndex].buttonVariant}/90 text-white border-2 border-transparent px-6 py-6 text-base`}
                 variant={carouselItems[activeIndex].buttonVariant}
                 size="lg"
@@ -219,10 +219,10 @@ const Hero = () => {
                   {carouselItems[activeIndex].buttonText}
                 </Link>
               </Button>
-              <Button 
-                asChild 
-                variant="outline" 
-                className="bg-transparent text-white border-2 border-white hover:bg-white/10 px-6 py-6 text-base flex items-center" 
+              <Button
+                asChild
+                variant="outline"
+                className="bg-transparent text-white border-2 border-white hover:bg-white/10 px-6 py-6 text-base flex items-center"
                 size="lg"
               >
                 <Link to={carouselItems[activeIndex].secondaryButtonLink}>
@@ -242,7 +242,7 @@ const Hero = () => {
             </div>
           </motion.div>
         </AnimatePresence>
-        
+
         {/* Slide indicators */}
         <div className="absolute bottom-10 left-0 right-0 flex justify-center z-30 space-x-2">
           {carouselItems.map((_, index) => (
@@ -250,26 +250,25 @@ const Hero = () => {
               key={index}
               onClick={() => handleDotClick(index)}
               aria-label={`Go to slide ${index + 1}`}
-              className={`h-2 rounded-full transition-all ${
-                activeIndex === index ? "w-8 bg-mikado" : "w-2 bg-white/40 hover:bg-white/60"
-              }`}
+              className={`h-2 rounded-full transition-all ${activeIndex === index ? "w-8 bg-mikado" : "w-2 bg-white/40 hover:bg-white/60"
+                }`}
             />
           ))}
         </div>
       </div>
-      
+
       {/* Motion graphics element - animated shape */}
       <div className="absolute bottom-0 left-0 right-0 z-10 opacity-30">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-[60px]">
-          <motion.path 
-            d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" 
-            fill="currentColor" 
+          <motion.path
+            d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
+            fill="currentColor"
             className="text-white"
             initial={{ y: 20 }}
             animate={{ y: 0 }}
-            transition={{ 
-              repeat: Infinity, 
-              repeatType: "reverse", 
+            transition={{
+              repeat: Infinity,
+              repeatType: "reverse",
               duration: 3
             }}
           />

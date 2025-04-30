@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 import { CheckCircle, SendIcon } from 'lucide-react';
+import axios from 'axios';
+import { BACKEND_URL } from '@/configs/constants';
 
 type ConsultationRequestFormProps = {
   className?: string;
@@ -10,15 +12,6 @@ type ConsultationRequestFormProps = {
   title?: string;
   subtitle?: string;
   description?: string;
-  serviceCategories?: Array<{
-    title: string;
-    path?: string;
-    description?: string;
-    activities?: Array<{
-      title: string;
-      description?: string;
-    }>;
-  }>;
 };
 
 const ConsultationRequestForm = ({
@@ -27,19 +20,20 @@ const ConsultationRequestForm = ({
   title = 'Request a Consultation',
   subtitle = 'Our experts will get back to you within 48 hours.',
   description,
-  serviceCategories = []
 }: ConsultationRequestFormProps) => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
-    name: '',
+    full_name: '',
     email: '',
-    phone: '',
-    subject: '',
+    phone_number: '',
+    subject_or_service: '',
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  
+  const [services, setServices] = useState<any[]>([]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -47,38 +41,51 @@ const ConsultationRequestForm = ({
       [name]: value,
     }));
   };
-  
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission with delay
-    setTimeout(() => {
+
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const res = await axios.get(`${BACKEND_URL}/v1/festari/services/`);
+        console.log(res.data);
+        setServices(res.data);
+      } catch (error) {
+
+      }
+    }
+    fetchServices();
+  }, []);
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    try {
+      e.preventDefault();
+      setIsSubmitting(true);
+      const res = await axios.post(`${BACKEND_URL}/v1/consultations/consultation-request/`, formData)
+      console.log("Result", res.data);
       toast({
         title: "Consultation Request Submitted",
         description: "Thank you for your request. We will contact you within 48 hours. For urgent matters, call: 0207702157",
       });
-      
-      // Email would be sent here in a real implementation
-      console.log('Form submitted:', formData);
-      
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-      
       // Reset form after submission
-      setTimeout(() => {
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          subject: '',
-          message: '',
-        });
-        setIsSubmitted(false);
-      }, 5000);
-    }, 1500);
+      setFormData({
+        full_name: '',
+        email: '',
+        phone_number: '',
+        subject_or_service: '',
+        message: '',
+      });
+    }
+    catch (error) {
+      console.error('Error submitting form:', error);
+      setError('An error occurred while submitting the form. Please try again.');
+      setIsSubmitting(false);
+    }
+    finally {
+      setIsSubmitting(false);
+    }
   };
-  
+
   const getVariantClasses = () => {
     switch (variant) {
       case 'white':
@@ -100,7 +107,7 @@ const ConsultationRequestForm = ({
         <h3 className="text-xl font-bold mb-2 text-festari-900">{title}</h3>
         <p className="text-festari-600">{description || subtitle}</p>
       </div>
-      
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -110,8 +117,8 @@ const ConsultationRequestForm = ({
             <input
               type="text"
               id="name"
-              name="name"
-              value={formData.name}
+              name="full_name"
+              value={formData.full_name}
               onChange={handleInputChange}
               required
               className="w-full px-3 py-2 border border-festari-200 rounded-md focus:outline-none focus:ring-2 focus:ring-festari-accent/50"
@@ -134,7 +141,7 @@ const ConsultationRequestForm = ({
             />
           </div>
         </div>
-        
+
         <div>
           <label htmlFor="phone" className="block text-sm font-medium text-festari-700 mb-1">
             Phone Number (Optional)
@@ -142,49 +149,35 @@ const ConsultationRequestForm = ({
           <input
             type="tel"
             id="phone"
-            name="phone"
-            value={formData.phone}
+            name="phone_number"
+            value={formData.phone_number}
             onChange={handleInputChange}
             className="w-full px-3 py-2 border border-festari-200 rounded-md focus:outline-none focus:ring-2 focus:ring-festari-accent/50"
             placeholder="+233 XX XXX XXXX"
           />
         </div>
-        
+
         <div>
           <label htmlFor="subject" className="block text-sm font-medium text-festari-700 mb-1">
             Subject *
           </label>
           <select
             id="subject"
-            name="subject"
-            value={formData.subject}
+            name="subject_or_service"
+            value={formData.subject_or_service}
             onChange={handleInputChange}
             required
             className="w-full px-3 py-2 border border-festari-200 rounded-md focus:outline-none focus:ring-2 focus:ring-festari-accent/50"
           >
             <option value="">Select a service</option>
-            {serviceCategories.flatMap((category, categoryIndex) => 
-              category.activities ? 
-                category.activities.map((activity, activityIndex) => (
-                  <option key={`${categoryIndex}-${activityIndex}`} value={activity.title}>
-                    {activity.title}
-                  </option>
-                ))
-              : []
-            )}
-            {serviceCategories.length === 0 && (
-              <>
-                <option value="Research Consultation">Research Consultation</option>
-                <option value="Property Inquiry">Property Inquiry</option>
-                <option value="Agricultural Services">Agricultural Services</option>
-                <option value="Enterprise Solutions">Enterprise Solutions</option>
-                <option value="Academic Support">Academic Support</option>
-                <option value="General Inquiry">General Inquiry</option>
-              </>
-            )}
+            {services.map((service, index) => (
+              <option key={index} value={service.slug}>
+                {service.name}
+              </option>))
+            }
           </select>
         </div>
-        
+
         <div>
           <label htmlFor="message" className="block text-sm font-medium text-festari-700 mb-1">
             Message *
@@ -200,8 +193,9 @@ const ConsultationRequestForm = ({
             placeholder="How can we help you?"
           ></textarea>
         </div>
-        
+
         <div className="pt-2">
+          {error && <p className='text-red-500 text-center pb-3'>{error}</p>}
           <Button
             type="submit"
             disabled={isSubmitting || isSubmitted}
@@ -224,7 +218,7 @@ const ConsultationRequestForm = ({
               </>
             )}
           </Button>
-          
+
           <p className="text-xs text-festari-500 mt-3 text-center">
             By submitting, you agree to our <a href="/privacy-policy" className="text-festari-accent hover:underline">Privacy Policy</a>.
             <br />

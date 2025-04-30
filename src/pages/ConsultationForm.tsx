@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -7,6 +7,8 @@ import ConsultationRequestForm from '@/components/common/ConsultationRequestForm
 import { serviceCategories } from '@/data/services';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { FileText, MessageSquare } from 'lucide-react';
+import axios from 'axios';
+import { BACKEND_URL } from '@/configs/constants';
 
 const ConsultationPage = () => {
   const location = useLocation();
@@ -22,7 +24,7 @@ const ConsultationPage = () => {
       <Header />
       <main className="flex-grow">
         {/* Background image with overlay - updated with better image and consistent overlay */}
-        <section 
+        <section
           className="relative py-16 bg-cover bg-center text-white"
           style={{
             backgroundImage: "url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&q=80')"
@@ -38,7 +40,7 @@ const ConsultationPage = () => {
             </p>
           </div>
         </section>
-        
+
         <div className="py-16 bg-gray-50">
           <div className="container-custom max-w-4xl">
             <div className="bg-accent/10 p-4 sm:p-8 rounded-lg mb-8">
@@ -53,7 +55,7 @@ const ConsultationPage = () => {
             <Tabs defaultValue="request" className="w-full" onValueChange={setActiveTab}>
               <TabsList className="grid w-full grid-cols-2 mb-8">
                 <TabsTrigger value="request" className="flex items-center gap-2">
-                  <MessageSquare className="h-4 w-4" /> 
+                  <MessageSquare className="h-4 w-4" />
                   <span>Consultation Request</span>
                 </TabsTrigger>
                 <TabsTrigger value="faq" className="flex items-center gap-2">
@@ -63,8 +65,7 @@ const ConsultationPage = () => {
               </TabsList>
 
               <TabsContent value="request" className="space-y-6">
-                <ConsultationRequestForm 
-                  serviceCategories={serviceCategories}
+                <ConsultationRequestForm
                   title="Request a Professional Consultation"
                   subtitle="Our team of experts is ready to assist you with specialized solutions tailored to your needs."
                 />

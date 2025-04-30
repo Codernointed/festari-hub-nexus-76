@@ -48,7 +48,7 @@ const divisions: DivisionProps[] = [
     icon: <Building size={28} />,
     bgImage: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&q=80",
     color: "mikado",
-    link: "/real-estate",
+    link: "/properties",
     delay: 150,
     keyServices: [
       "Property Listings",
